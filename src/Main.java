@@ -18,7 +18,7 @@ public class Main {
     }
 
     public static void setConnectionString(){
-        connectionString = "jdbc:sqlserver://DESKTOP-M9UAP31\\\\SQLEXPRESS:60091;Database=Cric360;IntegratedSecurity=true;trustServerCertificate=true";
+        connectionString = "jdbc:sqlserver://DESKTOP-M9UAP31\\SQLEXPRESS:60091;Database=Cric360;IntegratedSecurity=true;trustServerCertificate=true";
     }
 
     public static void main(String[] args) {
