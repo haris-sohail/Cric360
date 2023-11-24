@@ -47,15 +47,19 @@ public class SignUpGUI extends JFrame{
             return;
         }
 
-        // Display success message
-        JOptionPane.showMessageDialog(panelMain, "Registration successful!", "Success", JOptionPane.INFORMATION_MESSAGE);
-
         // output all the fields in terminal make a function
 
         outputFields(firstName, lastName, dob, username, new String(password), gender, type);
 
         // Database addition and object creation
 
+        if(addUser(type, firstName, lastName, dob, username, new String(password), gender)){
+            // Display success message
+            JOptionPane.showMessageDialog(panelMain, "Registration successful!", "Success", JOptionPane.INFORMATION_MESSAGE);
+        }
+        else{
+            JOptionPane.showMessageDialog(panelMain, "Registration failed!", "Error", JOptionPane.ERROR_MESSAGE);
+        }
 
         // Clear the fields after successful registration
         clearFields();
@@ -76,5 +80,13 @@ public class SignUpGUI extends JFrame{
         txtDOB.setText("");
         txtUsename.setText("");
         txtPassword.setText("");
+    }
+
+    private boolean addUser(String type, String firstName, String lastName, String dob, String username, String password, String gender) {
+        if (type.equals("Player")) {
+            Player player = new Player(firstName, lastName, username, password, dob, gender);
+            return player.addToDatabase();
+        }
+        return true;
     }
 }

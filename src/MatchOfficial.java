@@ -4,7 +4,7 @@ public class MatchOfficial extends User{
     private int noOfMatches;
     private double decisionAccuracyPerc;
 
-    public MatchOfficial(String first_name, String last_name, String username, String password, String gender, Date DOB){
+    public MatchOfficial(String first_name, String last_name, String username, String password, String gender, String DOB){
         this.first_name = first_name;
         this.last_name = last_name;
         this.username = username;

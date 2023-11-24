@@ -1,12 +1,10 @@
 import java.util.Date;
 
 public abstract class User {
-    protected String first_name, last_name, username, password, type, gender;
+    protected String first_name, last_name, username, password, type, gender, DOB;
     protected int id; // acts as a serial number
     protected int idCount; // tells us how many users have signed up
     protected boolean loginStatus;
-
-    protected Date DOB;
 
     public User(){
         loginStatus = false;

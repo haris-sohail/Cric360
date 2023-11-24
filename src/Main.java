@@ -10,6 +10,7 @@ public class Main {
         SignUpGUI newSignUp = new SignUpGUI();
         newSignUp.setContentPane(newSignUp.getPanelMain());
         newSignUp.setSize(400,400);
+        newSignUp.setLocationRelativeTo(null);
         newSignUp.setVisible(true);
         newSignUp.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }
