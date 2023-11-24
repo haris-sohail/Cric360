@@ -27,7 +27,7 @@ public class Player extends User{
                 System.out.println("Invalid Date format");
                 return false;
             }
-            Connection conn = DriverManager.getConnection("jdbc:sqlserver://DESKTOP-M9UAP31\\SQLEXPRESS:60091;Database=Cric360;IntegratedSecurity=true;trustServerCertificate=true");
+            Connection conn = DriverManager.getConnection(Main.connectionString);
             String sql = "INSERT INTO USER$ (ID, first_name, last_name, username, password, DOB, gender, type) VALUES (?,?,?,?,?,?,?,?)";
             PreparedStatement stmt = conn.prepareStatement(sql);
             stmt.setString(1, username);

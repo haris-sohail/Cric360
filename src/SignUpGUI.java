@@ -29,6 +29,12 @@ public class SignUpGUI extends JFrame{
                 handleSignUp();
             }
         });
+        btnCancel.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+
+            }
+        });
     }
 
     private void handleSignUp() {
