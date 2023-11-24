@@ -1,0 +1,80 @@
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+public class SignUpGUI extends JFrame{
+    private JPanel panelMain;
+    private JComboBox comboGender;
+    private JComboBox comboType;
+    private JButton btnSignUp;
+    private JButton btnCancel;
+    private JTextField txtFirstName;
+    private JTextField txtLastName;
+    private JTextField txtDOB;
+    private JTextField txtUsename;
+    private JPasswordField txtPassword;
+    private JButton playerButton;
+    private JButton matchOfficialButton;
+    private JButton enthusiastButton;
+
+    // get panel main
+    public JPanel getPanelMain() {
+        return panelMain;
+    }
+    public SignUpGUI() {
+        btnSignUp.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                handleSignUp();
+            }
+        });
+    }
+
+    private void handleSignUp() {
+        // Get values from text fields
+        String firstName = txtFirstName.getText();
+        String lastName = txtLastName.getText();
+        String dob = txtDOB.getText();
+        String username = txtUsename.getText();
+        char[] password = txtPassword.getPassword();
+        String gender = (String) comboGender.getSelectedItem();
+        String type = (String) comboType.getSelectedItem();
+
+        // Check if any field is empty
+        if (firstName.isEmpty() || lastName.isEmpty() || dob.isEmpty() || username.isEmpty() || password.length == 0) {
+            JOptionPane.showMessageDialog(panelMain, "All fields must be filled out", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        // Display success message
+        JOptionPane.showMessageDialog(panelMain, "Registration successful!", "Success", JOptionPane.INFORMATION_MESSAGE);
+
+        // output all the fields in terminal make a function
+
+        outputFields(firstName, lastName, dob, username, new String(password), gender, type);
+
+        // Database addition and object creation
+
+
+        // Clear the fields after successful registration
+        clearFields();
+    }
+
+    private void outputFields(String firstName, String lastName, String dob, String username, String password, String gender, String type) {
+        System.out.println("First Name: " + firstName);
+        System.out.println("Last Name: " + lastName);
+        System.out.println("Date of Birth: " + dob);
+        System.out.println("Username: " + username);
+        System.out.println("Password: " + new String(password));
+        System.out.println("Gender: " + gender);
+        System.out.println("Type: " + type);
+    }
+    private void clearFields() {
+        txtFirstName.setText("");
+        txtLastName.setText("");
+        txtDOB.setText("");
+        txtUsename.setText("");
+        txtPassword.setText("");
+    }
+}
