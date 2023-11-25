@@ -52,7 +52,29 @@ public class Enthusiast extends User{
             System.out.println("Adding user to database failed.");
             e.printStackTrace();
         }
+        addToEnthusiastTable();
         return true;
+    }
+
+    public void addToEnthusiastTable(){
+        try {
+            Connection conn = DriverManager.getConnection(Main.connectionString);
+            String sql = "INSERT INTO Enthusiast (user_id) VALUES (?)";
+            PreparedStatement stmt = conn.prepareStatement(sql);
+            stmt.setString(1, username);
+            try{
+                stmt.executeUpdate();
+            }
+            catch(Exception e){
+                stmt.close();
+                conn.close();
+            }
+            stmt.close();
+            conn.close();
+        } catch (SQLException e) {
+            System.out.println("Adding enthusiast to database failed.");
+            e.printStackTrace();
+        }
     }
 
     private static boolean isValidDate(String dateStr) {
