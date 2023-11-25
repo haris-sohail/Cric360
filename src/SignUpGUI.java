@@ -14,6 +14,7 @@ public class SignUpGUI extends JFrame{
     private JTextField txtDOB;
     private JTextField txtUsename;
     private JPasswordField txtPassword;
+    private JButton btnLogin;
     private JButton playerButton;
     private JButton matchOfficialButton;
     private JButton enthusiastButton;
@@ -32,6 +33,20 @@ public class SignUpGUI extends JFrame{
         btnCancel.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                dispose();
+            }
+        });
+        btnLogin.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                LoginGUI loginForm = new LoginGUI();
+
+                loginForm.setContentPane(loginForm.getPanelMain());
+                Dimension parentSize = getSize();
+                loginForm.setSize(parentSize);
+                loginForm.setLocationRelativeTo(null);
+                loginForm.setVisible(true);
+                loginForm.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
                 dispose();
             }
         });
