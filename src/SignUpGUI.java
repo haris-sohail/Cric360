@@ -93,6 +93,11 @@ public class SignUpGUI extends JFrame{
             Player player = new Player(firstName, lastName, username, password, dob, gender);
             return player.addToDatabase();
         }
+
+        else if(type.equals("Enthusiast")){
+            Enthusiast enthusiast = new Enthusiast(firstName, lastName, username, password, dob, gender);
+            return enthusiast.addToDatabase();
+        }
         return true;
     }
 }

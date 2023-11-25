@@ -6,19 +6,18 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-public class Player extends User{
-    private int LeaderBoardRank, fantasyTeamID;
-    private String playsInTeam;
+public class Enthusiast extends User{
+    private int favTeamID;
 
     // the parameterized constructor acts as a signup function
-    public Player(String first_name, String last_name, String username, String password, String DOB, String gender){
+    public Enthusiast(String first_name, String last_name, String username, String password, String DOB, String gender){
         this.first_name = first_name;
         this.last_name = last_name;
         this.username = username;
         this.password = password;
         this.DOB = DOB;
         this.gender = gender;
-        this.type = "Player";
+        this.type = "Enthusiast";
     }
 
     public boolean addToDatabase(){
@@ -53,31 +52,7 @@ public class Player extends User{
             System.out.println("Adding user to database failed.");
             e.printStackTrace();
         }
-
-        addToPlayerTable();
-
         return true;
-    }
-
-    public void addToPlayerTable(){
-        try {
-            Connection conn = DriverManager.getConnection(Main.connectionString);
-            String sql = "INSERT INTO Player (user_id) VALUES (?)";
-            PreparedStatement stmt = conn.prepareStatement(sql);
-            stmt.setString(1, username);
-            try{
-                stmt.executeUpdate();
-            }
-            catch(Exception e){
-                stmt.close();
-                conn.close();
-            }
-            stmt.close();
-            conn.close();
-        } catch (SQLException e) {
-            System.out.println("Adding player to database failed.");
-            e.printStackTrace();
-        }
     }
 
     private static boolean isValidDate(String dateStr) {
@@ -96,20 +71,11 @@ public class Player extends User{
     }
 
     // setters and getters
-
-    public int getLeaderBoardRank() {
-        return LeaderBoardRank;
+    public int getFavTeamID() {
+        return favTeamID;
     }
 
-    public void setLeaderBoardRank(int LeaderBoardRank) {
-        this.LeaderBoardRank = LeaderBoardRank;
-    }
-
-    public int getFantasyTeamID() {
-        return fantasyTeamID;
-    }
-
-    public void setFantasyTeamID(int fantasyTeamID) {
-        this.fantasyTeamID = fantasyTeamID;
+    public void setFavTeamID(int favTeamID) {
+        this.favTeamID = favTeamID;
     }
 }
