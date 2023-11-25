@@ -20,18 +20,37 @@ public class LoginGUI extends JFrame{
                 handleLogin();
             }
         });
+        btnSignUp.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                SignUpGUI newSignUp = new SignUpGUI();
+                newSignUp.setContentPane(newSignUp.getPanelMain());
+                newSignUp.setSize(400,400);
+                newSignUp.setLocationRelativeTo(null);
+                newSignUp.setVisible(true);
+                newSignUp.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+                dispose();
+            }
+        });
     }
 
     public void handleLogin(){
         String username = txtUsername.getText();
         char[] password = txtPassword.getPassword();
 
+        String userType = checkCredentials(username, new String((password)));
         // Check from database
-        if(checkCredentials(username, new String(password))){
+        if(userType != null){
             JOptionPane.showMessageDialog(panelMain, "Login successful!", "Success", JOptionPane.INFORMATION_MESSAGE);
             // set text fields to blank
             txtUsername.setText("");
             txtPassword.setText("");
+
+            // based on the user show the main menu
+            UserOperations userOp = new UserOperations(userType);
+            userOp.userMainScreen();
+            dispose();
         }
         else{
             JOptionPane.showMessageDialog(panelMain, "Login failed!", "Error", JOptionPane.ERROR_MESSAGE);
@@ -41,7 +60,7 @@ public class LoginGUI extends JFrame{
         }
     }
 
-    public boolean checkCredentials(String username, String password){
+    public String checkCredentials(String username, String password){
         try{
             String query = "SELECT type FROM User$ WHERE username = '" + username + "' AND password = '" + password + "'";
 
@@ -53,19 +72,16 @@ public class LoginGUI extends JFrame{
                     // Extract the "type" column value and store it in a String
                     String userType = resultSet.getString("type");
 
-                    // based on the type of the user display main menu
-                    UserOperations userOp = new UserOperations(userType);
-                    userOp.userMainScreen();
-
-                    return true;
+//                    dispose();
+                    return userType;
                 } else {
-                    return false; // User not found
+                    return null; // User not found
                 }
             }
         }
        catch (Exception e){
             System.out.println("Connection Error");
-            return false;
+            return null;
        }
     }
 
