@@ -9,6 +9,7 @@ import java.sql.ResultSet;
 public class LoginGUI extends JFrame{
     private JPanel panelMain;
     private JTextField txtUsername;
+    public static String loggedInUserName;
     private JPasswordField txtPassword;
     private JButton btnLogin;
     private JButton btnSignUp;
@@ -42,6 +43,7 @@ public class LoginGUI extends JFrame{
         String userType = checkCredentials(username, new String((password)));
         // Check from database
         if(userType != null){
+            loggedInUserName = txtUsername.getText();
             JOptionPane.showMessageDialog(panelMain, "Login successful!", "Success", JOptionPane.INFORMATION_MESSAGE);
             // set text fields to blank
             txtUsername.setText("");

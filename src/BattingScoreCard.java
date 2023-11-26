@@ -77,46 +77,9 @@ public class BattingScoreCard extends JFrame{
         return panelMain;
     }
 
-    public BattingScoreCard() {
-        // Set up the frame and other components as needed
 
-        // Create a table model with columns: Name, Runs, Balls, 4s, 6s, Out
-        String[] columnNames = {"Name", "Runs", "Balls", "4s", "6s", "Out"};
-        DefaultTableModel model = new DefaultTableModel(columnNames, 0);
 
-        // Load player names from the database and add rows to the table model
-        loadPlayerNames(model);
 
-        // Set the model to the table
-        tableBatting.setModel(model);
-    }
-
-    private void loadPlayerNames(DefaultTableModel model) {
-        String query = "SELECT User$.first_name + ' ' + User$.last_name AS PlayerName " +
-                "FROM Player " +
-                "INNER JOIN Team ON Player.playsInTeam = Team.name " +
-                "INNER JOIN User$ ON User$.id = Player.user_id";
-
-        try (Connection conn = DriverManager.getConnection(Main.connectionString);
-             PreparedStatement stmt = conn.prepareStatement(query);
-             ResultSet resultSet = stmt.executeQuery()) {
-
-            while (resultSet.next()) {
-                // Add a row with the player name to the table model
-                Vector<Object> row = new Vector<>();
-                row.add(resultSet.getString("PlayerName"));
-                row.add(""); // Runs
-                row.add(""); // Balls
-                row.add(""); // 4s
-                row.add(""); // 6s
-                row.add(false); // Out (checkbox, default is not out)
-
-                model.addRow(row);
-            }
-        } catch (SQLException e) {
-            e.printStackTrace(); // Handle the exception according to your needs
-        }
-    }
 
 
 }
