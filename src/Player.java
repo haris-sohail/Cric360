@@ -55,6 +55,7 @@ public class Player extends User{
         }
 
         addToPlayerTable();
+        addToPlayerStatsTable();
 
         return true;
     }
@@ -63,6 +64,27 @@ public class Player extends User{
         try {
             Connection conn = DriverManager.getConnection(Main.connectionString);
             String sql = "INSERT INTO Player (user_id) VALUES (?)";
+            PreparedStatement stmt = conn.prepareStatement(sql);
+            stmt.setString(1, username);
+            try{
+                stmt.executeUpdate();
+            }
+            catch(Exception e){
+                stmt.close();
+                conn.close();
+            }
+            stmt.close();
+            conn.close();
+        } catch (SQLException e) {
+            System.out.println("Adding player to database failed.");
+            e.printStackTrace();
+        }
+    }
+
+    public void addToPlayerStatsTable(){
+        try {
+            Connection conn = DriverManager.getConnection(Main.connectionString);
+            String sql = "INSERT INTO PlayerStats (playerID) VALUES (?)";
             PreparedStatement stmt = conn.prepareStatement(sql);
             stmt.setString(1, username);
             try{

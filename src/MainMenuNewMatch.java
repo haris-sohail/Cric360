@@ -17,11 +17,68 @@ public class MainMenuNewMatch extends JFrame{
     private JTextField txtUmpire1;
     private JTextField txtUmpire2;
     private JTextField txtUmpire3;
+    public static String teamA, teamB, tossWinner, startingTime, venue, format, date, matchNo, umpire1, umpire2, umpire3;
 
     public JPanel getPanelMain() {
         return panelMain;
     }
 
+    public String[] getPlayerIDs(String teamName) {
+        String[] playerIDs = new String[11];
+
+        String query = "SELECT player.user_id FROM Player WHERE playsInTeam = ?";
+
+        try (Connection conn = DriverManager.getConnection(Main.connectionString);
+             PreparedStatement stmt = conn.prepareStatement(query)) {
+
+            // Set the parameter for the prepared statement
+            stmt.setString(1, teamName);
+
+            try (ResultSet resultSet = stmt.executeQuery()) {
+                int index = 0;
+                while (resultSet.next() && index < 11) {
+                    playerIDs[index] = resultSet.getString("user_id");
+                    index++;
+                }
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return playerIDs;
+    }
+
+    public String[] getPlayerNames(String teamName) {
+        String[] playerNames = new String[11];
+
+        String query = "SELECT User$.first_name + ' ' + User$.last_name AS fullName " +
+                "FROM Player " +
+                "INNER JOIN Team ON Player.playsInTeam = Team.name " +
+                "INNER JOIN User$ ON User$.id = Player.user_id " +
+                "WHERE Team.name = ?";
+
+        try (Connection conn = DriverManager.getConnection(Main.connectionString);
+             PreparedStatement stmt = conn.prepareStatement(query)) {
+
+            // Set the parameter for the prepared statement
+            stmt.setString(1, teamName);
+
+            try (ResultSet resultSet = stmt.executeQuery()) {
+                int index = 0;
+                while (resultSet.next() && index < 11) {
+                    String fullName = resultSet.getString("fullName");
+                    playerNames[index] = fullName;
+                    index++;
+                }
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return playerNames;
+    }
     public MainMenuNewMatch() {
         // Set up the frame and other components as needed
 
@@ -31,21 +88,43 @@ public class MainMenuNewMatch extends JFrame{
             @Override
             public void actionPerformed(ActionEvent e) {
                 // get the texts from all the combo boxes
-                String teamA = (String) comboTeamA.getSelectedItem();
-                String teamB = (String) comboTeamB.getSelectedItem();
-                String tossWinner = (String) comboTossWinner.getSelectedItem();
-                String startingTime = txtStartingTime.getText();
-                String venue = txtVenue.getText();
-                String format = (String) comboFormat.getSelectedItem();
-                String date = txtDate.getText();
-                String matchNo = txtMatchNo.getText();
-                String umpire1 = txtUmpire1.getText();
-                String umpire2 = txtUmpire2.getText();
-                String umpire3 = txtUmpire3.getText();
+                teamA = (String) comboTeamA.getSelectedItem();
+                teamB = (String) comboTeamB.getSelectedItem();
+                tossWinner = (String) comboTossWinner.getSelectedItem();
+                startingTime = txtStartingTime.getText();
+                venue = txtVenue.getText();
+                format = (String) comboFormat.getSelectedItem();
+                date = txtDate.getText();
+                matchNo = txtMatchNo.getText();
+                umpire1 = txtUmpire1.getText();
+                umpire2 = txtUmpire2.getText();
+                umpire3 = txtUmpire3.getText();
+
 
 
                 // Create a new batting score card
                 BattingScoreCard battingScoreCard = new BattingScoreCard();
+
+                String[] playerNamesTeamA;
+                String[] playerIDsTeamA;
+                if(tossWinner.equals("Team A")){
+                    playerNamesTeamA = getPlayerNames(teamA);
+                    playerIDsTeamA = getPlayerIDs(teamA);
+                    battingScoreCard.setPlayerIDs(playerIDsTeamA);
+                    battingScoreCard.setPlayerNames(playerNamesTeamA);
+                    battingScoreCard.setTeamName(teamA);
+                }
+
+                String[] playerNamesTeamB;
+                String[] playerIDsTeamB;
+                if(tossWinner.equals("Team B")){
+                    playerNamesTeamB = getPlayerNames(teamB);
+                    playerIDsTeamB = getPlayerIDs(teamB);
+                    battingScoreCard.setPlayerIDs(playerIDsTeamB);
+                    battingScoreCard.setPlayerNames(playerNamesTeamB);
+                    battingScoreCard.setTeamName(teamB);
+                }
+
                 battingScoreCard.setContentPane(battingScoreCard.getPanelMain());
                 battingScoreCard.setSize(400,600);
                 battingScoreCard.setLocationRelativeTo(null);
@@ -54,18 +133,6 @@ public class MainMenuNewMatch extends JFrame{
 
 
                 dispose();
-
-//                // Create a new match object
-//                Match newMatch = new Match(teamA, teamB, tossWinner);
-//
-//                // Show the new match screen
-//                newMatch.setContentPane(newMatch.getPanelMain());
-//                newMatch.setSize(400,400);
-//                newMatch.setLocationRelativeTo(null);
-//                newMatch.setVisible(true);
-//                newMatch.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-//
-//                dispose();
             }
         });
     }
