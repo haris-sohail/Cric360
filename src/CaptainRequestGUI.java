@@ -14,6 +14,60 @@ public class CaptainRequestGUI extends JFrame{
         return panelMain;
     }
 
+    public void updatePlayerTeamInDB(int requestID){
+        // extract the username of the requesting player
+        String query = "SELECT MADEBYPLAYER, requestFor FROM TEAMJOINREQUEST WHERE ID = " + requestID;
+
+        String madeByPlayerID = "";
+        String requestFor = "";
+
+        try (Connection conn = DriverManager.getConnection(Main.connectionString);
+             PreparedStatement stmt = conn.prepareStatement(query)) {
+
+            // Set the parameter for the prepared statement
+            stmt.setInt(1, requestID);
+
+            try (ResultSet resultSet = stmt.executeQuery()) {
+                // Check if there is a result
+                if (resultSet.next()) {
+                    madeByPlayerID = resultSet.getString("MADEBYPLAYER");
+                    requestFor = resultSet.getString("requestFor");
+                }
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        // update the player's team
+
+        if (madeByPlayerID != null && requestFor != null) {
+            // Execute the update query
+            String queryUpdate = "UPDATE Player SET playsInTeam = ? WHERE Player.user_id = ?";
+
+            try (Connection conn = DriverManager.getConnection(Main.connectionString);
+                 PreparedStatement stmtUpdate = conn.prepareStatement(queryUpdate)) {
+
+                // Set parameters for the update query
+                stmtUpdate.setString(1, requestFor);
+                stmtUpdate.setString(2, madeByPlayerID);
+
+                // Execute the update
+                int rowsUpdated = stmtUpdate.executeUpdate();
+
+                // Check the number of rows updated if needed
+                if (rowsUpdated > 0) {
+                    System.out.println("Player team updated successfully.");
+                } else {
+                    System.out.println("No player updated. Player not found.");
+                }
+
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
     public CaptainRequestGUI() {
         populateRequestsList();
         btnApprove.addActionListener(new ActionListener() {
@@ -35,6 +89,9 @@ public class CaptainRequestGUI extends JFrame{
                         stmt.setInt(1, id);
                         stmt.setInt(2, requestId);
                         stmt.executeUpdate();
+
+                        // update the player's team
+                        updatePlayerTeamInDB(requestId);
                     } catch (SQLException exception) {
                         exception.printStackTrace();
                     }
@@ -49,6 +106,8 @@ public class CaptainRequestGUI extends JFrame{
                 UserOperations playerOp = new UserOperations("Player");
                 playerOp.userMainScreen();
                 dispose();
+
+
             }
         });
         btnReject.addActionListener(new ActionListener() {
@@ -130,6 +189,7 @@ public class CaptainRequestGUI extends JFrame{
         // Execute SQL query
         String query = "SELECT id, message, madeByPlayer FROM TeamJoinRequest " +
                 "INNER JOIN Captain ON TeamJoinRequest.requestFor = Captain.captainOf";
+
         try (Connection conn = DriverManager.getConnection(Main.connectionString);
              Statement stmt = conn.createStatement();
              ResultSet resultSet = stmt.executeQuery(query)) {
