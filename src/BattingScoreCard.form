@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <form xmlns="http://www.intellij.com/uidesigner/form/" version="1" bind-to-class="BattingScoreCard">
-  <grid id="27dc6" binding="panelMain" layout-manager="GridLayoutManager" row-count="14" column-count="10" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+  <grid id="27dc6" binding="panelMain" layout-manager="GridLayoutManager" row-count="15" column-count="10" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
     <margin top="0" left="0" bottom="0" right="0"/>
     <constraints>
-      <xy x="20" y="20" width="939" height="475"/>
+      <xy x="20" y="20" width="939" height="508"/>
     </constraints>
     <properties/>
     <border type="none"/>
@@ -599,6 +599,23 @@
         </constraints>
         <properties>
           <text value="BATTING SCORE CARD"/>
+        </properties>
+      </component>
+      <component id="50bcb" class="javax.swing.JButton" binding="btnContinue">
+        <constraints>
+          <grid row="14" column="5" row-span="1" col-span="3" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties>
+          <background color="-12607734"/>
+          <text value="Continue"/>
+        </properties>
+      </component>
+      <component id="e60ae" class="javax.swing.JLabel" binding="lblTeamName">
+        <constraints>
+          <grid row="0" column="5" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties>
+          <text value="Team Name"/>
         </properties>
       </component>
     </children>
