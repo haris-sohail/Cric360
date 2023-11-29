@@ -56,9 +56,16 @@ public class UserOperations {
                 playerMainMenu.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
             }
 
+
         }
         else if(userType.equals("Enthusiast")){
-
+            System.out.println("Enthusiast Main menu");
+            Enthusiast_MainMenu enthusiastmainmenu = new Enthusiast_MainMenu();
+            enthusiastmainmenu.setContentPane(enthusiastmainmenu.getPanelMain());
+            enthusiastmainmenu.setSize(400, 400);
+            enthusiastmainmenu.setLocationRelativeTo(null);
+            enthusiastmainmenu.setVisible(true);
+            enthusiastmainmenu.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         }
         else if(userType.equals("MatchOfficial")){
             System.out.println("Match Official Main menu");

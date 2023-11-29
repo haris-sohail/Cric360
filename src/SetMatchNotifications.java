@@ -10,45 +10,72 @@ import java.sql.SQLException;
 
 public class SetMatchNotifications extends JFrame {
 
+    private JPanel panelMain;
     private JButton preferredPlayersButton;
-    private JButton backButton;
     private JButton favoriteTeamsButton;
     private JButton specificMatchesButton;
+    private JButton backButton;
 
     public SetMatchNotifications() {
-        // Initialize buttons
-        preferredPlayersButton = new JButton("Preferred Players");
-        backButton = new JButton("Back");
-        favoriteTeamsButton = new JButton("Favorite Teams");
-        specificMatchesButton = new JButton("Specific Matches");
 
         // Add action listener to preferredPlayersButton
         preferredPlayersButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+
                 showPreferredPlayersPage();
             }
         });
 
-        // Set layout
-        setLayout(new FlowLayout());
 
-        // Add buttons to the JFrame
-        add(preferredPlayersButton);
-        add(favoriteTeamsButton);
-        add(specificMatchesButton);
-        add(backButton);
-
-        // Set frame properties
-        setTitle("Set Match Notifications");
-        setSize(200, 400);
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setLocationRelativeTo(null);
+        favoriteTeamsButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                showFavoriteTeamsPage();
+            }
+        });
     }
 
+    private void showFavoriteTeamsPage() {
+        // Replace this with your actual logic to fetch and display favorite teams
+        String[] teamList = {"Team A", "Team B", "Team C", "Team D"};
+
+        // Create a list to display favorite teams
+        JList<String> teamJList = new JList<>(teamList);
+
+        // Create a scroll pane to handle the list if there are many teams
+        JScrollPane scrollPane = new JScrollPane(teamJList);
+
+        // Create a button to add the selected team to favorites
+        JButton addToFavoritesButton = new JButton("Add to Favorites");
+        addToFavoritesButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                // Get the selected team from the list
+                String selectedTeam = teamJList.getSelectedValue();
+
+                // Display a message (replace with your logic)
+                JOptionPane.showMessageDialog(SetMatchNotifications.this, "Added to Favorites: " + selectedTeam);
+            }
+        });
+
+        // Create a panel to hold the components
+        JPanel favoriteTeamsPanel = new JPanel(new BorderLayout());
+        favoriteTeamsPanel.add(scrollPane, BorderLayout.CENTER);
+        favoriteTeamsPanel.add(addToFavoritesButton, BorderLayout.SOUTH);
+
+        // Create a frame to display the favorite teams page
+        JFrame favoriteTeamsFrame = new JFrame("Favorite Teams");
+        favoriteTeamsFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        favoriteTeamsFrame.getContentPane().add(favoriteTeamsPanel);
+        favoriteTeamsFrame.setSize(300, 200);
+        favoriteTeamsFrame.setLocationRelativeTo(this);
+        favoriteTeamsFrame.setVisible(true);
+    }
+    public JPanel getPanelMain() {return panelMain;}
     private void showPreferredPlayersPage() {
         // Connect to the database and retrieve player data
-        try (Connection connection = DriverManager.getConnection("jdbc:sqlserver://DESKTOP-2BV11P4\\SQLEXPRESS:50143;Database=Cric360;IntegratedSecurity=true;encrypt=false");
+        try (Connection connection = DriverManager.getConnection(Main.connectionString);
              PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM Player");
              ResultSet resultSet = preparedStatement.executeQuery()) {
 
@@ -88,7 +115,7 @@ public class SetMatchNotifications extends JFrame {
         frame.setVisible(true);
     }
 
-    public static void main(String[] args) {
-        SwingUtilities.invokeLater(() -> new SetMatchNotifications().setVisible(true));
-    }
+//    public static void main(String[] args) {
+//        SwingUtilities.invokeLater(() -> new SetMatchNotifications().setVisible(true));
+//    }
 }
