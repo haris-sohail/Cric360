@@ -4,6 +4,7 @@ import java.awt.event.ActionListener;
 import java.sql.*;
 
 public class BowlingScoreCardGUIController extends JFrame{
+    private Boolean InningsFlag2nd;
     private JPanel panelMain;
     private String TeamName;
     private String[] playerNames;
@@ -77,7 +78,12 @@ public class BowlingScoreCardGUIController extends JFrame{
     private JLabel lblTeamName;
     private JButton btnContinue;
 
+    public void setInningsFlag2nd(){
+        InningsFlag2nd = true;
+    }
+
     public BowlingScoreCardGUIController() {
+        InningsFlag2nd = false;
         btnContinue.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -87,6 +93,7 @@ public class BowlingScoreCardGUIController extends JFrame{
 
                 // insert into Db
                 insertIntoDb(runsConceded, ballsBowled, wicketsTaken);
+                dispose();
             }
         });
     }
@@ -376,7 +383,9 @@ public class BowlingScoreCardGUIController extends JFrame{
     }
 
     public void insertIntoDb(int[] runsConceded, int[] ballsBowled, int[] wicketsTaken) {
-        incrementNoMatches(playerIDs);
+        if(InningsFlag2nd){
+            incrementNoMatches(playerIDs);
+        }
 
         setRunsConceded(runsConceded);
         setBallsBowled(ballsBowled);

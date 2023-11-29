@@ -77,7 +77,11 @@ public class BattingScoreCard extends JFrame{
     private JButton btnContinue;
     private JLabel lblTeamName;
     private JTable tableBatting;
+    private Boolean InningsFlag2nd;
 
+    public void setInningsFlag2nd(){
+        this.InningsFlag2nd = true;
+    }
     public JPanel getPanelMain() {
         return panelMain;
     }
@@ -100,6 +104,7 @@ public class BattingScoreCard extends JFrame{
     }
 
     public BattingScoreCard() {
+        InningsFlag2nd = false;
         btnContinue.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -480,7 +485,9 @@ public class BattingScoreCard extends JFrame{
 
 
     public void insertToPlayerStatsTable(int[] runs, int[] balls, int[] fours, int[] sixes, Boolean[] outs){
-        incrementNoMatches(playerIDs);
+        if(InningsFlag2nd){
+            incrementNoMatches(playerIDs);
+        }
 
         setBattingAvg(runs);
         setRuns(runs);

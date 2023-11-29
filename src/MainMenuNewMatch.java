@@ -162,7 +162,62 @@ public class MainMenuNewMatch extends JFrame{
                 bowlingScoreCard.setVisible(true);
                 bowlingScoreCard.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
+                // create batting score card for other team
+
+                // Create a new batting score card
+                BattingScoreCard battingScoreCard_opponennt = new BattingScoreCard();
+                battingScoreCard_opponennt.setInningsFlag2nd();
+
+                if(tossWinner.equals("Team A")){
+                    playerNamesTeamB = getPlayerNames(teamB);
+                    playerIDsTeamB = getPlayerIDs(teamB);
+                    battingScoreCard_opponennt.setTeamName(teamB);
+                    battingScoreCard_opponennt.setPlayerIDs(playerIDsTeamB);
+                    battingScoreCard_opponennt.setPlayerNames(playerNamesTeamB);
+                }
+
+                if(tossWinner.equals("Team B")){
+                    playerNamesTeamA = getPlayerNames(teamA);
+                    playerIDsTeamA = getPlayerIDs(teamA);
+                    battingScoreCard_opponennt.setTeamName(teamA);
+                    battingScoreCard_opponennt.setPlayerIDs(playerIDsTeamA);
+                    battingScoreCard_opponennt.setPlayerNames(playerNamesTeamA);
+                }
+
+                battingScoreCard_opponennt.setContentPane(battingScoreCard_opponennt.getPanelMain());
+                battingScoreCard_opponennt.setSize(400,600);
+                battingScoreCard_opponennt.setLocationRelativeTo(null);
+                battingScoreCard_opponennt.setVisible(true);
+                battingScoreCard_opponennt.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+
+                // create bowling score card for the other Team
+
+                BowlingScoreCardGUIController bowlingScoreCard_opponent = new BowlingScoreCardGUIController();
+                bowlingScoreCard_opponent.setInningsFlag2nd();
+
+                if(tossWinner.equals("Team A")){
+                    playerNamesTeamA = getPlayerNames(teamA);
+                    playerIDsTeamA = getPlayerIDs(teamA);
+                    bowlingScoreCard_opponent.setTeamName(teamA);
+                    bowlingScoreCard_opponent.setPlayerIDs(playerIDsTeamA);
+                    bowlingScoreCard_opponent.setPlayerNames(playerNamesTeamA);
+                }
+
+                if(tossWinner.equals("Team B")){
+                    playerNamesTeamB = getPlayerNames(teamB);
+                    playerIDsTeamB = getPlayerIDs(teamB);
+                    bowlingScoreCard_opponent.setTeamName(teamB);
+                    bowlingScoreCard_opponent.setPlayerIDs(playerIDsTeamB);
+                    bowlingScoreCard_opponent.setPlayerNames(playerNamesTeamB);
+                }
+
+                bowlingScoreCard_opponent.setContentPane(bowlingScoreCard_opponent.getPanelMain());
+                bowlingScoreCard_opponent.setSize(400,600);
+                bowlingScoreCard_opponent.setLocationRelativeTo(null);
+                bowlingScoreCard_opponent.setVisible(true);
+                bowlingScoreCard_opponent.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
             }
+
         });
     }
 
