@@ -111,6 +111,9 @@ public class BattingScoreCard extends JFrame{
 
                 // now we have to insert everything into the DB
                 insertIntoDB(runs, balls, fours, sixes, outs);
+
+                // display success message and close the form
+                dispose();
             }
         });
     }

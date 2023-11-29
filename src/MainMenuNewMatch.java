@@ -1,6 +1,8 @@
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.sql.*;
 
 public class MainMenuNewMatch extends JFrame{
@@ -105,14 +107,15 @@ public class MainMenuNewMatch extends JFrame{
                 // Create a new batting score card
                 BattingScoreCard battingScoreCard = new BattingScoreCard();
 
+
                 String[] playerNamesTeamA;
                 String[] playerIDsTeamA;
                 if(tossWinner.equals("Team A")){
                     playerNamesTeamA = getPlayerNames(teamA);
                     playerIDsTeamA = getPlayerIDs(teamA);
+                    battingScoreCard.setTeamName(teamA);
                     battingScoreCard.setPlayerIDs(playerIDsTeamA);
                     battingScoreCard.setPlayerNames(playerNamesTeamA);
-                    battingScoreCard.setTeamName(teamA);
                 }
 
                 String[] playerNamesTeamB;
@@ -120,19 +123,45 @@ public class MainMenuNewMatch extends JFrame{
                 if(tossWinner.equals("Team B")){
                     playerNamesTeamB = getPlayerNames(teamB);
                     playerIDsTeamB = getPlayerIDs(teamB);
+                    battingScoreCard.setTeamName(teamB);
                     battingScoreCard.setPlayerIDs(playerIDsTeamB);
                     battingScoreCard.setPlayerNames(playerNamesTeamB);
-                    battingScoreCard.setTeamName(teamB);
                 }
 
                 battingScoreCard.setContentPane(battingScoreCard.getPanelMain());
                 battingScoreCard.setSize(400,600);
                 battingScoreCard.setLocationRelativeTo(null);
                 battingScoreCard.setVisible(true);
-                battingScoreCard.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+                battingScoreCard.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+
+                // create bowling score card for the other Team
 
 
-                dispose();
+                BowlingScoreCardGUIController bowlingScoreCard = new BowlingScoreCardGUIController();
+
+
+                if(tossWinner.equals("Team A")){
+                    playerNamesTeamB = getPlayerNames(teamB);
+                    playerIDsTeamB = getPlayerIDs(teamB);
+                    bowlingScoreCard.setTeamName(teamB);
+                    bowlingScoreCard.setPlayerIDs(playerIDsTeamB);
+                    bowlingScoreCard.setPlayerNames(playerNamesTeamB);
+                }
+
+                if(tossWinner.equals("Team B")){
+                    playerNamesTeamA = getPlayerNames(teamA);
+                    playerIDsTeamA = getPlayerIDs(teamA);
+                    bowlingScoreCard.setTeamName(teamA);
+                    bowlingScoreCard.setPlayerIDs(playerIDsTeamA);
+                    bowlingScoreCard.setPlayerNames(playerNamesTeamA);
+                }
+
+                bowlingScoreCard.setContentPane(bowlingScoreCard.getPanelMain());
+                bowlingScoreCard.setSize(400,600);
+                bowlingScoreCard.setLocationRelativeTo(null);
+                bowlingScoreCard.setVisible(true);
+                bowlingScoreCard.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
             }
         });
     }
