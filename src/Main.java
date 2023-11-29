@@ -18,7 +18,7 @@ public class Main {
     }
 
     public static void setConnectionString(){
-        connectionString = "jdbc:sqlserver://DESKTOP-2BV11P4\\SQLEXPRESS:50143;Database=Cric360;IntegratedSecurity=true;encrypt=false";
+        connectionString = "jdbc:sqlserver://DESKTOP-M9UAP31\\SQLEXPRESS:60091;Database=Cric360;IntegratedSecurity=true;encrypt=false";
 
     }
 

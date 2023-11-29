@@ -24,9 +24,6 @@ public class CaptainRequestGUI extends JFrame{
         try (Connection conn = DriverManager.getConnection(Main.connectionString);
              PreparedStatement stmt = conn.prepareStatement(query)) {
 
-            // Set the parameter for the prepared statement
-            stmt.setInt(1, requestID);
-
             try (ResultSet resultSet = stmt.executeQuery()) {
                 // Check if there is a result
                 if (resultSet.next()) {

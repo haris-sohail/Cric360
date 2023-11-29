@@ -48,7 +48,7 @@ public class SetMatchNotifications extends JFrame {
 
     private void showPreferredPlayersPage() {
         // Connect to the database and retrieve player data
-        try (Connection connection = DriverManager.getConnection("jdbc:sqlserver://DESKTOP-2BV11P4\\SQLEXPRESS:50143;Database=Cric360;IntegratedSecurity=true;encrypt=false");
+        try (Connection connection = DriverManager.getConnection("jdbc:sqlserver://DESKTOP-M9UAP31\\SQLEXPRESS:60091;Database=Cric360;IntegratedSecurity=true;encrypt=false");
              PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM Player");
              ResultSet resultSet = preparedStatement.executeQuery()) {
 
