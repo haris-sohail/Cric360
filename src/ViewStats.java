@@ -8,6 +8,7 @@ public class ViewStats extends JFrame {
     private JTextField textField1;
     private JLabel hellotxt;
     private JButton OKButton;
+    private JTextArea resultText;
 
     public JPanel getPanelMain() {
         return panelMain;
@@ -17,79 +18,92 @@ public class ViewStats extends JFrame {
         OKButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                String playerName = textField1.getText();
-                displayPlayerStats(playerName);
+                // Clear previous results
+                //resultText.setText("");
+
+                // Execute the SQL query and display results
+                displayPlayerStats();
             }
         });
     }
 
-    private void displayPlayerStats(String playerName) {
+    // Inside the ViewStats class
+    private void displayPlayerStats() {
+        // Connect to the database
         try (Connection connection = DriverManager.getConnection(Main.connectionString)) {
-            String query = "SELECT Player.user_id AS name, PlayerStats.* FROM PlayerStats " +
-                    "INNER JOIN Player ON Player.user_id = PlayerStats.playerID " +
-                    "WHERE Player.user_id = ?";
-            try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
-                preparedStatement.setString(1, playerName);
-                try (ResultSet resultSet = preparedStatement.executeQuery()) {
-                    if (resultSet.next()) {
-                        ResultSetMetaData metaData = resultSet.getMetaData();
-                        int columnCount = metaData.getColumnCount();
+            // Execute the SQL query to get player stats
+            try (PreparedStatement preparedStatement = connection.prepareStatement(
+                    "SELECT u.first_name + ' ' + u.last_name AS FullName, p.playsInTeam as 'Plays In Team', ps.* " +
+                            "FROM User$ u " +
+                            "INNER JOIN Player p ON u.id = p.user_id " +
+                            "LEFT JOIN PlayerStats ps ON u.id = ps.playerID " +
+                            "WHERE ps.playerID = ?")) {
 
-                        //StringBuilder resultText = new StringBuilder("<html><div style='text-align: center; font-size: 16px; font-family: \"Droid Serif\";'><b>" + playerName + "</b></div><br>");
-                        StringBuilder resultText = new StringBuilder("<html><div style='text-align: center; font-family: Times New Roman; font-size: 16px; margin-left: 120px; text-transform: capitalize;'><b>" + playerName + "</b></div><br>");
-                        // Start the table
-                        resultText.append("<table style='width:100%; border-collapse: collapse;'>");
+                // Set the playerID parameter based on the input
+                preparedStatement.setString(1, textField1.getText());
 
+                // Execute the query
+                ResultSet resultSet = preparedStatement.executeQuery();
+
+                // Prepare the result text
+                StringBuilder resultText = new StringBuilder("<html><body><table border='0.5'>");
+
+                // Display user's full name at the top
+                if (resultSet.next()) {
+                    resultText.append("<tr>");
+                    resultText.append("<td colspan='2' style='font-family: \"Times New Roman\"; font-size: 16px; margin-left: 120px;text-align: center;'><b>")
+                            .append(resultSet.getString("FullName")).append("</b></td>");
+                    resultText.append("</tr>");
+
+//                    resultText.append("<tr>");
+//                    resultText.append("<td colspan='2' style='font-family: \"Droid Serif\";'>Plays In Team: ").append(resultSet.getString("playsInTeam")).append("</td>");
+//                    resultText.append("</tr>");
+                }
+
+                // Get the result metadata
+                ResultSetMetaData metaData = resultSet.getMetaData();
+                int columnCount = metaData.getColumnCount();
+
+                // Iterate through columns and append each heading and value to the resultText
+                for (int i = 2; i <= columnCount; i++) {
+                    String columnName = metaData.getColumnName(i);
+
+                    // Skip the 'playerID' column
+                    if (!columnName.equals("playerID") && !columnName.equals("highScore") && !columnName.equals("hundreds") &&!columnName.equals("fifties") &&!columnName.equals("format")) {
+                        String columnValue = resultSet.getString(i);
+
+                        columnValue = (columnValue == null) ? "-" : columnValue;
+
+                        // Add a table row
                         resultText.append("<tr>");
-                        resultText.append("<td colspan='2' style='text-align: center; font-family: Times New Roman; font-size: 16px; color: darkred; text-transform: capitalize;'><b>")
-                                .append(resultSet.getString("playerID")).append("</b></td>");
+
+                        // Add column headers
+                        resultText.append("<td style='font-family: \"Droid Serif\";'><b>").append(columnName).append("</b></td>");
+
+                        // Add column values
+                        resultText.append("<td style='font-family: \"Droid Serif\";'>").append(columnValue).append("</td>");
+
+                        // Close the table row
                         resultText.append("</tr>");
-
-                        // Iterate through columns and append each heading and value to the resultText
-                        for (int i = 2; i <= columnCount; i++) {
-                            String columnName = metaData.getColumnName(i);
-                            //String columnValue = resultSet.getString(i);
-
-                            // Skip the 'playerID' column
-                            if (!columnName.equals("playerID")) {
-                                String columnValue = resultSet.getString(i);
-
-                                // Add a table row
-                                resultText.append("<tr>");
-
-                                // Add column headers
-                                resultText.append("<td style='font-family: \"Droid Serif\";'><b>").append(columnName).append("</b></td>");
-
-                                // Add column values
-                                resultText.append("<td style='font-family: \"Droid Serif\";'>").append(columnValue).append("</td>");
-
-                                // Close the table row
-                                resultText.append("</tr>");
-                            }
-                        }
-
-                        // End the table
-                        resultText.append("</table></html>");
-
-                        // Display the result in a new window
-                        displayResultFrame(resultText.toString());
-                    } else {
-                        JOptionPane.showMessageDialog(this, "Player not found in the database.");
                     }
                 }
+
+                // Close the table
+                resultText.append("</table></body></html>");
+
+                // Display the result frame
+                displayResultFrame(resultText.toString());
             }
         } catch (SQLException ex) {
             ex.printStackTrace();
-            JOptionPane.showMessageDialog(this, "Error retrieving player data from the database.");
+            JOptionPane.showMessageDialog(this, "Error executing the SQL query.");
         }
     }
-
-
 
     private void displayResultFrame(String resultText) {
         JFrame resultFrame = new JFrame("Player Stats");
         resultFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        resultFrame.setSize(400, 440);
+        resultFrame.setSize(400, 465);
         resultFrame.setLocationRelativeTo(this);
 
         JLabel resultLabel = new JLabel(resultText);
@@ -97,4 +111,5 @@ public class ViewStats extends JFrame {
 
         resultFrame.setVisible(true);
     }
+
 }
