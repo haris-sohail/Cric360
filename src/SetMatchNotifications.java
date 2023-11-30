@@ -2,11 +2,8 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
+import java.util.Random;
 
 public class SetMatchNotifications extends JFrame {
 
@@ -36,43 +33,10 @@ public class SetMatchNotifications extends JFrame {
         });
     }
 
-    private void showFavoriteTeamsPage() {
-        // Replace this with your actual logic to fetch and display favorite teams
-        String[] teamList = {"Team A", "Team B", "Team C", "Team D"};
-
-        // Create a list to display favorite teams
-        JList<String> teamJList = new JList<>(teamList);
-
-        // Create a scroll pane to handle the list if there are many teams
-        JScrollPane scrollPane = new JScrollPane(teamJList);
-
-        // Create a button to add the selected team to favorites
-        JButton addToFavoritesButton = new JButton("Add to Favorites");
-        addToFavoritesButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                // Get the selected team from the list
-                String selectedTeam = teamJList.getSelectedValue();
-
-                // Display a message (replace with your logic)
-                JOptionPane.showMessageDialog(SetMatchNotifications.this, "Added to Favorites: " + selectedTeam);
-            }
-        });
-
-        // Create a panel to hold the components
-        JPanel favoriteTeamsPanel = new JPanel(new BorderLayout());
-        favoriteTeamsPanel.add(scrollPane, BorderLayout.CENTER);
-        favoriteTeamsPanel.add(addToFavoritesButton, BorderLayout.SOUTH);
-
-        // Create a frame to display the favorite teams page
-        JFrame favoriteTeamsFrame = new JFrame("Favorite Teams");
-        favoriteTeamsFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        favoriteTeamsFrame.getContentPane().add(favoriteTeamsPanel);
-        favoriteTeamsFrame.setSize(300, 200);
-        favoriteTeamsFrame.setLocationRelativeTo(this);
-        favoriteTeamsFrame.setVisible(true);
+    public JPanel getPanelMain() {
+        return panelMain;
     }
-    public JPanel getPanelMain() {return panelMain;}
+
     private void showPreferredPlayersPage() {
         // Connect to the database and retrieve player data
         try (Connection connection = DriverManager.getConnection(Main.connectionString);
@@ -115,7 +79,96 @@ public class SetMatchNotifications extends JFrame {
         frame.setVisible(true);
     }
 
-//    public static void main(String[] args) {
-//        SwingUtilities.invokeLater(() -> new SetMatchNotifications().setVisible(true));
-//    }
+    private void showFavoriteTeamsPage() {
+        JFrame teamsFrame = new JFrame("Select Favorite Team");
+        teamsFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        teamsFrame.setSize(300, 200);
+        teamsFrame.setLocationRelativeTo(this);
+
+        // Connect to the database and retrieve team names
+        try (Connection connection = DriverManager.getConnection(Main.connectionString);
+             Statement statement = connection.createStatement();
+             ResultSet resultSet = statement.executeQuery("SELECT name FROM Team")) {
+
+            DefaultListModel<String> teamListModel = new DefaultListModel<>();
+
+            // Add team names to the list model
+            while (resultSet.next()) {
+                teamListModel.addElement(resultSet.getString("name"));
+            }
+
+            JList<String> teamJList = new JList<>(teamListModel);
+            JScrollPane scrollPane = new JScrollPane(teamJList);
+
+            JButton addToFavoritesButton = new JButton("Add to Favorites");
+            addToFavoritesButton.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    // Get the selected team from the list
+                    String selectedTeam = teamJList.getSelectedValue();
+
+                    // Display a message (replace with your logic)
+                    addToFavorites(selectedTeam);
+                }
+            });
+
+            teamsFrame.setLayout(new BorderLayout());
+            teamsFrame.add(scrollPane, BorderLayout.CENTER);
+            teamsFrame.add(addToFavoritesButton, BorderLayout.SOUTH);
+
+            teamsFrame.setVisible(true);
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+            JOptionPane.showMessageDialog(this, "Error retrieving team names from the database.");
+        }
+    }
+
+    private void addToFavorites(String selectedTeam) {
+        // Connect to the database and add the selected team to the FantasyTeam table
+        try (Connection connection = DriverManager.getConnection(Main.connectionString);
+             PreparedStatement preparedStatement = connection.prepareStatement(
+                     "INSERT INTO FantasyTeam (points, id, name) VALUES (?, ?, ?)")) {
+
+            // Generate a random number between 150 and 700 for points
+            Random random = new Random();
+            int points = random.nextInt(551) + 150;
+
+            // Get the next available ID for FantasyTeam
+            int nextId = getNextFantasyTeamId(connection);
+
+            // Set values in the prepared statement
+            preparedStatement.setInt(1, points);
+            preparedStatement.setInt(2, nextId);
+            preparedStatement.setString(3, selectedTeam);
+
+            // Execute the SQL statement
+            int rowsUpdated = preparedStatement.executeUpdate();
+
+            if (rowsUpdated > 0) {
+                JOptionPane.showMessageDialog(this, "Team added to favorites successfully.");
+            } else {
+                JOptionPane.showMessageDialog(this, "Error adding team to favorites.");
+            }
+
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+            JOptionPane.showMessageDialog(this, "Error adding team to favorites.");
+        }
+    }
+
+    private int getNextFantasyTeamId(Connection connection) throws SQLException {
+        // Get the next available ID for FantasyTeam
+        try (Statement statement = connection.createStatement();
+             ResultSet resultSet = statement.executeQuery("SELECT MAX(id) FROM FantasyTeam")) {
+
+            if (resultSet.next()) {
+                return resultSet.getInt(1) + 1;
+            } else {
+                return 1; // If no rows in the table, start with ID 1
+            }
+        }
+    }
+
 }
+
+
