@@ -485,7 +485,7 @@ public class BattingScoreCard extends JFrame{
 
 
     public void insertToPlayerStatsTable(int[] runs, int[] balls, int[] fours, int[] sixes, Boolean[] outs){
-        if(InningsFlag2nd){
+        if(!InningsFlag2nd){
             incrementNoMatches(playerIDs);
         }
 

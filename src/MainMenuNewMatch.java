@@ -107,7 +107,6 @@ public class MainMenuNewMatch extends JFrame{
                 // Create a new batting score card
                 BattingScoreCard battingScoreCard = new BattingScoreCard();
 
-
                 String[] playerNamesTeamA;
                 String[] playerIDsTeamA;
                 if(tossWinner.equals("Team A")){

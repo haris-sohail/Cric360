@@ -383,7 +383,7 @@ public class BowlingScoreCardGUIController extends JFrame{
     }
 
     public void insertIntoDb(int[] runsConceded, int[] ballsBowled, int[] wicketsTaken) {
-        if(InningsFlag2nd){
+        if(!InningsFlag2nd){
             incrementNoMatches(playerIDs);
         }
 
