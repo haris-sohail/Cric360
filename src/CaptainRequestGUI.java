@@ -75,9 +75,9 @@ public class CaptainRequestGUI extends JFrame{
                 // get the id of each selectedItem
                 for (String selectedItem : selectedItems) {
                     int id = getID();
-                    System.out.println("ID Returned: "+ id);
+                    System.out.println("ID Returned: " + id);
                     int requestId = getRequestID(selectedItem);
-                    System.out.println("Request ID: "+ requestId);
+                    System.out.println("Request ID: " + requestId);
 
                     // Execute SQL query
                     String query = "INSERT INTO RequestResponse (STATUS, ID, REPLYTO) VALUES ('APPROVED', ?, ?)";
@@ -94,19 +94,20 @@ public class CaptainRequestGUI extends JFrame{
                     }
                 }
 
-                // Clear the list
-                RequestsList.setModel(new DefaultListModel<>());
-                populateRequestsList();
+                // Remove selected items from the list model
+                DefaultListModel<String> model = (DefaultListModel<String>) RequestsList.getModel();
+                for (String selectedItem : selectedItems) {
+                    model.removeElement(selectedItem);
+                }
 
-                // display success message and go back to main menu
+                // display success message and go back to the main menu
                 JOptionPane.showMessageDialog(panelMain, "Request approved!", "Success", JOptionPane.INFORMATION_MESSAGE);
                 UserOperations playerOp = new UserOperations("Player");
                 playerOp.userMainScreen();
                 dispose();
-
-
             }
         });
+
         btnReject.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -115,9 +116,9 @@ public class CaptainRequestGUI extends JFrame{
                 // get the id of each selectedItem
                 for (String selectedItem : selectedItems) {
                     int id = getID();
-                    System.out.println("ID Returned: "+ id);
+                    System.out.println("ID Returned: " + id);
                     int requestId = getRequestID(selectedItem);
-                    System.out.println("Request ID: "+ requestId);
+                    System.out.println("Request ID: " + requestId);
 
                     // Execute SQL query
                     String query = "INSERT INTO RequestResponse (STATUS, ID, REPLYTO) VALUES ('REJECTED', ?, ?)";
@@ -131,17 +132,20 @@ public class CaptainRequestGUI extends JFrame{
                     }
                 }
 
-                // Clear the list
-                RequestsList.setModel(new DefaultListModel<>());
-                populateRequestsList();
+                // Remove selected items from the list model
+                DefaultListModel<String> model = (DefaultListModel<String>) RequestsList.getModel();
+                for (String selectedItem : selectedItems) {
+                    model.removeElement(selectedItem);
+                }
 
-                // display success message and go back to main menu
+                // display success message and go back to the main menu
                 JOptionPane.showMessageDialog(panelMain, "Request rejected!", "Success", JOptionPane.INFORMATION_MESSAGE);
                 UserOperations playerOp = new UserOperations("Player");
                 playerOp.userMainScreen();
                 dispose();
             }
         });
+
     }
 
     public int getRequestID(String input){
