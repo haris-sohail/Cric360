@@ -8,6 +8,7 @@ public class Captain_MainMenu extends JFrame{
     private JButton btnSeeRequests;
     private JButton writeBlogButton;
     private JButton leaderboardbutton;
+    private JButton logoutButton;
 
     public Captain_MainMenu() {
         btnSeeRequests.addActionListener(new ActionListener() {
@@ -51,6 +52,13 @@ public class Captain_MainMenu extends JFrame{
                 leaderBoard_obj.setVisible(true);
                 leaderBoard_obj.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
+                dispose();
+            }
+        });
+        logoutButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                Main.handleSignup();
                 dispose();
             }
         });
