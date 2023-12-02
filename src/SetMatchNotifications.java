@@ -31,6 +31,20 @@ public class SetMatchNotifications extends JFrame {
                 showFavoriteTeamsPage();
             }
         });
+        specificMatchesButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                System.out.println("ScoreCard");
+                MatchScorecard matchScorecard_obj = new MatchScorecard();
+                matchScorecard_obj.setContentPane(matchScorecard_obj.getPanelMain());
+                matchScorecard_obj.setSize(400, 400);
+                matchScorecard_obj.setLocationRelativeTo(null);
+                matchScorecard_obj.setVisible(true);
+                matchScorecard_obj.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+                dispose();
+            }
+        });
     }
 
     public JPanel getPanelMain() {
@@ -109,6 +123,7 @@ public class SetMatchNotifications extends JFrame {
 
                     // Display a message (replace with your logic)
                     addToFavorites(selectedTeam);
+                    dispose();
                 }
             });
 
@@ -121,6 +136,7 @@ public class SetMatchNotifications extends JFrame {
             ex.printStackTrace();
             JOptionPane.showMessageDialog(this, "Error retrieving team names from the database.");
         }
+        dispose();
     }
 
     private void addToFavorites(String selectedTeam) {

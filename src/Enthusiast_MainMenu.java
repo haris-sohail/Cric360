@@ -20,6 +20,7 @@ public class Enthusiast_MainMenu extends JFrame{
                 setmatchnotifications.setLocationRelativeTo(null);
                 setmatchnotifications.setVisible(true);
                 setmatchnotifications.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+                dispose();
             }
         });
         viewStatsButton.addActionListener(new ActionListener() {

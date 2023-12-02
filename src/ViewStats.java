@@ -6,7 +6,6 @@ import java.sql.*;
 public class ViewStats extends JFrame {
     private JPanel panelMain;
     private JTextField textField1;
-    private JLabel hellotxt;
     private JButton OKButton;
     private JTextArea resultText;
 

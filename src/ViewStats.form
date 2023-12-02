@@ -61,16 +61,6 @@
           <text value="Enter Player ID:"/>
         </properties>
       </component>
-      <component id="edc55" class="javax.swing.JLabel" binding="hellotxt">
-        <constraints>
-          <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
-        </constraints>
-        <properties>
-          <font name="Constantia" size="14" style="2"/>
-          <foreground color="-10082975"/>
-          <text value="Hello"/>
-        </properties>
-      </component>
     </children>
   </grid>
 </form>
