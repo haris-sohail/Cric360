@@ -1,15 +1,10 @@
 import javax.swing.*;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
 
 public class Main {
     public static String connectionString;
 
     public static void handleSignup(){
-        SignUpGUI newSignUp = new SignUpGUI();
+        SignUpController newSignUp = new SignUpController();
         newSignUp.setContentPane(newSignUp.getPanelMain());
         newSignUp.setSize(400,400);
         newSignUp.setLocationRelativeTo(null);

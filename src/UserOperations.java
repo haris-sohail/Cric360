@@ -1,5 +1,4 @@
 import javax.swing.*;
-import java.awt.*;
 import java.sql.*;
 
 public class UserOperations {
@@ -37,9 +36,9 @@ public class UserOperations {
     public void userMainScreen(){
         if(userType.equals("Player")){
             // if the player is captain
-            if(checkCaptain(LoginGUI.loggedInUserName)){
+            if(checkCaptain(LoginController.loggedInUserName)){
                 System.out.println("Captain Main menu");
-                Captain_MainMenu captainMainMenu = new Captain_MainMenu();
+                Captain_MainMenuController captainMainMenu = new Captain_MainMenuController();
                 captainMainMenu.setContentPane(captainMainMenu.getPanelMain());
                 captainMainMenu.setSize(400, 400);
                 captainMainMenu.setLocationRelativeTo(null);
@@ -48,7 +47,7 @@ public class UserOperations {
             }
             else{
                 System.out.println("Player Main menu");
-                Player_MainMenu playerMainMenu = new Player_MainMenu();
+                Player_MainMenuController playerMainMenu = new Player_MainMenuController();
                 playerMainMenu.setContentPane(playerMainMenu.getPanelMain());
                 playerMainMenu.setSize(400, 400);
                 playerMainMenu.setLocationRelativeTo(null);
@@ -60,7 +59,7 @@ public class UserOperations {
         }
         else if(userType.equals("Enthusiast")){
             System.out.println("Enthusiast Main menu");
-            Enthusiast_MainMenu enthusiastmainmenu = new Enthusiast_MainMenu();
+            Enthusiast_MainMenuController enthusiastmainmenu = new Enthusiast_MainMenuController();
             enthusiastmainmenu.setContentPane(enthusiastmainmenu.getPanelMain());
             enthusiastmainmenu.setSize(400, 400);
             enthusiastmainmenu.setLocationRelativeTo(null);
@@ -69,7 +68,7 @@ public class UserOperations {
         }
         else if(userType.equals("MatchOfficial")){
             System.out.println("Match Official Main menu");
-            MatchOfficial_MainMenu matchOfficialMainMenu = new MatchOfficial_MainMenu();
+            MatchOfficial_MainMenuController matchOfficialMainMenu = new MatchOfficial_MainMenuController();
             matchOfficialMainMenu.setContentPane(matchOfficialMainMenu.getPanelMain());
             matchOfficialMainMenu.setSize(400, 400);
             matchOfficialMainMenu.setLocationRelativeTo(null);
