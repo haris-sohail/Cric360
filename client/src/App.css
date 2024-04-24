@@ -5,13 +5,92 @@
   margin: 0;
   padding: 0;
   font-family: "Red Hat Display", sans-serif;
+  color: #240101;
 }
 
-.App {
+h1 {
+  font-size: 42px !important;
+}
+
+h2 {
+  font-size: 35px !important;
+}
+
+h3 {
+  font-size: 30px !important;
+  font-weight: normal !important;
+}
+
+h4 {
+  font-size: 24px !important;
+}
+
+h5 {
+  font-size: 20px !important;
+}
+
+h6 {
+  font-size: 17px !important;
+}
+
+p {
+  font-size: 14px !important;
+  margin: 0 !important;
+}
+
+button {
+  background-color: #DD1F1F;
+  font-weight: 500;
+  border: 2px solid black;
+  border-radius: 10px !important;
+  width: 9vmax;
+  padding-left: 2vw;
+  padding-right: 2vw;
+  padding-top: 0.5vh;
+  padding-bottom: 0.5vh;
+}
+
+button * {
+  color: white;
+}
+
+button:hover {
+  background-color: #df3232;
+}
+
+#root {
   height: 100vh;
-  width: 70%;
-  margin: 0 auto;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  width: 100%;
+  background-color: #EEEEEE;
+}
+
+@media only screen and (max-width: 600px) {
+  h1 {
+    font-size: 37px !important;
+  }
+
+  h2 {
+    font-size: 30px !important;
+  }
+
+  h3 {
+    font-size: 35px !important;
+    font-weight: normal !important;
+  }
+
+  h4 {
+    font-size: 20px !important;
+  }
+
+  h5 {
+    font-size: 18px !important;
+  }
+
+  h6 {
+    font-size: 14px !important;
+  }
+
+  p {
+    font-size: 10px !important;
+  }
 }
