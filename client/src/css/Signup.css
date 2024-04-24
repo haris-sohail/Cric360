@@ -1,0 +1,17 @@
+.signup-container {
+    width: 50%;
+    height: 60%;
+    border: 3px solid black;
+}
+
+.signup-form{
+    display: flex;
+    flex-direction: column;
+    
+}
+
+@media only screen and (max-width: 600px) {
+    .signup-container{
+        width: 100%;
+    }
+}

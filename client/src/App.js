@@ -1,9 +1,11 @@
 import './App.css';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import Signup from './Signup';
 
 function App() {
   return (
     <div className="App">
-      <h1> Hello </h1>
+      <Signup />
     </div>
   );
 }
