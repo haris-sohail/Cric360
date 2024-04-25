@@ -7,6 +7,7 @@ import "../css/Login.css";
 function Login() {
     const [username, setUserName] = useState();
     const [password, setPassword] = useState();
+    const navigate = useNavigate();
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -18,6 +19,7 @@ function Login() {
             if (res.data !== null) {
                 // login successful
                 toast.success("Login successful")
+                navigate('/home')
             }
 
             else {
