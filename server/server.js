@@ -16,6 +16,18 @@ app.post('/register', (req, res) => {
     .catch(err => res.json(err))
 })
 
+app.get('/getUser', (req, res) => {
+  UserModel.find(req.body.username)
+    .then(users => res.json(users))
+    .catch(err => res.json(err))
+})
+
+app.get('/getEmail', (req, res) => {
+  UserModel.find(req.body.email)
+    .then(email => res.json(email))
+    .catch(err => res.json(err))
+})
+
 
 app.listen(3001, () => {
   console.log("Server is running")

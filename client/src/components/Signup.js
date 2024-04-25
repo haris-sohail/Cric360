@@ -2,18 +2,79 @@ import { React, useState } from "react"
 import '../css/Signup.css';
 import { Link } from 'react-router-dom';
 import axios from 'axios'
+import toast from 'react-hot-toast'
 
 function Signup() {
     const [username, setUserName] = useState();
     const [email, setEmail] = useState();
     const [password, setPassword] = useState();
 
-    const handleSubmit = (e) => {
+    const isFieldsNotEmpty = () => {
+        // email, password or username can not be empty
+        if (!email || !password || !username) {
+            toast.error("Please fill all the fields")
+            return false;
+        }
+
+        // if email is invalid
+        if (!email.includes('@')) {
+            toast.error("Invalid Email")
+            return false;
+        }
+
+        if (password.length < 6) {
+            toast.error("Password must be at least 6 characters")
+            return false;
+        }
+
+        return true;
+    }
+
+    const userNameExists = async () => {
+        try {
+            const res = await axios.get('http://localhost:3001/getUser', { username });
+
+            if (res.data.length > 0)
+                toast.error("Username exists already")
+
+            return res.data.length > 0;
+        } catch (err) {
+            console.log(err);
+            return false;
+        }
+    }
+
+    const emailExists = async () => {
+        try {
+            const res = await axios.get('http://localhost:3001/getEmail', { email });
+
+            if (res.data.length > 0)
+                toast.error("Email exists already")
+
+            return res.data.length > 0;
+        } catch (err) {
+            console.log(err);
+            return false;
+        }
+    }
+
+    const handleSubmit = async (e) => {
         e.preventDefault();
 
-        axios.post('http://localhost:3001/register', { username, email, password })
-            .then(res => console.log(res))
-            .catch(err => console.log(err))
+        if (isFieldsNotEmpty()) {
+            const userNameCheck = await userNameExists();
+            const emailCheck = await emailExists();
+
+            if (!userNameCheck && !emailCheck) {
+                try {
+                    const res = await axios.post('http://localhost:3001/register', { username, email, password });
+                    console.log(res)
+                    toast.success("Registered Successfully");
+                } catch (err) {
+                    console.log(err);
+                }
+            }
+        }
     }
 
     return (
