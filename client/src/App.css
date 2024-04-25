@@ -23,14 +23,18 @@ h3 {
 
 h4 {
   font-size: 24px !important;
+  margin: 0 !important;
 }
 
 h5 {
   font-size: 20px !important;
+  margin: 0 !important;
 }
 
 h6 {
   font-size: 17px !important;
+  margin: 0 !important;
+  font-weight: 700 !important;
 }
 
 p {
@@ -51,7 +55,7 @@ button {
 }
 
 button * {
-  color: white;
+  color: white !important;
 }
 
 button:hover {
@@ -87,10 +91,10 @@ button:hover {
   }
 
   h6 {
-    font-size: 14px !important;
+    font-size: 10px !important;
   }
 
   p {
-    font-size: 10px !important;
+    font-size: 8px !important;
   }
 }
