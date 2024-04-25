@@ -1,6 +1,6 @@
 import { React, useState } from "react"
 import '../css/Signup.css';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios'
 import toast from 'react-hot-toast'
 
@@ -8,6 +8,7 @@ function Signup() {
     const [username, setUserName] = useState();
     const [email, setEmail] = useState();
     const [password, setPassword] = useState();
+    const navigate = useNavigate();
 
     const isFieldsNotEmpty = () => {
         // email, password or username can not be empty
@@ -69,6 +70,9 @@ function Signup() {
                 try {
                     const res = await axios.post('http://localhost:3001/register', { username, email, password });
                     toast.success("Registered Successfully");
+
+                    // navigate to login page
+                    navigate('/login')
                 } catch (err) {
                     console.log(err);
                 }
