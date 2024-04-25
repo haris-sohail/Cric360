@@ -32,12 +32,12 @@ function Signup() {
 
     const userNameExists = async () => {
         try {
-            const res = await axios.get('http://localhost:3001/getUser', { username });
+            const res = await axios.post('http://localhost:3001/getUser', { username });
 
-            if (res.data.length > 0)
+            if(res.data !== null)
                 toast.error("Username exists already")
-
-            return res.data.length > 0;
+            
+            return res.data !== null;
         } catch (err) {
             console.log(err);
             return false;
@@ -46,12 +46,12 @@ function Signup() {
 
     const emailExists = async () => {
         try {
-            const res = await axios.get('http://localhost:3001/getEmail', { email });
+            const res = await axios.post('http://localhost:3001/getEmail', { email });
 
-            if (res.data.length > 0)
+            if (res.data !== null)
                 toast.error("Email exists already")
 
-            return res.data.length > 0;
+            return res.data !== null;
         } catch (err) {
             console.log(err);
             return false;
@@ -68,7 +68,6 @@ function Signup() {
             if (!userNameCheck && !emailCheck) {
                 try {
                     const res = await axios.post('http://localhost:3001/register', { username, email, password });
-                    console.log(res)
                     toast.success("Registered Successfully");
                 } catch (err) {
                     console.log(err);
