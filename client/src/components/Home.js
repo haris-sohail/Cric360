@@ -1,6 +1,7 @@
 import React from 'react'
 import Navbar from './Navbar'
 import Discussion from './Discussion'
+import StartDiscussion from './StartDiscussion'
 import { useLocation } from 'react-router-dom'
 import '../css/Home.css'
 
@@ -14,7 +15,7 @@ function Home() {
 
             <h1>Welcome {data.username}</h1>
 
-            
+            <StartDiscussion />
         </div>
     )
 }

@@ -1,0 +1,18 @@
+input {
+    width: 100%;
+    padding: 1%;
+    border-radius: 20px;
+    border: 1px solid transparent;
+    text-align: center;
+    font-size: 16px;
+}
+
+input:focus{
+    border: 1px solid transparent;
+    outline: 1px solid transparent;
+}
+    
+input:hover {
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    cursor: pointer;
+}
