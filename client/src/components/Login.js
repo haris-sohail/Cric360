@@ -19,7 +19,8 @@ function Login() {
             if (res.data !== null) {
                 // login successful
                 toast.success("Login successful")
-                navigate('/home')
+
+                navigate('/home', { state: { username } })
             }
 
             else {
