@@ -1,0 +1,32 @@
+.start-dicussion-details-container{
+    height: 100vh;
+    width: 70%;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 10vh;
+}
+
+.start-dicussion-details-container input, .start-dicussion-details-container textarea {
+    width: 100%;
+    padding: 1%;
+    border-radius: 20px;
+    border: 1px solid black;
+    font-size: 16px;
+}
+
+.start-dicussion-details-container input:focus, .start-dicussion-details-container textarea:focus {
+    border: 1px solid #7D0A0A;
+    outline: 1px solid #7D0A0A;
+    box-shadow: 0 0 1px rgba(0, 0, 0, 0.2);
+}
+
+.text-input{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 5vh;
+}
+

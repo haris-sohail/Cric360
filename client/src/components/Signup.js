@@ -35,9 +35,9 @@ function Signup() {
         try {
             const res = await axios.post('http://localhost:3001/getUser', { username });
 
-            if(res.data !== null)
+            if (res.data !== null)
                 toast.error("Username exists already")
-            
+
             return res.data !== null;
         } catch (err) {
             console.log(err);
@@ -69,7 +69,8 @@ function Signup() {
             if (!userNameCheck && !emailCheck) {
                 try {
                     const res = await axios.post('http://localhost:3001/register', { username, email, password });
-                    toast.success("Registered Successfully");
+                    if (res)
+                        toast.success("Registered Successfully");
 
                     // navigate to login page
                     navigate('/login')

@@ -15,7 +15,7 @@ function Home() {
 
             <h1>Welcome {data.username}</h1>
 
-            <StartDiscussion />
+            <StartDiscussion username={ data.username } />
         </div>
     )
 }

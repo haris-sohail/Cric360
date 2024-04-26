@@ -2,6 +2,7 @@ const express = require("express")
 const mongoose = require("mongoose")
 const cors = require("cors")
 const UserModel = require("./Models/User")
+const DiscussionModel = require("./Models/Discussion")
 
 const app = express()
 app.use(express.json())
@@ -32,6 +33,12 @@ app.post('/getEmail', (req, res) => {
 app.post('/login', (req, res) => {
   UserModel.findOne({ username: req.body.username, password: req.body.password })
     .then(user => res.json(user))
+    .catch(err => res.json(err))
+})
+
+app.post('/postDiscussion', (req, res) => {
+  DiscussionModel.create(req.body)
+    .then(discussions => res.json(discussions))
     .catch(err => res.json(err))
 })
 
