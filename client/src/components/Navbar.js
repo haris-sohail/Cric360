@@ -3,12 +3,17 @@ import Logo from '../system/assets/logo.png'
 import { Link, useNavigate } from 'react-router-dom';
 import '../css/Navbar.css'
 
-function Navbar() {
+function Navbar({ username }) {
+    const navigate = useNavigate();
+
+    const handleLogoClick = () => {
+        navigate('/home', { state: { username } })
+    }
     return (
         <div className='navbar'>
-            <Link to='/home'>
+            <a onClick={handleLogoClick} id='logo-link'>
                 <img src={Logo} alt="logo" />
-            </Link>
+            </a>
 
             <div className='btns-container'>
                 <Link>

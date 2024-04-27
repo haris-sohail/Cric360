@@ -11,11 +11,11 @@ function Home() {
 
     return (
         <div className='home-container'>
-            <Navbar />
+            <Navbar username={data.username} />
 
             <h1>Welcome {data.username}</h1>
 
-            <StartDiscussion username={ data.username } />
+            <StartDiscussion username={data.username} />
         </div>
     )
 }
