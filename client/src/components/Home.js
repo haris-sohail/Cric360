@@ -17,7 +17,7 @@ function Home() {
 
             <StartDiscussion username={data.username} />
 
-            <Discussion id={1} title={'Discussion Test'} upvotes={20} downvotes={15} comments={[
+            <Discussion id={1} title={'Pak Lost to a C Team!'} upvotes={20} downvotes={15} username={'mushtaq'} comments={[
                 {
                     username: 'ahmed',
                     text: 'Achi discussion hai'
