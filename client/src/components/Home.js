@@ -16,6 +16,17 @@ function Home() {
             <h1>Welcome {data.username}</h1>
 
             <StartDiscussion username={data.username} />
+
+            <Discussion id={1} title={'Discussion Test'} upvotes={20} downvotes={15} comments={[
+                {
+                    username: 'ahmed',
+                    text: 'Achi discussion hai'
+                },
+                {
+                    username: 'tallal',
+                    text: 'Maza nai aaya'
+                }
+            ]} />
         </div>
     )
 }
