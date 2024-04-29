@@ -52,6 +52,7 @@ button {
   padding-right: 2vw;
   padding-top: 0.5vh;
   padding-bottom: 0.5vh;
+  transition: background-color 0.2s;
 }
 
 button * {
@@ -59,7 +60,7 @@ button * {
 }
 
 button:hover {
-  background-color: #df3232;
+  background-color: #f13535;
 }
 
 #root {
