@@ -42,6 +42,11 @@ app.post('/postDiscussion', (req, res) => {
     .catch(err => res.json(err))
 })
 
+app.post('/getDiscussions', (req, res) => {
+  DiscussionModel.find()
+    .then(discussions => res.json(discussions))
+    .catch(err => res.json(err))
+})
 
 app.listen(3001, () => {
   console.log("Server is running")
