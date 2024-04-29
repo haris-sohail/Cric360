@@ -3,6 +3,7 @@ const mongoose = require("mongoose")
 const cors = require("cors")
 const UserModel = require("./Models/User")
 const DiscussionModel = require("./Models/Discussion")
+const TeamModel = require("./Models/Team")
 
 const app = express()
 app.use(express.json())
@@ -44,6 +45,13 @@ app.post('/postDiscussion', (req, res) => {
 app.post('/getDiscussions', (req, res) => {
   DiscussionModel.find()
     .then(discussions => res.json(discussions))
+    .catch(err => res.json(err))
+})
+
+app.post('/registerTeam', (req, res) => {
+  console.log(req.body)
+  TeamModel.create(req.body)
+    .then(teams => res.json(teams))
     .catch(err => res.json(err))
 })
 
