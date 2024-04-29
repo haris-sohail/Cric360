@@ -30,6 +30,7 @@ function Login() {
 
         catch (err) {
             console.log(err);
+            toast.error("Couldn't reach the server")
         }
 
     }

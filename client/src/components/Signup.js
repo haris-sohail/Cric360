@@ -41,6 +41,7 @@ function Signup() {
             return res.data !== null;
         } catch (err) {
             console.log(err);
+            toast.error("Couldn't reach the server")
             return false;
         }
     }
@@ -54,6 +55,7 @@ function Signup() {
 
             return res.data !== null;
         } catch (err) {
+            toast.error("Couldn't reach the server")
             console.log(err);
             return false;
         }
@@ -75,6 +77,7 @@ function Signup() {
                     // navigate to login page
                     navigate('/login')
                 } catch (err) {
+                    toast.error("Couldn't reach the server")
                     console.log(err);
                 }
             }

@@ -8,11 +8,9 @@
     justify-content: space-between;
     padding-left: 2vmax;
     padding-right: 2vmax;
-    transition: background-image 0.7s;
 }
 
 .discussion-container:hover {
-    background-image: linear-gradient(to right, #7D0A0A, #DD1F1F);
     cursor: pointer;
 }
 

@@ -34,6 +34,7 @@ function StartDiscussionDetails() {
 
             }
             catch (err) {
+                toast.error("Couldn't reach the server")
                 console.log(err);
             }
         }
