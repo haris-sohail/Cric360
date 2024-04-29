@@ -9,6 +9,11 @@ function Navbar({ username }) {
     const handleLogoClick = () => {
         navigate('/home', { state: { username } })
     }
+
+    const handleTeamsClick = () => {
+        navigate('/teams', { state: { username } })
+    }
+
     return (
         <div className='navbar'>
             <a onClick={handleLogoClick} id='logo-link'>
@@ -23,6 +28,10 @@ function Navbar({ username }) {
                 <Link>
                     <button><h6>Stats</h6></button>
                 </Link>
+
+                <a onClick={handleTeamsClick}>
+                    <button><h6>Teams</h6></button>
+                </a>
             </div>
         </div>
     )

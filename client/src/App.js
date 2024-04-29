@@ -5,6 +5,8 @@ import Login from './components/Login';
 import Home from './components/Home'
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import StartDiscussionDetails from './components/StartDiscussionDetails';
+import Teams from './components/Teams';
+import RegisterTeam from './components/RegisterTeam';
 
 function App() {
   return (
@@ -15,6 +17,8 @@ function App() {
         <Route path='/login' element={<Login />} />
         <Route path='/home' element={<Home />} />
         <Route path='/StartDiscussionDetails' element={<StartDiscussionDetails />} />
+        <Route path='/teams' element={<Teams />} />
+        <Route path='/registerTeam' element={<RegisterTeam />} />
       </Routes>
     </BrowserRouter>
   );
