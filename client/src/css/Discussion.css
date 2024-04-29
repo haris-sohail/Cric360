@@ -8,10 +8,16 @@
     justify-content: space-between;
     padding-left: 2vmax;
     padding-right: 2vmax;
+    transition: background-color 0.2s;
 }
 
 .discussion-container:hover {
     cursor: pointer;
+    background-color: #DD1F1F;
+}
+
+.discussion-container:hover h2{
+    color: #EEEEEE;
 }
 
 .title-container {
