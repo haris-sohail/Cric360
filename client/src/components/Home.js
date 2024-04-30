@@ -6,31 +6,54 @@ import HeadingMessage from './HeadingMessage'
 import { useLocation } from 'react-router-dom'
 import toast from 'react-hot-toast'
 import axios from 'axios';
+import CircularProgress from '@mui/material/CircularProgress';
+import Box from '@mui/material/Box';
 import '../css/Home.css'
 
 function Home() {
     const location = useLocation();
     const data = location.state;
     const [discussions, setDiscussions] = useState();
+    const [discussionsComp, setDiscussionsComp] = useState();
+    const [loading, setLoading] = useState(false);
 
     useEffect(() => {
+        setLoading(true);
         loadDiscussions();
     }, []);
 
     useEffect(() => {
-        console.log(discussions);
+        if (discussions) {
+            const discussionsComponents = discussions.map(discussion => (
+                <Discussion
+                    key={discussion.id}
+                    id={discussion.id}
+                    title={discussion.title}
+                    upvotes={discussion.upvotes}
+                    downvotes={discussion.downvotes}
+                    username={discussion.username}
+                    comments={discussion.comments}
+                />
+            ));
+            setDiscussionsComp(discussionsComponents);
+        }
     }, [discussions]);
+
+
 
     const loadDiscussions = async () => {
         try {
-            const res = await axios.post('http://localhost:3001/getDiscussions');
+            const res = await axios.post('http://localhost:3001/getDiscussions')
+                .finally(() => {
+                    setLoading(false);
+                });
 
             if (res) {
                 setDiscussions(res.data);
             }
 
             else { // no discussions posted yet
-                
+
             }
         }
         catch (err) {
@@ -46,16 +69,16 @@ function Home() {
 
             <StartDiscussion username={data.username} />
 
-            <Discussion id={1} title={'Pak Lost to a C Team!'} upvotes={20} downvotes={15} username={'mushtaq'} comments={[
-                {
-                    username: 'ahmed',
-                    text: 'Achi discussion hai'
-                },
-                {
-                    username: 'tallal',
-                    text: 'Maza nai aaya'
+            <div className='home-discussions-container'>
+
+                {discussionsComp ? discussionsComp :
+                    <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', flex: '1' }}>
+                        <CircularProgress />
+                    </Box>
                 }
-            ]} />
+
+            </div>
+
         </div>
     )
 }

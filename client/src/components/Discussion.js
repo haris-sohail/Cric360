@@ -5,7 +5,7 @@ import downvote from '../system/assets/downvote.png'
 import comment from '../system/assets/comment.png'
 import '../css/Discussion.css'
 
-function Discussion({ id, title, upvotes, downvotes, username, comments }) {
+function Discussion({ key, id, title, upvotes, downvotes, username, comments }) {
   const displayProps = () => {
     console.log(id)
     console.log(title)
@@ -14,6 +14,10 @@ function Discussion({ id, title, upvotes, downvotes, username, comments }) {
     console.log(username)
     console.log(comments)
   }
+
+  useEffect(() => {
+    displayProps();
+  },[])
 
   return (
     <div className='discussion-container'>
