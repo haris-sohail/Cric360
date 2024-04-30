@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import Navbar from './Navbar'
 import { useLocation, useNavigate } from 'react-router-dom';
 import '../css/StartDiscussionDetails.css'
 import toast from 'react-hot-toast'
@@ -43,12 +44,16 @@ function StartDiscussionDetails() {
     }
     return (
         <div className='start-dicussion-details-container'>
-            <h1>Starting a discussion</h1>
-            <div className='text-input'>
-                <input placeholder='Title' onChange={(e) => { setTitle(e.target.value.trim()) }}></input>
-                <textarea placeholder='Text (optional)' rows={10} onChange={(e) => { setText(e.target.value.trim()) }}></textarea>
+            <Navbar username={data.username} />
+
+            <div className='main-content-start-dicussion-details'>
+                <h1>Starting a discussion</h1>
+                <div className='text-input'>
+                    <input placeholder='Title' onChange={(e) => { setTitle(e.target.value.trim()) }}></input>
+                    <textarea placeholder='Text (optional)' rows={10} onChange={(e) => { setText(e.target.value.trim()) }}></textarea>
+                </div>
+                <button onClick={handleSubmit}><h6>Post</h6></button>
             </div>
-            <button onClick={handleSubmit}><h6>Post</h6></button>
         </div>
     )
 }
