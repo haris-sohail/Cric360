@@ -3,10 +3,19 @@
     height: 100vh;
     margin: 0 auto;
     display: flex;
-    justify-content: center;
+    /* justify-content: center; */
     align-items: center;
     flex-direction: column;
+}
+
+.main-content-register-team{
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     gap: 10vh;
+    flex-direction: column;
+    flex: 1;
 }
 
 .register-team-input{
