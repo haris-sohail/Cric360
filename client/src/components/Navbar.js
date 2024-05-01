@@ -21,9 +21,7 @@ function Navbar({ username }) {
             </a>
 
             <div className='btns-container'>
-                <Link>
-                    <button><h6>Matches</h6></button>
-                </Link>
+                <button><h6>Matches</h6></button>
 
                 <Link>
                     <button><h6>Stats</h6></button>

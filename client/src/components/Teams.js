@@ -1,6 +1,7 @@
 import React from 'react'
 import { useLocation, useNavigate } from 'react-router-dom';
 import Navbar from './Navbar'
+import Team from './Team'
 import '../css/Teams.css'
 
 function Teams() {
@@ -16,6 +17,8 @@ function Teams() {
         <div className='teams-container'>
             <Navbar username={username} />
             <button onClick={handleRegisterTeam}><h6>Register a team</h6></button>
+
+            <Team />
         </div>
     )
 }
