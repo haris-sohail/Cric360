@@ -15,11 +15,10 @@ function DiscussionStats() {
                 <a>
                     <img src={downvote} className='stats-img-discussion-page'></img>
                 </a>
-
-                <a>
-                    <img src={comment} className='stats-img-discussion-page'></img>
-                </a>
             </div>
+            <a>
+                <img src={comment} className='stats-img-discussion-page'></img>
+            </a>
         </div>
     )
 }

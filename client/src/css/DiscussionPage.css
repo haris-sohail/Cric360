@@ -16,3 +16,9 @@
 #discussion-text{
     margin-top: 5vh !important; 
 }
+
+@media only screen and (max-width: 600px) {
+    .discussion-page-container{
+        width: 95%;
+    }
+}
