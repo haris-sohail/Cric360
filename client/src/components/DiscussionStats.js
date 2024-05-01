@@ -51,7 +51,7 @@ function DiscussionStats({ discussionId }) {
     return (
         <div className='dicussion-stats-container'>
             <div className='upvotes-downvotes-container'>
-                <div className='upvotes-container'>
+                <div className='upvotes-container-discussion-stats'>
                     <a onClick={handleUpvote}>
                         <img src={upvote} className='stats-img-discussion-page'></img>
                     </a>
@@ -60,7 +60,7 @@ function DiscussionStats({ discussionId }) {
                     </p>
                 </div>
 
-                <div className='downvotes-container'>
+                <div className='downvotes-container-discussion-stats'>
                     <a onClick={handleDownvote}>
                         <img src={downvote} className='stats-img-discussion-page'></img>
                     </a>
