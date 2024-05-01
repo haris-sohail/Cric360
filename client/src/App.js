@@ -7,6 +7,7 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import StartDiscussionDetails from './components/StartDiscussionDetails';
 import Teams from './components/Teams';
 import RegisterTeam from './components/RegisterTeam';
+import DiscussionPage from './components/DiscussionPage';
 
 function App() {
   return (
@@ -19,6 +20,7 @@ function App() {
         <Route path='/StartDiscussionDetails' element={<StartDiscussionDetails />} />
         <Route path='/teams' element={<Teams />} />
         <Route path='/registerTeam' element={<RegisterTeam />} />
+        <Route path='/discussionPage' element={<DiscussionPage />} />
       </Routes>
     </BrowserRouter>
   );
