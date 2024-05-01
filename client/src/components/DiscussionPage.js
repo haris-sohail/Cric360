@@ -2,6 +2,7 @@ import React, { useEffect } from 'react'
 import { useLocation } from 'react-router-dom'
 import Navbar from './Navbar'
 import '../css/DiscussionPage.css'
+import DiscussionStats from './DiscussionStats'
 
 function DiscussionPage() {
     const location = useLocation();
@@ -27,6 +28,8 @@ function DiscussionPage() {
                     </p>
                 </div>
             </div>
+
+            <DiscussionStats />
         </div>
     )
 }
