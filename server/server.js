@@ -7,7 +7,7 @@ const path = require('path')
 const UserModel = require("./Models/User")
 const DiscussionModel = require("./Models/Discussion")
 const TeamModel = require("./Models/Team")
-const { isUndefined } = require("util")
+const uuid = require('uuid');
 
 const app = express()
 app.use(express.json())
@@ -41,7 +41,17 @@ app.post('/login', (req, res) => {
 })
 
 app.post('/postDiscussion', (req, res) => {
-  DiscussionModel.create(req.body)
+  DiscussionModel.create(
+    {
+      id: uuid.v4(),
+      title: req.body.title,
+      username: req.body.username,
+      text: req.body.text,
+      comments: req.body.comments,
+      upvotes: req.body.upvotes,
+      downvotes: req.body.downvotes
+    }
+  )
     .then(discussions => res.json(discussions))
     .catch(err => res.json(err))
 })

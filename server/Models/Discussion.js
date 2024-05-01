@@ -1,6 +1,7 @@
 const mongoose = require("mongoose")
 
 const DiscussionSchema = new mongoose.Schema({
+    id: String,
     username: String,
     title: String,
     text: String,
