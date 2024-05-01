@@ -1,0 +1,18 @@
+.discussion-page-container{
+    width: 70%;
+    margin: 0 auto;
+    min-height: 100vh;
+}
+
+.main-content-container-discussion-page{
+    width: 100%;
+    margin-top: 5vh;
+}
+
+#discussion-posted-by{
+    font-weight: 100;
+}
+
+#discussion-text{
+    margin-top: 5vh !important; 
+}
