@@ -83,8 +83,8 @@ app.post('/registerTeam', upload.single('teamLogo'), (req, res) => {
       location: req.body.teamLocation,
       name: req.body.teamName
     })
-    .then(teams => res.json(teams))
-    .catch(err => res.json(err))
+      .then(teams => res.json(teams))
+      .catch(err => res.json(err))
   }
   else { // no team logo entered
     TeamModel.create({
@@ -92,9 +92,47 @@ app.post('/registerTeam', upload.single('teamLogo'), (req, res) => {
       location: req.body.teamLocation,
       name: req.body.teamName
     })
-    .then(teams => res.json(teams))
+      .then(teams => res.json(teams))
+      .catch(err => res.json(err))
+  }
+})
+
+app.post('/upvote', (req, res) => {
+  let discussion_id = req.body.discussionId;
+
+  DiscussionModel.findOneAndUpdate(
+    { id: discussion_id }, { $inc: { upvotes: 1 } },
+    { returnOriginal: false }
+  )
+    .then(discussion => res.json(discussion))
     .catch(err => res.json(err))
-  }    
+})
+
+app.post('/downvote', (req, res) => {
+  let discussion_id = req.body.discussionId;
+
+  DiscussionModel.findOneAndUpdate(
+    { id: discussion_id }, { $inc: { downvotes: 1 } },
+    { returnOriginal: false }
+  )
+    .then(discussion => res.json(discussion))
+    .catch(err => res.json(err))
+})
+
+app.post('/getUpvotes', (req, res) => {
+  let discussion_id = req.body.discussionId;
+
+  DiscussionModel.findOne({ id: discussion_id })
+    .then(discussion => res.json(discussion.upvotes))
+    .catch(err => res.json(err))
+})
+
+app.post('/getDownvotes', (req, res) => {
+  let discussion_id = req.body.discussionId;
+
+  DiscussionModel.findOne({ id: discussion_id })
+    .then(discussion => res.json(discussion.downvotes))
+    .catch(err => res.json(err))
 })
 
 app.listen(3001, () => {

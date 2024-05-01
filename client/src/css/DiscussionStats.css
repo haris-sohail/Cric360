@@ -25,6 +25,12 @@
     padding-bottom: 0.5vmax;
 }
 
+.upvotes-container, .downvotes-container{
+    display: flex;
+    gap: 0.1vmax;
+    flex-direction: row;
+}
+
 .stats-img-discussion-page{
     width: 2vmax;
 }

@@ -29,7 +29,7 @@ function DiscussionPage() {
                 </div>
             </div>
 
-            <DiscussionStats />
+            <DiscussionStats discussionId={data.id} />
         </div>
     )
 }
