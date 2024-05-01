@@ -29,6 +29,7 @@ function Home() {
                     key={discussion.id}
                     id={discussion.id}
                     title={discussion.title}
+                    text={discussion.text}
                     upvotes={discussion.upvotes}
                     downvotes={discussion.downvotes}
                     username={discussion.username}

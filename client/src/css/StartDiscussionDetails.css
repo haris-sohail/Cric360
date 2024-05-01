@@ -37,3 +37,8 @@
     gap: 5vh;
 }
 
+@media only screen and (max-width: 600px) {
+    .start-dicussion-details-container{
+        width: 95%;
+    }
+}

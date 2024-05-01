@@ -34,3 +34,9 @@
 #image-upload-register-team{
     border: none;
 }
+
+@media only screen and (max-width: 600px) {
+    .register-team-container{
+        width: 95%;
+    }
+}

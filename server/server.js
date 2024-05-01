@@ -7,7 +7,7 @@ const path = require('path')
 const UserModel = require("./Models/User")
 const DiscussionModel = require("./Models/Discussion")
 const TeamModel = require("./Models/Team")
-const { isUndefined } = require("util")
+const uuid = require('uuid');
 
 const app = express()
 app.use(express.json())
@@ -41,7 +41,17 @@ app.post('/login', (req, res) => {
 })
 
 app.post('/postDiscussion', (req, res) => {
-  DiscussionModel.create(req.body)
+  DiscussionModel.create(
+    {
+      id: uuid.v4(),
+      title: req.body.title,
+      username: req.body.username,
+      text: req.body.text,
+      comments: req.body.comments,
+      upvotes: req.body.upvotes,
+      downvotes: req.body.downvotes
+    }
+  )
     .then(discussions => res.json(discussions))
     .catch(err => res.json(err))
 })
@@ -73,8 +83,8 @@ app.post('/registerTeam', upload.single('teamLogo'), (req, res) => {
       location: req.body.teamLocation,
       name: req.body.teamName
     })
-    .then(teams => res.json(teams))
-    .catch(err => res.json(err))
+      .then(teams => res.json(teams))
+      .catch(err => res.json(err))
   }
   else { // no team logo entered
     TeamModel.create({
@@ -82,9 +92,47 @@ app.post('/registerTeam', upload.single('teamLogo'), (req, res) => {
       location: req.body.teamLocation,
       name: req.body.teamName
     })
-    .then(teams => res.json(teams))
+      .then(teams => res.json(teams))
+      .catch(err => res.json(err))
+  }
+})
+
+app.post('/upvote', (req, res) => {
+  let discussion_id = req.body.discussionId;
+
+  DiscussionModel.findOneAndUpdate(
+    { id: discussion_id }, { $inc: { upvotes: 1 } },
+    { returnOriginal: false }
+  )
+    .then(discussion => res.json(discussion))
     .catch(err => res.json(err))
-  }    
+})
+
+app.post('/downvote', (req, res) => {
+  let discussion_id = req.body.discussionId;
+
+  DiscussionModel.findOneAndUpdate(
+    { id: discussion_id }, { $inc: { downvotes: 1 } },
+    { returnOriginal: false }
+  )
+    .then(discussion => res.json(discussion))
+    .catch(err => res.json(err))
+})
+
+app.post('/getUpvotes', (req, res) => {
+  let discussion_id = req.body.discussionId;
+
+  DiscussionModel.findOne({ id: discussion_id })
+    .then(discussion => res.json(discussion.upvotes))
+    .catch(err => res.json(err))
+})
+
+app.post('/getDownvotes', (req, res) => {
+  let discussion_id = req.body.discussionId;
+
+  DiscussionModel.findOne({ id: discussion_id })
+    .then(discussion => res.json(discussion.downvotes))
+    .catch(err => res.json(err))
 })
 
 app.listen(3001, () => {
