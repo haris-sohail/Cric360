@@ -1,4 +1,37 @@
-.create-match-container{
+.create-match-container {
     width: 70%;
+    height: 100vh;
     margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+}
+
+.match-input-create-match {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    width: 100%;
+    flex: 1;
+    gap: 5vh;
+}
+
+#venue-in-create-match {
+    width: 100%;
+    padding: 1%;
+    border-radius: 20px;
+    border: 1px solid black;
+    font-size: 16px;
+    background-color: transparent;
+}
+
+
+#venue-in-create-match:focus {
+    border: 1px solid #7D0A0A;
+    outline: 1px solid #7D0A0A;
+    box-shadow: 0 0 1px rgba(0, 0, 0, 0.2);
+}
+
+#create-button-container-create-match{
+    display: flex;
+    justify-content: center;
 }
