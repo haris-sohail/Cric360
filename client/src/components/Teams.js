@@ -4,7 +4,7 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import Navbar from './Navbar';
 import Team from './Team';
 import '../css/Teams.css';
-import defaultteam from '../system/assets/logo.png'
+import defaultteam from '../system/assets/tigers.png'
 
 function Teams() {
     const location = useLocation();

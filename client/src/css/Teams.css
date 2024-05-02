@@ -1,28 +1,39 @@
 .teams-container {
     align-items: center;
     width: 100%;
-    height: 15vh;
+    height: 18vh;
     border: 5px solid #7D0A0A;
     border-radius: 20px;
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding-left: 2vmax;
-    padding-right: 2vmax;
-    transition: background-color 0.2s;
+    transition: background 2s ease;
+    background: linear-gradient(to right, grey, #EEEEEE);
+    margin-top: 3%;
 }
+
 .teams-container:hover{
     cursor: pointer;
-    background-color: #DD1F1F;
+    background: #FFFFFF;
+    transition: background 3s ease;
 }
-.teams-container:hover h2 ,h3{
-    color: #EEEEEE;
+.teams-container:hover h2 {
+    color: black;
 }
-.title-container {
+.teams-container:hover h3{
+    color: black;
+}
+.title-container-teamspage h3{
+    color:black;
+    font-weight: 200;
+    text-align: left; 
+    font-style: italic;
+}
+.title-container-teamspage {
     flex: 1;
     text-align: center;
 }
-.title-container h2 ,h3{
+.title-container-teamspage h2 {
     color:black;
     font-weight: 500;
     text-align: left; 
@@ -32,14 +43,21 @@
     margin: 0 auto;
 }
 .teams-container img {
-    width: 10vmax;
+    width: 13vb;
+    height:13vb;
+    border-radius: 50%;
+    border: 5px solid black;
 }
 .object-container{
     display:flex;
     width:90%;
     justify-content: flex-end;
+    align-items: center;
+    padding:2vmax;
+    height:30%;
 }
-.title-container{
+
+.title-container-teamspage{
     display:flex;
     justify-content: flex-start;
     flex-direction: column;
@@ -60,9 +78,15 @@
     width:100%;
     display: flex;
     justify-content: flex-end; /* Aligns items to the right */
-    align-items: right; 
+    margin-top: 10%;
 }
 
 .register-button {
-    width: 30vb;
+    width: 25%;
+}
+
+@media only screen and (max-width: 600px) {
+    .main-div{
+        width:95%;
+    }
 }
