@@ -13,11 +13,13 @@ const userRoutes = require('./routes/userRoutes');
 const discussionRoutes = require('./routes/discussionRoutes');
 const teamRoutes = require('./routes/teamRoutes');
 const playerRoutes = require('./routes/playerRoutes');
+const matchRoutes = require('./routes/matchRoutes');
 
 app.use('/user', userRoutes);
 app.use('/discussion', discussionRoutes);
 app.use('/team', teamRoutes);
 app.use('/player', playerRoutes);
+app.use('/match', matchRoutes);
 
 
 app.listen(3001, () => {

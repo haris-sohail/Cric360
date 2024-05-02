@@ -12,16 +12,46 @@ import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 import HeadingMessage from './HeadingMessage';
+import toast from 'react-hot-toast'
+import axios from 'axios'
+import dayjs from 'dayjs';
 
 function CreateMatch() {
     const location = useLocation();
     const data = location.state;
     const username = data.username
     const navigate = useNavigate();
-    const [startingAt, setStartinAt] = useState()
+    const [startingAt, setStartingAt] = useState()
     const [venue, setVenue] = useState()
     const [format, setFormat] = useState()
 
+    const handleCreate = async () => {
+        if (!startingAt || !venue || !format) {
+            toast.error("Please fill in all the fields")
+        }
+        else {
+            let teamName;
+
+            // get the team of the player
+            axios.post('http://localhost:3001/player/getTeam', { username })
+                .then(res => {
+                    teamName = res.data.teamName
+                })
+            
+            try {
+                axios.post('http://localhost:3001/match/createMatch', { startingAt, venue, format, teamName })
+                    .then(res => {
+                        toast.success("Created the match successfully")
+                        navigate('/matches', { state: { username } })
+                    })
+            }
+            catch (err) {
+                toast.error("Couldn't reach the server")
+                console.log(err)
+            }
+        }
+
+    }
     return (
         <div className='create-match-container'>
             <Navbar username={username} />
@@ -51,12 +81,13 @@ function CreateMatch() {
                     <DemoContainer components={['DateTimePicker']}>
                         <DateTimePicker
                             label="Starting at"
+                            onChange={(e) => setStartingAt(e)}
                         />
                     </DemoContainer>
                 </LocalizationProvider>
 
                 <div id='create-button-container-create-match'>
-                    <button><h6>Create</h6></button>
+                    <button onClick={handleCreate}><h6>Create</h6></button>
                 </div>
             </div>
         </div>

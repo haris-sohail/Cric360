@@ -2,7 +2,10 @@ const mongoose = require("mongoose")
 
 const PlayerSchema = new mongoose.Schema({
     username: String,
-    teamName: String,
+    teamName: {
+        type: String,
+        default: ""
+    },
     leaderBoardRank: Number,
     battingAvg: Number,
     captainOf: String,
