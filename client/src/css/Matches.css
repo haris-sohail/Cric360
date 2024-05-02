@@ -26,6 +26,9 @@
 
 .matches-main-content{
     margin-top: 2vh;
+    display: flex;
+    flex-direction: column;
+    gap: 5vh;
 }
 
 @media only screen and (max-width: 600px) {

@@ -17,6 +17,12 @@ router.post('/createMatch', (req, res) => {
         .catch(err => res.json(err))
 });
 
+router.post('/getMatches', (req, res) => {
+    MatchModel.find()
+        .then(matches => res.json(matches))
+        .catch(err => { res.json(err) })
+})
+
 // to be moved to teamRoutes.js:
 const TeamModel = require("../Models/Team");
 router.post('/getTeamLogo', (req, res) => {

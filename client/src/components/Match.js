@@ -23,6 +23,9 @@ function Match({ id, venue, startingAt, teamA, format, isLive }) {
     // convert the date
     const formattedDate = new Date(startingAt).toLocaleString('en-US', {
       timeZone: 'Asia/Karachi',
+      month: 'numeric',
+      day: 'numeric',
+      year: 'numeric',
       hour: 'numeric',
       minute: 'numeric',
       hour12: true
@@ -38,7 +41,7 @@ function Match({ id, venue, startingAt, teamA, format, isLive }) {
       </div>
       <div className='match-details-match-container'>
         <p>{venue.toUpperCase()}</p>
-        <p>{format}</p>
+        <p>{format.toUpperCase()}</p>
         <p>{startingAtDate}</p>
       </div>
     </div>

@@ -25,19 +25,24 @@ function CreateMatch() {
     const [venue, setVenue] = useState()
     const [format, setFormat] = useState()
     const [teamName, setTeamName] = useState()
+    const [loading, setLoading] = useState(false)
 
     useEffect(() => {
+        setLoading(true)
         axios.post('http://localhost:3001/player/getTeam', { username })
             .then(res => {
+                console.log(res)
                 setTeamName(res.data.teamName);
             });
+        setLoading(false)
     }, []);
 
     const handleCreate = async () => {
         if (!startingAt || !venue || !format) {
             toast.error("Please fill in all the fields")
         }
-        else {                
+        else {
+
             if (teamName) {
                 try {
                     axios.post('http://localhost:3001/match/createMatch', { startingAt, venue, format, teamName })
@@ -96,6 +101,7 @@ function CreateMatch() {
                     <button onClick={handleCreate}><h6>Create</h6></button>
                 </div>
             </div>
+
         </div>
     )
 }
