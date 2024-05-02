@@ -29,7 +29,7 @@ function RegisterTeam() {
         }
 
         try {
-            const res = await axios.post('http://localhost:3001/registerTeam', formData);
+            const res = await axios.post('http://localhost:3001/team/registerTeam', formData);
 
             if (res) {
                 toast.success("Registered successfully")
