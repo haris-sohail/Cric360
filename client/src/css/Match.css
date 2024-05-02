@@ -1,0 +1,49 @@
+.match-container {
+    width: 100%;
+    height: 20vh;
+    border-bottom: 5px solid black;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: #f3f3f3;
+    padding-left: 1vmax;
+    padding-right: 1vmax;
+    transition: background-color 0.2s;
+}
+
+.team-details-match{
+    display: flex;
+    align-items: center;
+    gap: 1vmax;
+}
+
+.team-details-match img{
+    border-radius: 50%;
+    width: 7vmax;
+}
+
+.team-details-match h2{
+    margin: 0;
+    font-weight: 700;
+}
+
+.match-details-match-container{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: right;
+}
+
+@media only screen and (max-width: 600px) {
+    .match-container{
+        flex-direction: column;
+        justify-content: space-around;
+    }
+
+    .match-details-match-container{
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        text-align: center;
+    }
+}

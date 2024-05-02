@@ -1,6 +1,18 @@
 .matches-container{
     width: 70%;
     margin: 0 auto;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+.matches-container-main-content{
+    margin-top: 5vh;
+}
+
+#button-container-matches-container{
+    display: flex;
+    justify-content: right;
 }
 
 #create-match-btn-matches-page{
@@ -10,6 +22,10 @@
 
 #create-match-btn-matches-page:hover{
     background-color: rgb(0, 189, 0);
+}
+
+.matches-main-content{
+    margin-top: 2vh;
 }
 
 @media only screen and (max-width: 600px) {
