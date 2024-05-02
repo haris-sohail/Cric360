@@ -71,8 +71,13 @@ function Signup() {
             if (!userNameCheck && !emailCheck) {
                 try {
                     const res = await axios.post('http://localhost:3001/user/register', { username, email, password });
-                    if (res)
-                        toast.success("Registered Successfully");
+
+                    if (res) {
+                        await axios.post('http://localhost:3001/player/createPlayer', { username })
+                            .then(res => {
+                                toast.success("Registered Successfully");
+                            })
+                    }
 
                     // navigate to login page
                     navigate('/login')
