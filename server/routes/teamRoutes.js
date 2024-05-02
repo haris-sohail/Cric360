@@ -21,6 +21,7 @@ const upload = multer({
 router.post('/registerTeam', upload.single('teamLogo'), (req, res) => {
     if (req.file) {
         TeamModel.create({
+            id: uuid.v4(),
             captain_username: req.body.captainUsername,
             logo: req.file.filename,
             location: req.body.teamLocation,
@@ -31,6 +32,7 @@ router.post('/registerTeam', upload.single('teamLogo'), (req, res) => {
     }
     else { // no team logo entered
         TeamModel.create({
+            id: uuid.v4(),
             captain_username: req.body.captainUsername,
             location: req.body.teamLocation,
             name: req.body.teamName

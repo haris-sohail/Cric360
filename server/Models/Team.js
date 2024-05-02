@@ -1,6 +1,7 @@
 const mongoose = require("mongoose")
 
 const TeamSchema = new mongoose.Schema({
+    id: String,
     captain_username: String,
     name: String,
     logo: {
