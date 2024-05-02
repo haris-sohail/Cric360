@@ -17,7 +17,9 @@ function Matches() {
         <div className='matches-container'>
             <Navbar username={data.username} />
 
-            <button onClick={handleCreateMatch}><p>Create Match</p></button>
+            <button onClick={handleCreateMatch} id='create-match-btn-matches-page'><h6>Create Match</h6></button>
+
+            
         </div>
     )
 }

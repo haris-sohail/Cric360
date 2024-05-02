@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
 import '../css/CreateMatch.css'
 import Navbar from './Navbar';
@@ -24,31 +24,37 @@ function CreateMatch() {
     const [startingAt, setStartingAt] = useState()
     const [venue, setVenue] = useState()
     const [format, setFormat] = useState()
+    const [teamName, setTeamName] = useState()
+
+    useEffect(() => {
+        axios.post('http://localhost:3001/player/getTeam', { username })
+            .then(res => {
+                setTeamName(res.data.teamName);
+            });
+    }, []);
 
     const handleCreate = async () => {
         if (!startingAt || !venue || !format) {
             toast.error("Please fill in all the fields")
         }
-        else {
-            let teamName;
+        else {                
+            if (teamName) {
+                try {
+                    axios.post('http://localhost:3001/match/createMatch', { startingAt, venue, format, teamName })
+                        .then(res => {
+                            toast.success("Created the match successfully")
+                            navigate('/matches', { state: { username } })
+                        })
+                }
+                catch (err) {
+                    toast.error("Couldn't reach the server")
+                    console.log(err)
+                }
+            }
+            else {
+                toast.error("Team name not found")
+            }
 
-            // get the team of the player
-            axios.post('http://localhost:3001/player/getTeam', { username })
-                .then(res => {
-                    teamName = res.data.teamName
-                })
-            
-            try {
-                axios.post('http://localhost:3001/match/createMatch', { startingAt, venue, format, teamName })
-                    .then(res => {
-                        toast.success("Created the match successfully")
-                        navigate('/matches', { state: { username } })
-                    })
-            }
-            catch (err) {
-                toast.error("Couldn't reach the server")
-                console.log(err)
-            }
         }
 
     }
