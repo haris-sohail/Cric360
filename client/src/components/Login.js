@@ -14,7 +14,7 @@ function Login() {
 
         // fetch from database
         try {
-            const res = await axios.post('http://localhost:3001/login', { username, password });
+            const res = await axios.post('http://localhost:3001/user/login', { username, password });
 
             if (res.data !== null) {
                 // login successful

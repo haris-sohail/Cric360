@@ -30,6 +30,7 @@
     gap: 0.1vmax;
     flex-direction: row;
     align-items: center;
+    justify-content: center;
 }
 
 .stats-img-discussion-page{

@@ -16,29 +16,9 @@ app.use(cors())
 mongoose.connect("mongodb://127.0.0.1:27017/Cric360");
 
 
-app.post('/register', (req, res) => {
-  UserModel.create(req.body)
-    .then(users => res.json(users))
-    .catch(err => res.json(err))
-})
+const userRoutes = require('./routes/userRoutes');
 
-app.post('/getUser', (req, res) => {
-  UserModel.findOne({ username: req.body.username })
-    .then(user => res.json(user))
-    .catch(err => res.json(err))
-})
-
-app.post('/getEmail', (req, res) => {
-  UserModel.findOne({ email: req.body.email })
-    .then(email => res.json(email))
-    .catch(err => res.json(err))
-})
-
-app.post('/login', (req, res) => {
-  UserModel.findOne({ username: req.body.username, password: req.body.password })
-    .then(user => res.json(user))
-    .catch(err => res.json(err))
-})
+app.use('/user', userRoutes);
 
 app.post('/postDiscussion', (req, res) => {
   DiscussionModel.create(

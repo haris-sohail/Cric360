@@ -33,7 +33,7 @@ function Signup() {
 
     const userNameExists = async () => {
         try {
-            const res = await axios.post('http://localhost:3001/getUser', { username });
+            const res = await axios.post('http://localhost:3001/user/getUser', { username });
 
             if (res.data !== null)
                 toast.error("Username exists already")
@@ -48,7 +48,7 @@ function Signup() {
 
     const emailExists = async () => {
         try {
-            const res = await axios.post('http://localhost:3001/getEmail', { email });
+            const res = await axios.post('http://localhost:3001/user/getEmail', { email });
 
             if (res.data !== null)
                 toast.error("Email exists already")
@@ -70,7 +70,7 @@ function Signup() {
 
             if (!userNameCheck && !emailCheck) {
                 try {
-                    const res = await axios.post('http://localhost:3001/register', { username, email, password });
+                    const res = await axios.post('http://localhost:3001/user/register', { username, email, password });
                     if (res)
                         toast.success("Registered Successfully");
 
