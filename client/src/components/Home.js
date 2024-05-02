@@ -44,7 +44,7 @@ function Home() {
 
     const loadDiscussions = async () => {
         try {
-            const res = await axios.post('http://localhost:3001/getDiscussions')
+            const res = await axios.post('http://localhost:3001/discussion/getDiscussions')
                 .finally(() => {
                     setLoading(false);
                 });

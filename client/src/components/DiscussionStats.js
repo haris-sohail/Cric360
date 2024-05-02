@@ -13,12 +13,12 @@ function DiscussionStats({ discussionId }) {
 
     useEffect(() => {
 
-        axios.post("http://localhost:3001/getUpvotes", { discussionId })
+        axios.post("http://localhost:3001/discussion/getUpvotes", { discussionId })
             .then(res => {
                 setUpvotes(res.data)
             })
 
-        axios.post("http://localhost:3001/getDownvotes", { discussionId })
+        axios.post("http://localhost:3001/discussion/getDownvotes", { discussionId })
             .then(res => {
                 setDownvotes(res.data)
             })
@@ -29,7 +29,7 @@ function DiscussionStats({ discussionId }) {
         setUpvotes(upvotes + 1)
 
         try {
-            axios.post("http://localhost:3001/upvote", { discussionId })
+            axios.post("http://localhost:3001/discussion/upvote", { discussionId })
         }
         catch (err) {
             toast.error("Couldn't reach the server")
@@ -40,7 +40,7 @@ function DiscussionStats({ discussionId }) {
         setDownvotes(downvotes + 1)
 
         try {
-            axios.post("http://localhost:3001/downvote", { discussionId })
+            axios.post("http://localhost:3001/discussion/downvote", { discussionId })
 
         }
         catch (err) {
