@@ -8,6 +8,8 @@ import StartDiscussionDetails from './components/StartDiscussionDetails';
 import Teams from './components/Teams';
 import RegisterTeam from './components/RegisterTeam';
 import DiscussionPage from './components/DiscussionPage';
+import Matches from './components/Matches';
+import CreateMatch from './components/CreateMatch';
 
 function App() {
   return (
@@ -21,6 +23,8 @@ function App() {
         <Route path='/teams' element={<Teams />} />
         <Route path='/registerTeam' element={<RegisterTeam />} />
         <Route path='/discussionPage' element={<DiscussionPage />} />
+        <Route path='/matches' element={<Matches />} />
+        <Route path='/createMatch' element={<CreateMatch />} />
       </Routes>
     </BrowserRouter>
   );

@@ -14,6 +14,10 @@ function Navbar({ username }) {
         navigate('/teams', { state: { username } })
     }
 
+    const handleMatchesClick = () => {
+        navigate('/matches', { state: { username } })
+    }
+
     return (
         <div className='navbar'>
             <a onClick={handleLogoClick} id='logo-link'>
@@ -21,7 +25,9 @@ function Navbar({ username }) {
             </a>
 
             <div className='btns-container'>
-                <button><h6>Matches</h6></button>
+                <a onClick={handleMatchesClick}>
+                    <button><h6>Matches</h6></button>
+                </a>
 
                 <Link>
                     <button><h6>Stats</h6></button>
