@@ -7,6 +7,7 @@ import '../css/Match.css'
 function Match({ id, venue, startingAt, teamA, format, isLive }) {
   const [teamLogo, setTeamLogo] = useState();
   const [startingAtDate, setStartingAtDate] = useState()
+
   useEffect(() => {
     // get team logo
     try {
@@ -30,15 +31,23 @@ function Match({ id, venue, startingAt, teamA, format, isLive }) {
       minute: 'numeric',
       hour12: true
     });
-  
+
     setStartingAtDate(formattedDate);
   }, [])
+
   return (
     <div className='match-container'>
       <div className='team-details-match'>
         <img src={'http://localhost:3001/Images/' + teamLogo} alt="team_logo"></img>
-        <h2>{ teamA.toUpperCase() }</h2>
+        <h2>{teamA.toUpperCase()}</h2>
       </div>
+
+      <div className='accept-match-button-container'>
+        <button>
+          <h6>Accept Match</h6>
+        </button>
+      </div>
+
       <div className='match-details-match-container'>
         <p>{venue.toUpperCase()}</p>
         <p>{format.toUpperCase()}</p>
