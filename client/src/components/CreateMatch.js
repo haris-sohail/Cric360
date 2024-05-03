@@ -33,8 +33,10 @@ function CreateMatch() {
             .then(res => {
                 console.log(res)
                 setTeamName(res.data.teamName);
-            });
-        setLoading(false)
+            })
+            .finally(() => {
+                setLoading(false)
+            })
     }, []);
 
     const handleCreate = async () => {
@@ -62,6 +64,9 @@ function CreateMatch() {
 
         }
 
+    }
+    if (loading) {
+        return null;
     }
     return (
         <div className='create-match-container'>

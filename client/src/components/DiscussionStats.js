@@ -10,9 +10,10 @@ import axios from 'axios';
 function DiscussionStats({ discussionId }) {
     const [upvotes, setUpvotes] = useState()
     const [downvotes, setDownvotes] = useState()
+    const [loading, setLoading] = useState(false)
 
     useEffect(() => {
-
+        setLoading(true)
         axios.post("http://localhost:3001/discussion/getUpvotes", { discussionId })
             .then(res => {
                 setUpvotes(res.data)
@@ -22,7 +23,9 @@ function DiscussionStats({ discussionId }) {
             .then(res => {
                 setDownvotes(res.data)
             })
-
+            .finally(() => {
+                setLoading(false)
+            })
     }, [])
 
     const handleUpvote = (e) => {
@@ -48,6 +51,9 @@ function DiscussionStats({ discussionId }) {
         }
     }
 
+    if (loading) {
+        return null
+    }
     return (
         <div className='dicussion-stats-container'>
             <div className='upvotes-downvotes-container'>

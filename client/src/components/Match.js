@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react'
 import axios from 'axios'
 import toast from 'react-hot-toast'
+import CircularProgress from '@mui/material/CircularProgress';
+import Box from '@mui/material/Box';
 import '../css/Match.css'
 
 
@@ -10,17 +12,17 @@ function Match({ id, venue, startingAt, teamA, format, isLive, username }) {
   const [decreaseOpacity, setDecreaseOpacity] = useState(false)
   const [showAcceptButton, setShowAcceptButton] = useState(false)
   const [myTeam, setMyTeam] = useState()
+  const [matchAccepted, setMatchAccepted] = useState(false)
+  const [teamB, setTeamB] = useState()
+  const [loading, setLoading] = useState(false)
 
   useEffect(() => {
+    setLoading(true)
+
     // get my team
     axios.post('http://localhost:3001/player/getTeam', { username })
       .then(res => {
-        if (res.data.teamName.toLowerCase() == teamA.toLowerCase()) {
-          setMyTeam(true);
-        }
-        else {
-          setMyTeam(false);
-        }
+        setMyTeam(res.data.teamName.toLowerCase());
       })
 
     // get team logo
@@ -46,11 +48,14 @@ function Match({ id, venue, startingAt, teamA, format, isLive, username }) {
       hour12: true
     });
 
-    setStartingAtDate(formattedDate);
+    setStartingAtDate(formattedDate)
+      
+    setLoading(false)
+    
   }, [])
 
   const handleMouseEnter = () => {
-    if (!myTeam) {
+    if (myTeam.toLowerCase() != teamA.toLowerCase()) {
       setDecreaseOpacity(true)
       setShowAcceptButton(true)
     }
@@ -61,7 +66,7 @@ function Match({ id, venue, startingAt, teamA, format, isLive, username }) {
   }
 
   const handleMouseLeave = () => {
-    if (!myTeam) {
+    if (myTeam.toLowerCase() != teamA.toLowerCase()) {
       setDecreaseOpacity(false)
       setShowAcceptButton(false)
     }
@@ -71,7 +76,21 @@ function Match({ id, venue, startingAt, teamA, format, isLive, username }) {
     }
   }
 
+  const handleAcceptMatch = () => {
+    setTeamB(myTeam)
+    console.log('setting team b as', myTeam)
+  }
+
+  if (loading) {
+    return (
+      <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', flex: '1' }}>
+        <CircularProgress />
+      </Box>
+    )
+  }
+
   return (
+
     <div onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
       className={`match-container`}>
@@ -84,7 +103,7 @@ function Match({ id, venue, startingAt, teamA, format, isLive, username }) {
       {(showAcceptButton) && (
         <div className='accept-match-button-container'>
           <button>
-            <h6>Accept Match</h6>
+            <h6 onClick={handleAcceptMatch}>Accept Match</h6>
           </button>
         </div>
       )}
