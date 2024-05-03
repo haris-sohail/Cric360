@@ -21,12 +21,14 @@ function Matches() {
         if (matches) {
             const matchesComponents = matches.map(match => (
                 <Match
+                    key={match.id}
                     id={match.id}
                     venue={match.venue}
                     startingAt={match.startingAt}
                     teamA={match.teamA}
                     format={match.format}
                     isLive={match.isLive}
+                    username={username}
                 />
             ));
             setMatchesComponent(matchesComponents);
