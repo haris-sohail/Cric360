@@ -26,4 +26,12 @@ router.post('/changeTeamName', (req, res) => {
         .catch(err => res.json(err))
 });
 
+router.post('/getPlayer', (req, res) => {
+    PlayerModel.findOne({ username: req.body.username })
+        .then(player => { res.json(player) })
+        .catch(err => res.json(err))
+});
+
+
+
 module.exports = router;

@@ -15,6 +15,7 @@ function Matches() {
     const navigate = useNavigate();
     const [matches, setMatches] = useState()
     const [matchesComponent, setMatchesComponent] = useState()
+    const [isCaptain, setIsCaptain] = useState()
 
     useEffect(() => {
         if (matches) {
@@ -30,7 +31,6 @@ function Matches() {
             ));
             setMatchesComponent(matchesComponents);
         }
-        console.log(matches)
     }, [matches]);
 
     useEffect(() => {
@@ -56,9 +56,18 @@ function Matches() {
     }
 
     const hideCreateMatchButton = () => {
-        
+        axios.post('http://localhost:3001/player/getPlayer', { username })
+            .then(res => {
+                if (res.data.isCaptain == false || !res.data.isCaptain) {
+                    // hide the create match button
+                    setIsCaptain(false)
+                }
+                else {
+                    setIsCaptain(true)
+                }
+            })
     }
-    
+
     const handleCreateMatch = () => {
         navigate('/createMatch', { state: { username } })
     }
@@ -68,10 +77,11 @@ function Matches() {
             <Navbar username={data.username} />
 
             <div className='matches-container-main-content'>
-
-                <div id='button-container-matches-container'>
-                    <button onClick={handleCreateMatch} id='create-match-btn-matches-page'><h6>Create Match</h6></button>
-                </div>
+                {isCaptain && (
+                    <div id='button-container-matches-container'>
+                        <button onClick={handleCreateMatch} id='create-match-btn-matches-page'><h6>Create Match</h6></button>
+                    </div>
+                )}
                 <div className='matches-main-content'>
                     {matchesComponent ? matchesComponent :
                         <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', flex: '1' }}>
