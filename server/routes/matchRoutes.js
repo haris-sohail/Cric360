@@ -23,6 +23,21 @@ router.post('/getMatches', (req, res) => {
         .catch(err => { res.json(err) })
 })
 
+router.post('/getMatch', (req, res) => {
+    MatchModel.findOne({id: req.body.id})
+        .then(match => res.json(match))
+        .catch(err => { res.json(err) })
+})
+
+router.post('/setTeamB', (req, res) => {
+    const { details } = req.body
+
+    //{ username: req.body.username }, { teamName: req.body.teamName }, { new: req.body.teamName }
+    MatchModel.findOneAndUpdate({id: details[0]}, {teamB: details[1]}, {new: details[1]})
+        .then(match => res.json(match))
+        .catch(err => { res.json(err) })
+})
+
 // to be moved to teamRoutes.js:
 const TeamModel = require("../Models/Team");
 router.post('/getTeamLogo', (req, res) => {
