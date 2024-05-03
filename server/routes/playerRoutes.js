@@ -8,12 +8,6 @@ router.post('/createPlayer', (req, res) => {
         .catch(err => res.json(err))
 });
 
-router.post('/getTeam', (req, res) => {
-    PlayerModel.findOne({ username: req.body.username })
-        .then(player => res.json(player))
-        .catch(err => res.json(err))
-});
-
 router.post('/makeCaptain', (req, res) => {
     PlayerModel.findOneAndUpdate({ username: req.body.username }, { isCaptain: true }, { new: true })
         .then(player => { res.json(player) })
