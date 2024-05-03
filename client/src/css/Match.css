@@ -8,13 +8,18 @@
     background-color: #f3f3f3;
     padding-left: 1vmax;
     padding-right: 1vmax;
-    transition: background-color 0.2s;
+    transition: all 0.2s;
+}
+
+.decrease-opacity{
+    opacity: 0.5;
 }
 
 .team-details-match{
     display: flex;
     align-items: center;
     gap: 1vmax;
+    transition: all 0.2s;
 }
 
 .team-details-match img{
@@ -32,6 +37,7 @@
     flex-direction: column;
     justify-content: center;
     text-align: right;
+    transition: all 0.2s;
 }
 
 @media only screen and (max-width: 600px) {

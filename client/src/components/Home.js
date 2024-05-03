@@ -62,6 +62,10 @@ function Home() {
             console.log(err)
         }
     }
+    if (loading) {
+        return null
+    }
+
     return (
         <div className='home-container'>
             <Navbar username={data.username} />

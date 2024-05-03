@@ -16,24 +16,30 @@ function Matches() {
     const [matches, setMatches] = useState()
     const [matchesComponent, setMatchesComponent] = useState()
     const [isCaptain, setIsCaptain] = useState()
+    const [loading, setLoading] = useState(false)
 
     useEffect(() => {
+        setLoading(true)
         if (matches) {
             const matchesComponents = matches.map(match => (
                 <Match
+                    key={match.id}
                     id={match.id}
                     venue={match.venue}
                     startingAt={match.startingAt}
                     teamA={match.teamA}
                     format={match.format}
                     isLive={match.isLive}
+                    username={username}
                 />
             ));
-            setMatchesComponent(matchesComponents);
+            setMatchesComponent(matchesComponents)
+            setLoading(false)
         }
     }, [matches]);
 
     useEffect(() => {
+        setLoading(true)
         // hide create match button if user is not captain
         hideCreateMatchButton();
 
@@ -44,6 +50,9 @@ function Matches() {
     const loadMatches = async () => {
         try {
             const res = await axios.post('http://localhost:3001/match/getMatches')
+                .finally(() => {
+                    setLoading(false)
+                })
 
             if (res) {
                 setMatches(res.data);
@@ -72,6 +81,9 @@ function Matches() {
         navigate('/createMatch', { state: { username } })
     }
 
+    if (loading) {
+        return null
+    }
     return (
         <div className='matches-container'>
             <Navbar username={data.username} />
