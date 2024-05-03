@@ -42,6 +42,13 @@ router.post('/registerTeam', upload.single('teamLogo'), (req, res) => {
     }
 })
 
+router.post('/getTeam', (req, res) => {
+    const { team } = req.body
+
+    TeamModel.findOne({ name: { $regex: team[0], $options: 'i' } })
+        .then(team => { res.json(team) })
+        .catch(err => { res.json(err) })
+});
 
 router.get('/getTeams', async (req, res) => {
     try {

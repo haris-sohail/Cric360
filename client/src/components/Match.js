@@ -31,7 +31,7 @@ function Match({ id, venue, startingAt, teamA, format, isLive, username }) {
 
     // get team logo
     try {
-      axios.post('http://localhost:3001/match/getTeamLogo', { team: [teamA] })
+      axios.post('http://localhost:3001/team/getTeam', { team: [teamA] })
         .then(res => {
           setTeamLogo(res.data.logo)
         })
@@ -90,7 +90,7 @@ function Match({ id, venue, startingAt, teamA, format, isLive, username }) {
     setLoading(true)
 
     // set team B logo
-    axios.post('http://localhost:3001/match/getTeamLogo', { team: [myTeam] })
+    axios.post('http://localhost:3001/team/getTeam', { team: [myTeam] })
       .then(res => {
         setTeamBLogo(res.data.logo)
       })
@@ -114,7 +114,7 @@ function Match({ id, venue, startingAt, teamA, format, isLive, username }) {
         // set team B and their logo
         setTeamB(res.data.teamB)
 
-        axios.post('http://localhost:3001/match/getTeamLogo', { team: [res.data.teamB] })
+        axios.post('http://localhost:3001/team/getTeam', { team: [res.data.teamB] })
           .then(res => {
             setTeamBLogo(res.data.logo)
           })

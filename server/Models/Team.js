@@ -5,7 +5,7 @@ const TeamSchema = new mongoose.Schema({
     captain_username: String,
     name: String,
     logo: {
-        type: String, default: '../public/Images/default-team.png'
+        type: String
     },
     location: String,
     matchesPlayed: {
