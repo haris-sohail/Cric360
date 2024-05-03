@@ -42,4 +42,16 @@ router.post('/registerTeam', upload.single('teamLogo'), (req, res) => {
     }
 })
 
+
+router.get('/getTeams', async (req, res) => {
+    try {
+        const teams = await TeamModel.find();
+        res.status(200).json({ Teams: teams });
+    } catch (error) {
+        console.error('Error fetching teams:', error);
+        res.status(500).json({ error: 'Failed to fetch teams' });
+    }
+});
+
+
 module.exports = router;
