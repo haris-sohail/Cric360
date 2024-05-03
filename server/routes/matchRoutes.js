@@ -26,7 +26,9 @@ router.post('/getMatches', (req, res) => {
 // to be moved to teamRoutes.js:
 const TeamModel = require("../Models/Team");
 router.post('/getTeamLogo', (req, res) => {
-    TeamModel.findOne({ name: { $regex: req.body.teamA, $options: 'i' } })
+    const { team } = req.body
+
+    TeamModel.findOne({ name: { $regex: team[0], $options: 'i' } })
         .then(team => { res.json(team) })
         .catch(err => { res.json(err) })
 });

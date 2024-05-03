@@ -29,9 +29,8 @@ function CreateMatch() {
 
     useEffect(() => {
         setLoading(true)
-        axios.post('http://localhost:3001/player/getTeam', { username })
+        axios.post('http://localhost:3001/player/getPlayer', { username })
             .then(res => {
-                console.log(res)
                 setTeamName(res.data.teamName);
             })
             .finally(() => {

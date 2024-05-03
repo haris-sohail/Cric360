@@ -14,20 +14,21 @@ function Match({ id, venue, startingAt, teamA, format, isLive, username }) {
   const [myTeam, setMyTeam] = useState()
   const [matchAccepted, setMatchAccepted] = useState(false)
   const [teamB, setTeamB] = useState()
+  const [teamBLogo, setTeamBLogo] = useState()
   const [loading, setLoading] = useState(false)
 
   useEffect(() => {
     setLoading(true)
 
     // get my team
-    axios.post('http://localhost:3001/player/getTeam', { username })
+    axios.post('http://localhost:3001/player/getPlayer', { username })
       .then(res => {
         setMyTeam(res.data.teamName.toLowerCase());
       })
 
     // get team logo
     try {
-      axios.post('http://localhost:3001/match/getTeamLogo', { teamA })
+      axios.post('http://localhost:3001/match/getTeamLogo', { team: [teamA] })
         .then(res => {
           setTeamLogo(res.data.logo)
         })
@@ -49,13 +50,13 @@ function Match({ id, venue, startingAt, teamA, format, isLive, username }) {
     });
 
     setStartingAtDate(formattedDate)
-      
+
     setLoading(false)
-    
+
   }, [])
 
   const handleMouseEnter = () => {
-    if (myTeam.toLowerCase() != teamA.toLowerCase()) {
+    if (myTeam.toLowerCase() != teamA.toLowerCase() && !matchAccepted) {
       setDecreaseOpacity(true)
       setShowAcceptButton(true)
     }
@@ -66,7 +67,7 @@ function Match({ id, venue, startingAt, teamA, format, isLive, username }) {
   }
 
   const handleMouseLeave = () => {
-    if (myTeam.toLowerCase() != teamA.toLowerCase()) {
+    if (myTeam.toLowerCase() != teamA.toLowerCase() && !matchAccepted) {
       setDecreaseOpacity(false)
       setShowAcceptButton(false)
     }
@@ -78,6 +79,20 @@ function Match({ id, venue, startingAt, teamA, format, isLive, username }) {
 
   const handleAcceptMatch = () => {
     setTeamB(myTeam)
+
+    setLoading(true)
+
+    // set team B logo
+    axios.post('http://localhost:3001/match/getTeamLogo', { team: [myTeam] })
+      .then(res => {
+        console.log(res.data)
+        setTeamBLogo(res.data.logo)
+      })
+      .finally(() => {
+        setLoading(false)
+      })
+
+    setMatchAccepted(true)
     console.log('setting team b as', myTeam)
   }
 
@@ -93,12 +108,22 @@ function Match({ id, venue, startingAt, teamA, format, isLive, username }) {
 
     <div onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
-      className={`match-container`}>
+      className={`match-container ${matchAccepted ? 'match-accepted-match-container' : ''}`}>
 
-      <div className={`team-details-match ${decreaseOpacity ? 'decrease-opacity' : ''}`}>
-        <img src={'http://localhost:3001/Images/' + teamLogo} alt="team_logo"></img>
-        <h2>{teamA.toUpperCase()}</h2>
+      <div className={`${matchAccepted ? 'teams-container-match' : ''}`}>
+        <div className={`team-details-match ${decreaseOpacity ? 'decrease-opacity' : ''} ${matchAccepted ? 'match-accepted-team-details-match' : ''}`}>
+          <img src={'http://localhost:3001/Images/' + teamLogo} alt="team_logo"></img>
+          <h2>{teamA.toUpperCase()}</h2>
+        </div>
+
+        {teamB && (
+          <div className={`team-details-match ${decreaseOpacity ? 'decrease-opacity' : ''} ${matchAccepted ? 'match-accepted-team-details-match' : ''}`}>
+            <h2>{teamB.toUpperCase()}</h2>
+            <img src={'http://localhost:3001/Images/' + teamBLogo} alt="team_logo"></img>
+          </div>
+        )}
       </div>
+
 
       {(showAcceptButton) && (
         <div className='accept-match-button-container'>
@@ -109,7 +134,7 @@ function Match({ id, venue, startingAt, teamA, format, isLive, username }) {
       )}
 
 
-      <div className={`match-details-match-container ${decreaseOpacity ? 'decrease-opacity' : ''}`}>
+      <div className={`match-details-match-container ${decreaseOpacity ? 'decrease-opacity' : ''} ${matchAccepted ? 'match-accepted-match-details-match-container' : ''}`}>
         <p>{venue.toUpperCase()}</p>
         <p>{format.toUpperCase()}</p>
         <p>{startingAtDate}</p>
