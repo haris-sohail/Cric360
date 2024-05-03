@@ -9,7 +9,7 @@ function Team({ captain_username, name,logo, location, matches_played, matches_w
       </div>
 
       <div className='image-container'>
-          <img src={logo}></img>
+          <img src={'http://localhost:3001/Images/' + logo}></img>
       </div>
     </div>
   );
