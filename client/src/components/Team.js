@@ -4,7 +4,7 @@ function Team({ captain_username, name,logo, location, matches_played, matches_w
   return (
     <div className='teams-container'>
       <div className='title-container-teamspage'>
-        <h2>{name}</h2>
+        <h2>{name.toUpperCase()}</h2>
         <h3>{location}</h3>
       </div>
 
