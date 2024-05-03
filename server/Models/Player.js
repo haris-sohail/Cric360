@@ -2,6 +2,7 @@ const mongoose = require("mongoose")
 
 const PlayerSchema = new mongoose.Schema({
     username: String,
+    isCaptain: Boolean,
     teamName: {
         type: String,
         default: ""

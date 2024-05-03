@@ -29,12 +29,19 @@ function RegisterTeam() {
         }
 
         try {
-            const res = await axios.post('http://localhost:3001/team/registerTeam', formData);
-
-            if (res) {
-                toast.success("Registered successfully")
-
-            }
+            axios.post('http://localhost:3001/team/registerTeam', formData)
+                .then(() => {
+                    // change team name of player
+                    axios.post('http://localhost:3001/player/changeTeamName', { username, teamName })
+                        .then(() => {
+                            // change captain status
+                            axios.post('http://localhost:3001/player/makeCaptain', { username })
+                                .then(() => {
+                                    toast.success("Registered Successfully")
+                                    navigate('/teams', { state: { username } })
+                                })
+                        })
+                })
         }
         catch (err) {
             console.log(err)
@@ -50,7 +57,7 @@ function RegisterTeam() {
             <div className='main-content-register-team'>
                 <h1>Registering a Team</h1>
                 <div className='register-team-input'>
-                    <input placeholder='Team Name' onChange={(e) => { setTeamName(e.target.value.trim()) }}></input>
+                    <input placeholder='Team Name' onChange={(e) => { setTeamName(e.target.value.trim().toLocaleLowerCase()) }}></input>
                     <input placeholder='State / Town' onChange={(e) => { setLocation(e.target.value.trim()) }}></input>
 
                     <input id='image-upload-register-team'

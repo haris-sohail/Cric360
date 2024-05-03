@@ -14,4 +14,16 @@ router.post('/getTeam', (req, res) => {
         .catch(err => res.json(err))
 });
 
+router.post('/makeCaptain', (req, res) => {
+    PlayerModel.findOneAndUpdate({ username: req.body.username }, { isCaptain: true }, { new: true })
+        .then(player => { res.json(player) })
+        .catch(err => res.json(err))
+});
+
+router.post('/changeTeamName', (req, res) => {
+    PlayerModel.findOneAndUpdate({ username: req.body.username }, { teamName: req.body.teamName }, { new: req.body.teamName })
+        .then(player => { res.json(player) })
+        .catch(err => res.json(err))
+});
+
 module.exports = router;
