@@ -5,13 +5,14 @@
     border: 5px solid #7D0A0A;
     border-radius: 20px;
     display: flex;
-    flex-direction: column;
     align-items: center;
     justify-content: space-between;
     transition: background 2s ease;
     background: linear-gradient(to right, grey, #EEEEEE);
-    margin-top: 15%;
-    padding:
+    margin-top: 5%;
+    padding: 50px;
+    padding-left: 100px;
+    padding-right: 100px;
 }
 
 
