@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 import axios from 'axios'
 import toast from 'react-hot-toast'
 import CircularProgress from '@mui/material/CircularProgress';
 import Box from '@mui/material/Box';
+import TossDetails from './TossDetails';
 import '../css/Match.css'
 
 
@@ -18,6 +20,7 @@ function Match({ id, venue, startingAt, teamA, format, isLive, username }) {
   const [teamB, setTeamB] = useState()
   const [teamBLogo, setTeamBLogo] = useState()
   const [loading, setLoading] = useState(false)
+  const navigate = useNavigate()
 
   useEffect(() => {
     setLoading(true)
@@ -112,7 +115,7 @@ function Match({ id, venue, startingAt, teamA, format, isLive, username }) {
       setDecreaseOpacity(false)
       setShowStartMatchButton(false)
     }
-    
+
     if (!loading && myTeam) {
       if (myTeam.toLowerCase() != teamA.toLowerCase() && !matchAccepted) {
         setDecreaseOpacity(false)
@@ -166,7 +169,9 @@ function Match({ id, venue, startingAt, teamA, format, isLive, username }) {
   }
 
   const handleStartMatch = () => {
-
+    if (!loading) {
+      navigate('/tossDetails', { state: { teamA, teamB } })
+    }
   }
 
   if (loading) {
