@@ -67,7 +67,7 @@ function Matches() {
     const hideCreateMatchButton = () => {
         axios.post('http://localhost:3001/player/getPlayer', { username })
             .then(res => {
-                if (res.data.isCaptain == false) {
+                if (!res.data || res.data.isCaptain == false) {
                     // hide the create match button
                     setIsCaptain(false)
                 }

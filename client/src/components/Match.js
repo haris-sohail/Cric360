@@ -26,14 +26,16 @@ function Match({ id, venue, startingAt, teamA, format, isLive, username }) {
     // get my team
     axios.post('http://localhost:3001/player/getPlayer', { username })
       .then(res => {
-        setMyTeam(res.data.teamName.toLowerCase());
+        if (res.data)
+          setMyTeam(res.data.teamName.toLowerCase());
       })
 
     // get team logo
     try {
       axios.post('http://localhost:3001/team/getTeam', { team: [teamA] })
         .then(res => {
-          setTeamLogo(res.data.logo)
+          if (res.data)
+            setTeamLogo(res.data.logo)
         })
     }
     catch (err) {
@@ -92,7 +94,8 @@ function Match({ id, venue, startingAt, teamA, format, isLive, username }) {
     // set team B logo
     axios.post('http://localhost:3001/team/getTeam', { team: [myTeam] })
       .then(res => {
-        setTeamBLogo(res.data.logo)
+        if (res.data)
+          setTeamBLogo(res.data.logo)
       })
 
     setMatchAccepted(true)
@@ -107,16 +110,18 @@ function Match({ id, venue, startingAt, teamA, format, isLive, username }) {
   const checkMatchAccepted = () => {
     axios.post('http://localhost:3001/match/getMatch', { id })
       .then(res => {
-        if (res.data.teamB) {
-          setMatchAccepted(true)
-        }
+        if (res.data)
+          if (res.data.teamB) {
+            setMatchAccepted(true)
+          }
 
         // set team B and their logo
         setTeamB(res.data.teamB)
 
         axios.post('http://localhost:3001/team/getTeam', { team: [res.data.teamB] })
           .then(res => {
-            setTeamBLogo(res.data.logo)
+            if (res.data)
+              setTeamBLogo(res.data.logo)
           })
       })
   }
