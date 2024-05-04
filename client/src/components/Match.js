@@ -11,6 +11,7 @@ function Match({ id, venue, startingAt, teamA, format, isLive, username }) {
   const [startingAtDate, setStartingAtDate] = useState()
   const [decreaseOpacity, setDecreaseOpacity] = useState(false)
   const [showAcceptButton, setShowAcceptButton] = useState(false)
+  const [showStartMatchButton, setShowStartMatchButton] = useState(false)
   const [myTeam, setMyTeam] = useState()
   const [matchAccepted, setMatchAccepted] = useState(false)
   const [teamB, setTeamB] = useState()
@@ -20,28 +21,18 @@ function Match({ id, venue, startingAt, teamA, format, isLive, username }) {
   useEffect(() => {
     setLoading(true)
 
+    // check if the user is umpire, and set start match button if they are
+    isUserUmpire()
+
     // check if match is already accepted
     checkMatchAccepted()
 
     // get my team
-    axios.post('http://localhost:3001/player/getPlayer', { username })
-      .then(res => {
-        if (res.data)
-          setMyTeam(res.data.teamName.toLowerCase());
-      })
+    getMyTeam()
 
     // get team logo
-    try {
-      axios.post('http://localhost:3001/team/getTeam', { team: [teamA] })
-        .then(res => {
-          if (res.data)
-            setTeamLogo(res.data.logo)
-        })
-    }
-    catch (err) {
-      toast.error("Couldn't reach the server")
-      console.log(err)
-    }
+    getMyTeamLogo()
+
 
     // convert the date
     const formattedDate = new Date(startingAt).toLocaleString('en-US', {
@@ -59,6 +50,43 @@ function Match({ id, venue, startingAt, teamA, format, isLive, username }) {
     setLoading(false)
 
   }, [])
+
+  const isUserUmpire = () => {
+    axios.post('http://localhost:3001/user/getUser', { username })
+      .then(res => {
+        if (res.data) {
+          if (res.data.role.toLowerCase() == 'umpire') {
+            setShowStartMatchButton(true);
+          }
+        }
+      })
+      .catch(err => {
+        toast.error("Error checking if user is umpire. Can not reach server")
+        console.log(err)
+      })
+  }
+
+  const getMyTeam = () => {
+    axios.post('http://localhost:3001/player/getPlayer', { username })
+      .then(res => {
+        if (res.data)
+          setMyTeam(res.data.teamName.toLowerCase());
+      })
+  }
+
+  const getMyTeamLogo = () => {
+    try {
+      axios.post('http://localhost:3001/team/getTeam', { team: [teamA] })
+        .then(res => {
+          if (res.data)
+            setTeamLogo(res.data.logo)
+        })
+    }
+    catch (err) {
+      toast.error("Couldn't reach the server")
+      console.log(err)
+    }
+  }
 
   const handleMouseEnter = () => {
     if (!loading && myTeam) {
