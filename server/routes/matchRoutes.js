@@ -38,14 +38,4 @@ router.post('/setTeamB', (req, res) => {
         .catch(err => { res.json(err) })
 })
 
-// to be moved to teamRoutes.js:
-const TeamModel = require("../Models/Team");
-router.post('/getTeamLogo', (req, res) => {
-    const { team } = req.body
-
-    TeamModel.findOne({ name: { $regex: team[0], $options: 'i' } })
-        .then(team => { res.json(team) })
-        .catch(err => { res.json(err) })
-});
-
 module.exports = router;

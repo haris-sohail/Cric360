@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import Navbar from './Navbar'
 import { useLocation, useNavigate } from 'react-router-dom';
+import defaultTeam from '../system/assets/default-team.png'
 import toast from 'react-hot-toast'
 import axios from 'axios';
 import '../css/RegisterTeam.css'
