@@ -16,6 +16,25 @@
     flex: 1;
 }
 
+.welcome-container-home{
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.welcome-container-home h1{
+    margin: 0;
+}
+
+#logout-img-home{
+    width: 2.5vmax;
+}
+
+#logout-img-home:hover{
+    cursor: pointer;
+}
+
 @media only screen and (max-width: 600px) {
     .home-container{
         width: 95%;
