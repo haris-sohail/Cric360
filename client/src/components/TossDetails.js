@@ -8,6 +8,7 @@ import toast from 'react-hot-toast'
 
 import '../css/TossDetails.css'
 import Navbar from './Navbar'
+import MatchHandler from './MatchHandler';
 
 function TossDetails() {
     const location = useLocation()
@@ -16,13 +17,14 @@ function TossDetails() {
     const teamB = data.teamB
     const [tossWonBy, setTossWonBy] = useState()
     const [electedTo, setElectedTo] = useState()
+    const navigate = useNavigate()
 
     const handleStartInnings = () => {
         if (!tossWonBy || !electedTo) {
             toast.error("Please fill in all the fields")
         }
         else {
-            
+            navigate('/matchHandler', { state: { tossWonBy, electedTo } })
         }
     }
 

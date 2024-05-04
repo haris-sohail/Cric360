@@ -1,0 +1,31 @@
+.match-handler-container {
+    width: 70%;
+    margin: 0 auto;
+}
+
+.match-handler-live-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.2vmax;
+}
+
+.blink-dot-live-container {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background-color: red;
+    animation: blink 1s infinite;
+}
+
+@keyframes blink {
+    0% {
+        opacity: 1;
+    }
+    50% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+}
