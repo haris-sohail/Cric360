@@ -12,6 +12,7 @@ function Match({ id, venue, startingAt, teamA, format, isLive, username }) {
   const [decreaseOpacity, setDecreaseOpacity] = useState(false)
   const [showAcceptButton, setShowAcceptButton] = useState(false)
   const [showStartMatchButton, setShowStartMatchButton] = useState(false)
+  const [isUserUmpire, setIsUserUmpire] = useState(false)
   const [myTeam, setMyTeam] = useState()
   const [matchAccepted, setMatchAccepted] = useState(false)
   const [teamB, setTeamB] = useState()
@@ -22,7 +23,7 @@ function Match({ id, venue, startingAt, teamA, format, isLive, username }) {
     setLoading(true)
 
     // check if the user is umpire, and set start match button if they are
-    isUserUmpire()
+    checkUser()
 
     // check if match is already accepted
     checkMatchAccepted()
@@ -51,12 +52,12 @@ function Match({ id, venue, startingAt, teamA, format, isLive, username }) {
 
   }, [])
 
-  const isUserUmpire = () => {
+  const checkUser = () => {
     axios.post('http://localhost:3001/user/getUser', { username })
       .then(res => {
         if (res.data) {
           if (res.data.role.toLowerCase() == 'umpire') {
-            setShowStartMatchButton(true);
+            setIsUserUmpire(true);
           }
         }
       })
@@ -89,6 +90,11 @@ function Match({ id, venue, startingAt, teamA, format, isLive, username }) {
   }
 
   const handleMouseEnter = () => {
+    if (!loading && isUserUmpire && matchAccepted) {
+      setDecreaseOpacity(true)
+      setShowStartMatchButton(true)
+    }
+
     if (!loading && myTeam) {
       if (myTeam.toLowerCase() != teamA.toLowerCase() && !matchAccepted) {
         setDecreaseOpacity(true)
@@ -102,6 +108,11 @@ function Match({ id, venue, startingAt, teamA, format, isLive, username }) {
   }
 
   const handleMouseLeave = () => {
+    if (!loading && isUserUmpire && matchAccepted) {
+      setDecreaseOpacity(false)
+      setShowStartMatchButton(false)
+    }
+    
     if (!loading && myTeam) {
       if (myTeam.toLowerCase() != teamA.toLowerCase() && !matchAccepted) {
         setDecreaseOpacity(false)
@@ -154,6 +165,10 @@ function Match({ id, venue, startingAt, teamA, format, isLive, username }) {
       })
   }
 
+  const handleStartMatch = () => {
+
+  }
+
   if (loading) {
     return (
       <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', flex: '1' }}>
@@ -187,6 +202,14 @@ function Match({ id, venue, startingAt, teamA, format, isLive, username }) {
           <div className='accept-match-button-container'>
             <button>
               <h6 onClick={handleAcceptMatch}>Accept Match</h6>
+            </button>
+          </div>
+        )}
+
+        {(showStartMatchButton) && (
+          <div className='start-match-button-container'>
+            <button>
+              <h6 onClick={handleStartMatch}>Start Match</h6>
             </button>
           </div>
         )}
