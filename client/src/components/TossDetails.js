@@ -16,6 +16,7 @@ function TossDetails() {
     const teamA = data.teamA
     const teamB = data.teamB
     const [tossWonBy, setTossWonBy] = useState()
+    const [tossLostBy, setTossLostBy] = useState()
     const [electedTo, setElectedTo] = useState()
     const navigate = useNavigate()
 
@@ -24,7 +25,7 @@ function TossDetails() {
             toast.error("Please fill in all the fields")
         }
         else {
-            navigate('/matchHandler', { state: { tossWonBy, electedTo } })
+            navigate('/matchHandler', { state: { tossWonBy, electedTo, tossLostBy } })
         }
     }
 
@@ -40,7 +41,7 @@ function TossDetails() {
                         labelId="demo-simple-select-standard-label"
                         id="demo-simple-select-standard"
                         value={tossWonBy}
-                        onChange={(e) => { setTossWonBy(e.target.value) }}
+                        onChange={(e) => { setTossWonBy(e.target.value); setTossLostBy(teamB) }}
                         label="toss-won-by"
                     >
                         <MenuItem value={teamA}><h6>{teamA.toUpperCase()}</h6></MenuItem>
