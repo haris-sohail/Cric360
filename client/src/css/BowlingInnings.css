@@ -1,7 +1,3 @@
-.bowler-innings-container{
-    flex: 1;
-}
-
 .bowler-details-container-bowler-innings{
     display: flex;
     justify-content: space-evenly;
@@ -16,7 +12,7 @@
 }
 .stats-details-bowler-innings{
     display: flex;
-    gap: 0.1vmax;
+    gap: 2vmax;
 }
 
 .bowler-details-container-bowler-innings h4{

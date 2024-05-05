@@ -15,6 +15,7 @@ function BowlingInnings({ bowlingTeam }) {
     const [allPlayers, setAllPlayers] = useState([])
     const [loading, setLoading] = useState(false)
     const [ballsBowled, setBallsBowled] = useState(0)
+    const [runsConceded, setRunsConceded] = useState(0)
 
     useEffect(() => {
         if (!useEffectCalled) {
@@ -57,7 +58,7 @@ function BowlingInnings({ bowlingTeam }) {
     }
     else {
         return (
-            <div className='bowling-innings-'>
+            <div className='bowling-innings-container'>
                 <FormControl variant="standard" fullWidth
                     className={`${bowler ? 'hide' : ''}`}>
 
@@ -82,6 +83,9 @@ function BowlingInnings({ bowlingTeam }) {
                     <div className={`stats-details-bowler-innings`}>
                         <h4 className={`${bowler ? 'show' : ''}`}>
                             BALLS: {ballsBowled}
+                        </h4>
+                        <h4 className={`${bowler ? 'show' : ''}`}>
+                            RUNS: {runsConceded}
                         </h4>
                     </div>
                 </div>

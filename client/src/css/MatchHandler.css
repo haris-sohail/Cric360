@@ -1,5 +1,8 @@
 .match-handler-container {
+    height: 100vh;
     width: 70%;
+    display: flex;
+    flex-direction: column;
     margin: 0 auto;
 }
 
@@ -16,6 +19,10 @@
     border-radius: 50%;
     background-color: red;
     animation: blink 1s infinite;
+}
+
+.innings-container-match-handler{
+    flex: 1;
 }
 
 @keyframes blink {

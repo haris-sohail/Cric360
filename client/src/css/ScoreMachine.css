@@ -1,0 +1,14 @@
+.score-machine-container{
+    width: 100%;
+    height: 15vh;
+    border-radius: 20px;
+    display: flex;
+    justify-content: space-around;
+    background-color: #dfdfdf;
+    padding: 2vmax;
+}
+
+.score-machine-container button{
+    width: 6vmax;
+    text-align: center;
+}
