@@ -1,3 +1,4 @@
 .innings-container{
-    
+    display: flex;
+    gap: 1vmax;
 }

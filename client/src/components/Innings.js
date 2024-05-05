@@ -6,6 +6,7 @@ function Innings({ battingTeam, bowlingTeam }) {
     return (
         <div className='innings-container'>
             <BattingInnings battingTeam={battingTeam} />
+            <BattingInnings battingTeam={battingTeam} />
         </div>
     )
 }

@@ -1,3 +1,32 @@
 .batting-innings-container{
-    width: 100%;
+    flex: 1;
+}
+
+.batsman-details-container-batting-innings{
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    background-color: white;
+    height: 3vmax;
+    display: none;
+}
+
+.flex{
+    display: flex;
+}
+.stats-details-batting-innings{
+    display: flex;
+    gap: 0.1vmax;
+}
+
+.batsman-details-container-batting-innings h4{
+    font-weight: 700;
+}
+
+.hide{
+    display: none !important;
+}
+
+.show{
+    display: flex;
 }

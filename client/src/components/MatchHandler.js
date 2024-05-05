@@ -39,7 +39,9 @@ function MatchHandler() {
                     <h6>LIVE</h6>
                     <div className='blink-dot-live-container'></div>
                 </div>
-                <Innings battingTeam={battingTeam} bowlingTeam={bowlingTeam} />
+                <div className='innings-container-match-handler'>
+                    <Innings battingTeam={battingTeam} bowlingTeam={bowlingTeam} />
+                </div>
             </div>
         )
     }

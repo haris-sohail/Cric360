@@ -14,6 +14,9 @@ function BattingInnings({ battingTeam }) {
     const [batsman, setBatsman] = useState();
     const [allPlayers, setAllPlayers] = useState([])
     const [loading, setLoading] = useState(false)
+    const [runsScored, setRunsScored] = useState(0)
+    const [ballsFaced, setBallsFaced] = useState(0)
+    const [currentlyFacing, setCurrentlyFacing] = useState()
 
     useEffect(() => {
         setLoading(true)
@@ -40,6 +43,10 @@ function BattingInnings({ battingTeam }) {
 
     }, [battingTeam])
 
+    const bracketStyle = {
+        fontFamily: 'Roboto Slab, sans-serif',
+    };
+
     if (loading || allPlayers.length == 0) {
         return (
             <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', flex: '1' }}>
@@ -50,7 +57,9 @@ function BattingInnings({ battingTeam }) {
     else {
         return (
             <div className='batting-innings-container'>
-                <FormControl variant="standard" fullWidth>
+                <FormControl variant="standard" fullWidth
+                    className={`${batsman ? 'hide' : ''}`}>
+
                     <InputLabel id="demo-simple-select-standard-label"><h6>SELECT BATSMAN</h6></InputLabel>
                     <Select
                         labelId="demo-simple-select-standard-label"
@@ -66,6 +75,18 @@ function BattingInnings({ battingTeam }) {
                         ))}
                     </Select>
                 </FormControl>
+                
+                <div className={`batsman-details-container-batting-innings ${batsman ? 'show' : ''}`}>
+                    <h4>{batsman}</h4>
+                    <div className='stats-details-batting-innings'>
+                        <h4>{runsScored}</h4>
+                        <h4 className = 'flex'>
+                            <h4 style={bracketStyle}>(</h4>
+                            {ballsFaced}
+                            <h4 style={bracketStyle}>)</h4>
+                        </h4>
+                    </div>
+                </div>
             </div>
         )
     }
