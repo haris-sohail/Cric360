@@ -60,7 +60,7 @@ function MatchHandler() {
                     <div className='blink-dot-live-container'></div>
                 </div>
                 <div className='innings-container-match-handler'>
-                    <Innings matchStatsID={matchStatsID} battingTeam={battingTeam} bowlingTeam={bowlingTeam} />
+                    <Innings matchStatsID={matchStatsID} battingTeam={battingTeam} bowlingTeam={bowlingTeam} inningNoVal={'0'}/>
                 </div>
             </div>
         )
