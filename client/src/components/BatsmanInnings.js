@@ -8,9 +8,9 @@ import CircularProgress from '@mui/material/CircularProgress';
 import Box from '@mui/material/Box';
 import axios from 'axios'
 
-import '../css/BattingInnings.css'
+import '../css/BatsmanInnings.css'
 
-function BattingInnings({ battingTeam }) {
+function BatsmanInnings({ battingTeam }) {
     const [batsman, setBatsman] = useState();
     const [allPlayers, setAllPlayers] = useState([])
     const [loading, setLoading] = useState(false)
@@ -75,7 +75,7 @@ function BattingInnings({ battingTeam }) {
                         ))}
                     </Select>
                 </FormControl>
-                
+
                 <div className={`batsman-details-container-batting-innings ${batsman ? 'show' : ''}`}>
                     <h4>{batsman}</h4>
                     <div className='stats-details-batting-innings'>
@@ -93,4 +93,4 @@ function BattingInnings({ battingTeam }) {
 
 }
 
-export default BattingInnings
+export default BatsmanInnings

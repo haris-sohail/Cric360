@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
+import axios from 'axios'
 import '../css/MatchHandler.css'
+import toast from 'react-hot-toast'
 import Innings from './Innings'
 
 function MatchHandler() {
@@ -11,23 +13,41 @@ function MatchHandler() {
     const tossLostBy = data.tossLostBy
     const [battingTeam, setBattingTeam] = useState();
     const [bowlingTeam, setBowlingTeam] = useState();
+    const [matchStatsID, setMatchStatsID] = useState()
     const [loading, setLoading] = useState(false);
+    let useEffectCalled = false
 
     useEffect(() => {
-        setLoading(true);
+        if (!useEffectCalled) {
+            useEffectCalled = true
 
-        if (electedTo == "bat") {
-            setBattingTeam(tossWonBy)
-            setBowlingTeam(tossLostBy)
+            setLoading(true);
+
+            if (electedTo == "bat") {
+                setBattingTeam(tossWonBy);
+                setBowlingTeam(tossLostBy);
+            } else {
+                setBattingTeam(tossLostBy);
+                setBowlingTeam(tossWonBy);
+            }
+
+            // make match details
+            axios.post('http://localhost:3001/matchStats/createMatchStats', { tossWonBy, electedTo, tossLostBy })
+                .then(res => {
+                    if (res.data) {
+                        setMatchStatsID(res.data.id);
+                    }
+                })
+                .catch(err => {
+                    toast.error("Error creating match stats, can not reach server");
+                    console.log(err);
+                })
+                .finally(() => {
+                    setLoading(false);
+                });
         }
 
-        else {
-            setBattingTeam(tossLostBy)
-            setBowlingTeam(tossWonBy)
-        }
-
-        setLoading(false);
-    }, [])
+    }, []);
 
     if (loading) {
         return null;
@@ -40,7 +60,7 @@ function MatchHandler() {
                     <div className='blink-dot-live-container'></div>
                 </div>
                 <div className='innings-container-match-handler'>
-                    <Innings battingTeam={battingTeam} bowlingTeam={bowlingTeam} />
+                    <Innings matchStatsID={matchStatsID} battingTeam={battingTeam} bowlingTeam={bowlingTeam} />
                 </div>
             </div>
         )
