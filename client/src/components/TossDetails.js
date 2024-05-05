@@ -29,6 +29,19 @@ function TossDetails() {
         }
     }
 
+    const handleTossWinner = (e) => {
+        let tossWinner = e.target.value
+
+        setTossWonBy(e.target.value)
+
+        if (tossWinner.toLowerCase() == teamA.toLowerCase()) {
+            setTossLostBy(teamB)
+        }
+        else {
+            setTossLostBy(teamA)
+        }
+    }
+
     return (
         <div className='toss-details-container'>
             <Navbar username={data.username} />
@@ -41,7 +54,7 @@ function TossDetails() {
                         labelId="demo-simple-select-standard-label"
                         id="demo-simple-select-standard"
                         value={tossWonBy}
-                        onChange={(e) => { setTossWonBy(e.target.value); setTossLostBy(teamB) }}
+                        onChange={handleTossWinner}
                         label="toss-won-by"
                     >
                         <MenuItem value={teamA}><h6>{teamA.toUpperCase()}</h6></MenuItem>

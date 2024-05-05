@@ -1,8 +1,8 @@
-.batsman-innings-container{
+.bowler-innings-container{
     flex: 1;
 }
 
-.batsman-details-container-batsman-innings{
+.bowler-details-container-bowler-innings{
     display: flex;
     justify-content: space-evenly;
     align-items: center;
@@ -14,12 +14,12 @@
 .flex{
     display: flex;
 }
-.stats-details-batsman-innings{
+.stats-details-bowler-innings{
     display: flex;
     gap: 0.1vmax;
 }
 
-.batsman-details-container-batsman-innings h4{
+.bowler-details-container-bowler-innings h4{
     font-weight: 700;
 }
 

@@ -56,7 +56,7 @@ function BatsmanInnings({ battingTeam }) {
     }
     else {
         return (
-            <div className='batting-innings-container'>
+            <div className='batsman-innings-container'>
                 <FormControl variant="standard" fullWidth
                     className={`${batsman ? 'hide' : ''}`}>
 
@@ -76,9 +76,9 @@ function BatsmanInnings({ battingTeam }) {
                     </Select>
                 </FormControl>
 
-                <div className={`batsman-details-container-batting-innings ${batsman ? 'show' : ''}`}>
+                <div className={`batsman-details-container-batsman-innings ${batsman ? 'show' : ''}`}>
                     <h4>{batsman}</h4>
-                    <div className='stats-details-batting-innings'>
+                    <div className='stats-details-batsman-innings'>
                         <h4>{runsScored}</h4>
                         <h4 className = 'flex'>
                             <h4 style={bracketStyle}>(</h4>
