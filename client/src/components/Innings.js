@@ -13,6 +13,18 @@ function Innings({ matchStatsID, battingTeam, bowlingTeam, inningNoVal }) {
     const [balls, setBalls] = useState(0)
     const [inningNo, setInningNo] = useState(inningNoVal)
     const [buttonPressed, setButtonPressed] = useState('')
+    const [batter1Facing, setBatter1Facing] = useState(true)
+    const [batter2Facing, setBatter2Facing] = useState(false)
+
+    const updateBatter1Facing = (value) => {
+        setBatter1Facing(value)
+        setBatter2Facing(!value)
+    }
+
+    const updateBatter2Facing = (value) => {
+        setBatter2Facing(value)
+        setBatter1Facing(!value)
+    }
 
     const handleButtonPress = (value) => {
         setButtonPressed(value);
@@ -24,6 +36,9 @@ function Innings({ matchStatsID, battingTeam, bowlingTeam, inningNoVal }) {
             setWickets(wickets + 1);
             setBalls(balls + 1)
         }
+        else if (value == 'MISS') {
+            setBalls(balls + 1)
+        }
         else {
             setTotalRuns(totalRuns + value)
             setBalls(balls + 1)
@@ -31,9 +46,17 @@ function Innings({ matchStatsID, battingTeam, bowlingTeam, inningNoVal }) {
     };
 
     useEffect(() => {
+        setButtonPressed('') // reset its value after it has been used
+    }, [buttonPressed])
+
+    useEffect(() => {
         if (balls > 5) {
             setBalls(0)
             setOvers(overs + 1)
+
+            const tempFacing = batter1Facing;
+            setBatter1Facing(batter2Facing);
+            setBatter2Facing(tempFacing);
         }
     }, [balls])
 
@@ -72,11 +95,14 @@ function Innings({ matchStatsID, battingTeam, bowlingTeam, inningNoVal }) {
     return (
         <div className='innings-container'>
             <div className='inning-stats-container-inning'>
-                <h6>{totalRuns}/{wickets} ({overs}.{balls})</h6>
+                <h2>{totalRuns}/{wickets} ({overs}.{balls})</h2>
             </div>
             <div className='batsmen-innings-container-innings'>
-                <BatsmanInnings battingTeam={battingTeam} />
-                <BatsmanInnings battingTeam={battingTeam} />
+                <BatsmanInnings battingTeam={battingTeam} buttonPressed={buttonPressed} currentlyFacing={batter1Facing}
+                    updateCurrentlyFacing={updateBatter1Facing} />
+
+                <BatsmanInnings battingTeam={battingTeam} buttonPressed={buttonPressed} currentlyFacing={batter2Facing}
+                    updateCurrentlyFacing={updateBatter2Facing} />
             </div>
 
             <div className='bowling-and-scoremachine-container'>

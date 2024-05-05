@@ -31,7 +31,6 @@ function BowlingInnings({ bowlingTeam }) {
                     .then(res => {
                         if (res.data && Array.isArray(res.data)) {
                             setAllPlayers(res.data)
-                            console.log(res.data)
                         }
                     })
                     .catch(err => {

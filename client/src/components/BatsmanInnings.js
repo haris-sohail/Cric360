@@ -10,13 +10,12 @@ import axios from 'axios'
 
 import '../css/BatsmanInnings.css'
 
-function BatsmanInnings({ battingTeam }) {
+function BatsmanInnings({ battingTeam, buttonPressed, currentlyFacing, updateCurrentlyFacing }) {
     const [batsman, setBatsman] = useState();
     const [allPlayers, setAllPlayers] = useState([])
     const [loading, setLoading] = useState(false)
     const [runsScored, setRunsScored] = useState(0)
     const [ballsFaced, setBallsFaced] = useState(0)
-    const [currentlyFacing, setCurrentlyFacing] = useState()
 
     useEffect(() => {
         setLoading(true)
@@ -40,8 +39,29 @@ function BatsmanInnings({ battingTeam }) {
                 })
         }
 
-
     }, [battingTeam])
+
+    useEffect(() => {
+        if (buttonPressed && currentlyFacing) {
+            if (buttonPressed == 'OUT') {
+                setBallsFaced(ballsFaced + 1)
+            }
+            else if (buttonPressed == 'WD') {
+            }
+            else if (buttonPressed == 'MISS') {
+                setBallsFaced(ballsFaced + 1)
+            }
+            else {
+                setRunsScored(runsScored + buttonPressed)
+                setBallsFaced(ballsFaced + 1)
+            }
+
+            // currently facing logic
+            if (buttonPressed == 1 || buttonPressed == 3 || buttonPressed == 5) {
+                updateCurrentlyFacing(false)
+            }
+        }
+    }, [buttonPressed])
 
     const bracketStyle = {
         fontFamily: 'Roboto Slab, sans-serif',
@@ -77,10 +97,15 @@ function BatsmanInnings({ battingTeam }) {
                 </FormControl>
 
                 <div className={`batsman-details-container-batsman-innings ${batsman ? 'show' : ''}`}>
-                    <h4>{batsman}</h4>
+                    {(currentlyFacing && (
+                        <h4>*{batsman}</h4>
+                    ))}
+                    {(!currentlyFacing && (
+                        <h4>{batsman}</h4>
+                    ))}
                     <div className='stats-details-batsman-innings'>
                         <h4>{runsScored}</h4>
-                        <h4 className = 'flex'>
+                        <h4 className='flex'>
                             <h4 style={bracketStyle}>(</h4>
                             {ballsFaced}
                             <h4 style={bracketStyle}>)</h4>

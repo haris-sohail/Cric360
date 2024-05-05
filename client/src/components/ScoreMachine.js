@@ -7,7 +7,7 @@ function ScoreMachine({ onButtonPress }) {
   };
   return (
     <div className='score-machine-container'>
-      <button onClick={() => handleButtonClick(0)}><h6>0</h6></button>
+      <button onClick={() => handleButtonClick('MISS')}><h6>0</h6></button>
       <button onClick={() => handleButtonClick(1)}><h6>1</h6></button>
       <button onClick={() => handleButtonClick(2)}><h6>2</h6></button>
       <button onClick={() => handleButtonClick(3)}><h6>3</h6></button>
