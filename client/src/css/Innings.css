@@ -6,6 +6,11 @@
     justify-content: space-around;
 }
 
+.inning-stats-container-inning{
+    display: flex;
+    justify-content: center;
+}
+
 .batsmen-innings-container-innings{
     display: flex;
     flex-direction: column;

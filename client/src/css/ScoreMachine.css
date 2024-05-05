@@ -4,11 +4,13 @@
     border-radius: 20px;
     display: flex;
     justify-content: space-around;
+    align-items: center;
     background-color: #dfdfdf;
     padding: 2vmax;
 }
 
 .score-machine-container button{
     width: 6vmax;
+    height: 5vmax;
     text-align: center;
 }

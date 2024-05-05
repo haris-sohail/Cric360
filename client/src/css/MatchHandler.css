@@ -36,3 +36,11 @@
         opacity: 1;
     }
 }
+
+@media only screen and (max-width: 600px) {
+    .match-handler-container {
+        width: 100%;
+    }
+}
+
+
