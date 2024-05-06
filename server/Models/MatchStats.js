@@ -2,7 +2,7 @@ const mongoose = require("mongoose")
 
 const MatchStatsSchema = new mongoose.Schema({
     id: String,
-    match_date: Date,
+    startedAt: Date,
     teamA: String,
     teamB: String,
     tossWinner: String,

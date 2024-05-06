@@ -14,6 +14,7 @@ function MatchHandler() {
     const [battingTeam, setBattingTeam] = useState();
     const [bowlingTeam, setBowlingTeam] = useState();
     const [matchStatsID, setMatchStatsID] = useState()
+    let matchStatsIDVal;
     const [loading, setLoading] = useState(false);
     let useEffectCalled = false
 
@@ -60,7 +61,7 @@ function MatchHandler() {
                     <div className='blink-dot-live-container'></div>
                 </div>
                 <div className='innings-container-match-handler'>
-                    <Innings matchStatsID={matchStatsID} battingTeam={battingTeam} bowlingTeam={bowlingTeam} inningNoVal={'0'}/>
+                    <Innings matchStatsID={matchStatsID} battingTeam={battingTeam} bowlingTeam={bowlingTeam} inningNoVal={'0'} />
                 </div>
             </div>
         )

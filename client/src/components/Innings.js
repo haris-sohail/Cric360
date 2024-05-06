@@ -21,6 +21,8 @@ function Innings({ matchStatsID, battingTeam, bowlingTeam, inningNoVal }) {
     const [isBatsman1Selected, setIsBatsman1Selected] = useState(false)
     const [isBatsman2Selected, setIsBatsman2Selected] = useState(false)
     const [isBowlerSelected, setIsBowlerSelected] = useState(false)
+    const [batsmanNumber, setBatsmanNumber] = useState(0)
+    const [extras, setExtras] = useState(0)
 
     const updateBatter1Facing = (value) => {
         setBatter1Facing(value)
@@ -37,6 +39,7 @@ function Innings({ matchStatsID, battingTeam, bowlingTeam, inningNoVal }) {
 
         if (value == 'WD') {
             setTotalRuns(totalRuns + 1)
+            setExtras(extras + 1)
         }
         else if (value == 'OUT') {
             setWickets(wickets + 1);
@@ -54,6 +57,14 @@ function Innings({ matchStatsID, battingTeam, bowlingTeam, inningNoVal }) {
     useEffect(() => {
         setButtonPressed('') // reset its value after it has been used
     }, [buttonPressed])
+
+    useEffect(() => {
+        axios.post('http://localhost:3001/matchStats/updateExtras', { extras, matchStatsID, inningNo })
+            .catch(err => {
+                console.log(err)
+                toast.error("Couldn't update extras, server is unreachable")
+            })
+    }, [extras])
 
     useEffect(() => {
         if (balls > 5) {
@@ -124,6 +135,10 @@ function Innings({ matchStatsID, battingTeam, bowlingTeam, inningNoVal }) {
             }, 200);
             setIsBatsman2Selected(false)
         }
+
+        if (wickets) {
+            setBatsmanNumber(batsmanNumber + 1)
+        }
     }, [wickets])
 
     const updateBatsman1Selected = () => {
@@ -146,12 +161,14 @@ function Innings({ matchStatsID, battingTeam, bowlingTeam, inningNoVal }) {
             <div className='batsmen-innings-container-innings'>
                 {loadBatsman1 && (
                     <BatsmanInnings battingTeam={battingTeam} buttonPressed={buttonPressed} currentlyFacing={batter1Facing}
-                        updateCurrentlyFacing={updateBatter1Facing} batsmanSelected={updateBatsman1Selected} />
+                        updateCurrentlyFacing={updateBatter1Facing} batsmanSelected={updateBatsman1Selected} batsmanNumber={batsmanNumber}
+                        matchStatsID={matchStatsID} inningNo={inningNo} />
                 )}
 
                 {loadBatsman2 && (
                     <BatsmanInnings battingTeam={battingTeam} buttonPressed={buttonPressed} currentlyFacing={batter2Facing}
-                        updateCurrentlyFacing={updateBatter2Facing} batsmanSelected={updateBatsman2Selected} />
+                        updateCurrentlyFacing={updateBatter2Facing} batsmanSelected={updateBatsman2Selected} batsmanNumber={batsmanNumber + 1}
+                        matchStatsID={matchStatsID} inningNo={inningNo} />
                 )}
             </div>
 

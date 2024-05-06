@@ -8,8 +8,15 @@ router.post('/createMatchStats', (req, res) => {
 
     MatchStatsModel.create({
         id: uuid.v4(),
+        teamA: tossWonBy,
+        teamB: tossLostBy,
         tossWinner: tossWonBy,
-        tossDecision: electedTo
+        tossDecision: electedTo,
+        innings: [
+            { teamName: tossWonBy },
+            { teamName: tossLostBy }
+        ],
+        startingAt: Date.now()
     })
         .then(MatchStats => res.json(MatchStats))
         .catch(err => res.json(err))
@@ -82,5 +89,78 @@ router.post('/updateOvers', (req, res) => {
         .then(MatchStats => res.json(MatchStats))
         .catch(err => res.json(err))
 });
+
+router.post('/updateRunsScoredBatsman', (req, res) => {
+    let id = req.body.matchStatsID
+    let runsScored = req.body.runsScored
+    let inningNo = req.body.inningNo
+    let batsmanNumber = req.body.batsmanNumber
+
+    let updateObject = {};
+    updateObject['innings.' + inningNo + '.batsmen.' + batsmanNumber + '.runs'] = runsScored;
+
+    MatchStatsModel.findOneAndUpdate(
+        { id: id },
+        { $set: updateObject },
+        { new: true }
+    )
+        .then(MatchStats => res.json(MatchStats))
+        .catch(err => res.json(err))
+});
+
+router.post('/updateBatsmanName', (req, res) => {
+    let id = req.body.matchStatsID
+    let batsmanName = req.body.batsman
+    let inningNo = req.body.inningNo
+    let batsmanNumber = req.body.batsmanNumber
+
+    let updateObject = {};
+    updateObject['innings.' + inningNo + '.batsmen.' + batsmanNumber + '.name'] = batsmanName;
+
+    MatchStatsModel.findOneAndUpdate(
+        { id: id },
+        { $set: updateObject },
+        { new: true }
+    )
+        .then(MatchStats => res.json(MatchStats))
+        .catch(err => res.json(err))
+});
+
+router.post('/updateBallsFaced', (req, res) => {
+    let id = req.body.matchStatsID
+    let ballsFaced = req.body.ballsFaced
+    let inningNo = req.body.inningNo
+    let batsmanNumber = req.body.batsmanNumber
+
+    let updateObject = {};
+    updateObject['innings.' + inningNo + '.batsmen.' + batsmanNumber + '.balls'] = ballsFaced;
+
+    MatchStatsModel.findOneAndUpdate(
+        { id: id },
+        { $set: updateObject },
+        { new: true }
+    )
+        .then(MatchStats => res.json(MatchStats))
+        .catch(err => res.json(err))
+});
+
+router.post('/updateExtras', (req, res) => {
+    let id = req.body.matchStatsID
+    let inningNo = req.body.inningNo
+    let extras = req.body.extras
+
+    let updateObject = {};
+    updateObject['innings.' + inningNo + '.extras'] = extras;
+
+    MatchStatsModel.findOneAndUpdate(
+        { id: id },
+        { $set: updateObject },
+        { new: true }
+    )
+        .then(MatchStats => res.json(MatchStats))
+        .catch(err => res.json(err))
+});
+
+
 
 module.exports = router;
