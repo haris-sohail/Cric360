@@ -161,6 +161,27 @@ router.post('/updateExtras', (req, res) => {
         .catch(err => res.json(err))
 });
 
+router.post('/createBowler', async (req, res) => {
+    const { matchStatsID, inningNo, bowler } = req.body;
+
+    const match = await MatchStatsModel.findOne({ id: matchStatsID });
+
+    const inning = match.innings[inningNo];
+
+    // Add bowler to the inning
+    inning.bowlers.push({
+        name: bowler,
+        overs: 0,
+        wickets: 0,
+        runs: 0,
+        economy: 0
+    });
+
+    // Save the updated match
+    await match.save();
+
+    res.json(match)
+})
 
 
 module.exports = router;

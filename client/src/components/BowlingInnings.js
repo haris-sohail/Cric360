@@ -9,7 +9,7 @@ import Box from '@mui/material/Box';
 import axios from 'axios'
 import '../css/BowlingInnings.css'
 
-function BowlingInnings({ bowlingTeam, buttonPressed, bowlerSelected }) {
+function BowlingInnings({ bowlingTeam, buttonPressed, bowlerSelected, matchStatsID, inningNo }) {
     let useEffectCalled = false;
     const [bowler, setBowler] = useState()
     const [allPlayers, setAllPlayers] = useState([])
@@ -43,6 +43,17 @@ function BowlingInnings({ bowlingTeam, buttonPressed, bowlerSelected }) {
             }
         }
     }, [])
+
+    useEffect(() => {
+        if (bowler) {
+            // update in database
+            axios.post('http://localhost:3001/matchStats/createBowler', { matchStatsID, inningNo, bowler })
+            .catch(err => {
+                toast.error("Couldn't update bowler name, server is unreachable")
+                console.log(err)
+            })
+        }
+    }, [bowler])
 
     useEffect(() => {
         if (bowler) {
