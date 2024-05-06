@@ -10,12 +10,18 @@ import axios from 'axios'
 
 import '../css/BatsmanInnings.css'
 
-function BatsmanInnings({ battingTeam, buttonPressed, currentlyFacing, updateCurrentlyFacing }) {
+function BatsmanInnings({ battingTeam, buttonPressed, currentlyFacing, updateCurrentlyFacing, batsmanSelected }) {
     const [batsman, setBatsman] = useState();
     const [allPlayers, setAllPlayers] = useState([])
     const [loading, setLoading] = useState(false)
     const [runsScored, setRunsScored] = useState(0)
     const [ballsFaced, setBallsFaced] = useState(0)
+
+    useEffect(() => {
+        if (batsman) {
+            batsmanSelected(true)
+        }
+    }, [batsman])
 
     useEffect(() => {
         setLoading(true)

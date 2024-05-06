@@ -9,7 +9,7 @@ import Box from '@mui/material/Box';
 import axios from 'axios'
 import '../css/BowlingInnings.css'
 
-function BowlingInnings({ bowlingTeam, buttonPressed }) {
+function BowlingInnings({ bowlingTeam, buttonPressed, bowlerSelected }) {
     let useEffectCalled = false;
     const [bowler, setBowler] = useState()
     const [allPlayers, setAllPlayers] = useState([])
@@ -43,6 +43,12 @@ function BowlingInnings({ bowlingTeam, buttonPressed }) {
             }
         }
     }, [])
+
+    useEffect(() => {
+        if (bowler) {
+            bowlerSelected(true)
+        }
+    }, [bowler])
 
     useEffect(() => {
         if (buttonPressed) {

@@ -18,6 +18,9 @@ function Innings({ matchStatsID, battingTeam, bowlingTeam, inningNoVal }) {
     const [loadBowler, setLoadBowler] = useState(true)
     const [loadBatsman1, setLoadBatsman1] = useState(true)
     const [loadBatsman2, setLoadBatsman2] = useState(true)
+    const [isBatsman1Selected, setIsBatsman1Selected] = useState(false)
+    const [isBatsman2Selected, setIsBatsman2Selected] = useState(false)
+    const [isBowlerSelected, setIsBowlerSelected] = useState(false)
 
     const updateBatter1Facing = (value) => {
         setBatter1Facing(value)
@@ -101,6 +104,7 @@ function Innings({ matchStatsID, battingTeam, bowlingTeam, inningNoVal }) {
             setTimeout(() => {
                 setLoadBowler(true);
             }, 200);
+            setIsBowlerSelected(false)
         }
     }, [overs]);
 
@@ -110,6 +114,7 @@ function Innings({ matchStatsID, battingTeam, bowlingTeam, inningNoVal }) {
             setTimeout(() => {
                 setLoadBatsman1(true);
             }, 200);
+            setIsBatsman1Selected(false)
         }
 
         else if (wickets && batter2Facing) {
@@ -117,8 +122,22 @@ function Innings({ matchStatsID, battingTeam, bowlingTeam, inningNoVal }) {
             setTimeout(() => {
                 setLoadBatsman2(true);
             }, 200);
+            setIsBatsman2Selected(false)
         }
     }, [wickets])
+
+    const updateBatsman1Selected = () => {
+        setIsBatsman1Selected(true)
+    }
+
+    const updateBatsman2Selected = () => {
+        setIsBatsman2Selected(true)
+    }
+
+    const updateBowledSelected = () => {
+        setIsBowlerSelected(true)
+    }
+
     return (
         <div className='innings-container'>
             <div className='inning-stats-container-inning'>
@@ -127,20 +146,22 @@ function Innings({ matchStatsID, battingTeam, bowlingTeam, inningNoVal }) {
             <div className='batsmen-innings-container-innings'>
                 {loadBatsman1 && (
                     <BatsmanInnings battingTeam={battingTeam} buttonPressed={buttonPressed} currentlyFacing={batter1Facing}
-                        updateCurrentlyFacing={updateBatter1Facing} />
+                        updateCurrentlyFacing={updateBatter1Facing} batsmanSelected={updateBatsman1Selected} />
                 )}
 
                 {loadBatsman2 && (
                     <BatsmanInnings battingTeam={battingTeam} buttonPressed={buttonPressed} currentlyFacing={batter2Facing}
-                        updateCurrentlyFacing={updateBatter2Facing} />
+                        updateCurrentlyFacing={updateBatter2Facing} batsmanSelected={updateBatsman2Selected} />
                 )}
             </div>
 
             <div className='bowling-and-scoremachine-container'>
                 {loadBowler && (
-                    <BowlingInnings bowlingTeam={bowlingTeam} buttonPressed={buttonPressed} />
+                    <BowlingInnings bowlingTeam={bowlingTeam} buttonPressed={buttonPressed} bowlerSelected={updateBowledSelected} />
                 )}
-                <ScoreMachine onButtonPress={handleButtonPress} />
+                {(isBatsman1Selected && isBatsman2Selected && isBowlerSelected) && (
+                    <ScoreMachine onButtonPress={handleButtonPress} />
+                )}
             </div>
 
         </div>
