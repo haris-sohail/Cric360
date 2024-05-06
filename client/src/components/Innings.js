@@ -15,7 +15,9 @@ function Innings({ matchStatsID, battingTeam, bowlingTeam, inningNoVal }) {
     const [buttonPressed, setButtonPressed] = useState('')
     const [batter1Facing, setBatter1Facing] = useState(true)
     const [batter2Facing, setBatter2Facing] = useState(false)
-    const [loadComponent, setLoadComponent] = useState(true)
+    const [loadBowler, setLoadBowler] = useState(true)
+    const [loadBatsman1, setLoadBatsman1] = useState(true)
+    const [loadBatsman2, setLoadBatsman2] = useState(true)
 
     const updateBatter1Facing = (value) => {
         setBatter1Facing(value)
@@ -95,28 +97,47 @@ function Innings({ matchStatsID, battingTeam, bowlingTeam, inningNoVal }) {
 
     useEffect(() => {
         if (overs) {
-            setLoadComponent(false);
+            setLoadBowler(false);
             setTimeout(() => {
-                setLoadComponent(true);
-                console.log('over changed');
+                setLoadBowler(true);
             }, 200);
         }
     }, [overs]);
+
+    useEffect(() => {
+        if (wickets && batter1Facing) {
+            setLoadBatsman1(false)
+            setTimeout(() => {
+                setLoadBatsman1(true);
+            }, 200);
+        }
+
+        else if (wickets && batter2Facing) {
+            setLoadBatsman2(false)
+            setTimeout(() => {
+                setLoadBatsman2(true);
+            }, 200);
+        }
+    }, [wickets])
     return (
         <div className='innings-container'>
             <div className='inning-stats-container-inning'>
                 <h2>{totalRuns}/{wickets} ({overs}.{balls})</h2>
             </div>
             <div className='batsmen-innings-container-innings'>
-                <BatsmanInnings battingTeam={battingTeam} buttonPressed={buttonPressed} currentlyFacing={batter1Facing}
-                    updateCurrentlyFacing={updateBatter1Facing} />
+                {loadBatsman1 && (
+                    <BatsmanInnings battingTeam={battingTeam} buttonPressed={buttonPressed} currentlyFacing={batter1Facing}
+                        updateCurrentlyFacing={updateBatter1Facing} />
+                )}
 
-                <BatsmanInnings battingTeam={battingTeam} buttonPressed={buttonPressed} currentlyFacing={batter2Facing}
-                    updateCurrentlyFacing={updateBatter2Facing} />
+                {loadBatsman2 && (
+                    <BatsmanInnings battingTeam={battingTeam} buttonPressed={buttonPressed} currentlyFacing={batter2Facing}
+                        updateCurrentlyFacing={updateBatter2Facing} />
+                )}
             </div>
 
             <div className='bowling-and-scoremachine-container'>
-                {loadComponent && (
+                {loadBowler && (
                     <BowlingInnings bowlingTeam={bowlingTeam} buttonPressed={buttonPressed} />
                 )}
                 <ScoreMachine onButtonPress={handleButtonPress} />
