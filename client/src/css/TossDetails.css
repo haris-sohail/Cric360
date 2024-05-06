@@ -1,0 +1,20 @@
+.toss-details-container{
+    display: flex;
+    flex-direction: column;
+    width: 70%;
+    margin: 0 auto;
+    height: 100vh;
+}
+
+.main-content-container-toss-details{
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 10vh;
+}
+
+.start-innings-btn-container-toss-details{
+    display: flex;
+    justify-content: center;
+}

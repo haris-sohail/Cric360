@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react'
+import { useNavigate } from 'react-router-dom'
 import Navbar from './Navbar'
 import Discussion from './Discussion'
 import StartDiscussion from './StartDiscussion'
@@ -8,6 +9,7 @@ import toast from 'react-hot-toast'
 import axios from 'axios';
 import CircularProgress from '@mui/material/CircularProgress';
 import Box from '@mui/material/Box';
+import logoutImg from '../system/assets/logout.png'
 import '../css/Home.css'
 
 function Home() {
@@ -16,6 +18,7 @@ function Home() {
     const [discussions, setDiscussions] = useState();
     const [discussionsComp, setDiscussionsComp] = useState();
     const [loading, setLoading] = useState(false);
+    const navigate = useNavigate()
 
     useEffect(() => {
         setLoading(true);
@@ -62,6 +65,10 @@ function Home() {
             console.log(err)
         }
     }
+    const handleLogout = (e) => {
+        navigate('/login')
+    }
+    
     if (loading) {
         return null
     }
@@ -70,7 +77,11 @@ function Home() {
         <div className='home-container'>
             <Navbar username={data.username} />
 
-            <h1>Welcome {data.username}</h1>
+            <div className='welcome-container-home'>
+                <h1>Welcome {data.username}</h1>
+
+                <img src={logoutImg} alt='logout' id='logout-img-home' onClick={handleLogout}></img>
+            </div>
 
             <StartDiscussion username={data.username} />
 

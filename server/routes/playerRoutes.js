@@ -26,6 +26,17 @@ router.post('/getPlayer', (req, res) => {
         .catch(err => res.json(err))
 });
 
+router.post('/getPlayersOfTeam', (req, res) => {
+    const teamName = req.body.teamName;
+    PlayerModel.find({ teamName: { $regex: new RegExp(teamName, 'i') } })
+        .then(players => {
+            res.json(players);
+        })
+        .catch(err => {
+            res.json(err);
+        });
+})
+
 
 
 module.exports = router;

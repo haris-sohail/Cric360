@@ -1,0 +1,24 @@
+.innings-container{
+    display: flex;
+    flex-direction: column;
+    gap: 1vmax;
+    height: 100%;
+    justify-content: space-around;
+}
+
+.inning-stats-container-inning{
+    display: flex;
+    justify-content: center;
+}
+
+.batsmen-innings-container-innings{
+    display: flex;
+    flex-direction: column;
+    gap: 2vh;
+}
+
+.bowling-and-scoremachine-container{
+    display: flex;
+    flex-direction: column;
+    gap: 2vh;
+}

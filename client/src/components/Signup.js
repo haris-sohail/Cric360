@@ -8,6 +8,7 @@ function Signup() {
     const [username, setUserName] = useState();
     const [email, setEmail] = useState();
     const [password, setPassword] = useState();
+    const [role, setRole] = useState("player")
     const navigate = useNavigate();
 
     const isFieldsNotEmpty = () => {
@@ -70,7 +71,7 @@ function Signup() {
 
             if (!userNameCheck && !emailCheck) {
                 try {
-                    const res = await axios.post('http://localhost:3001/user/register', { username, email, password });
+                    const res = await axios.post('http://localhost:3001/user/register', { username, email, password, role});
 
                     if (res) {
                         await axios.post('http://localhost:3001/player/createPlayer', { username })
