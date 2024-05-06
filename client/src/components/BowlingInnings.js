@@ -9,7 +9,7 @@ import Box from '@mui/material/Box';
 import axios from 'axios'
 import '../css/BowlingInnings.css'
 
-function BowlingInnings({ bowlingTeam }) {
+function BowlingInnings({ bowlingTeam, buttonPressed }) {
     let useEffectCalled = false;
     const [bowler, setBowler] = useState()
     const [allPlayers, setAllPlayers] = useState([])
@@ -43,6 +43,25 @@ function BowlingInnings({ bowlingTeam }) {
             }
         }
     }, [])
+
+    useEffect(() => {
+        if (buttonPressed) {
+            if (buttonPressed != 'WD') {
+                setBallsBowled(ballsBowled + 1)
+            }
+
+            // runs conceded
+            if (buttonPressed == 'WD') {
+                setRunsConceded(runsConceded + 1)
+            }
+            else if (buttonPressed == 'OUT' || buttonPressed == 'MISS') {
+
+            }
+            else {
+                setRunsConceded(runsConceded + parseInt(buttonPressed))
+            }
+        }
+    }, [buttonPressed])
 
     const bracketStyle = {
         fontFamily: 'Roboto Slab, sans-serif',

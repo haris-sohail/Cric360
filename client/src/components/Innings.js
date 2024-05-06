@@ -15,6 +15,7 @@ function Innings({ matchStatsID, battingTeam, bowlingTeam, inningNoVal }) {
     const [buttonPressed, setButtonPressed] = useState('')
     const [batter1Facing, setBatter1Facing] = useState(true)
     const [batter2Facing, setBatter2Facing] = useState(false)
+    const [loadComponent, setLoadComponent] = useState(true)
 
     const updateBatter1Facing = (value) => {
         setBatter1Facing(value)
@@ -92,6 +93,15 @@ function Innings({ matchStatsID, battingTeam, bowlingTeam, inningNoVal }) {
             })
     }, [overs])
 
+    useEffect(() => {
+        if (overs) {
+            setLoadComponent(false);
+            setTimeout(() => {
+                setLoadComponent(true);
+                console.log('over changed');
+            }, 200);
+        }
+    }, [overs]);
     return (
         <div className='innings-container'>
             <div className='inning-stats-container-inning'>
@@ -106,8 +116,9 @@ function Innings({ matchStatsID, battingTeam, bowlingTeam, inningNoVal }) {
             </div>
 
             <div className='bowling-and-scoremachine-container'>
-                <BowlingInnings bowlingTeam={bowlingTeam} />
-
+                {loadComponent && (
+                    <BowlingInnings bowlingTeam={bowlingTeam} buttonPressed={buttonPressed} />
+                )}
                 <ScoreMachine onButtonPress={handleButtonPress} />
             </div>
 
