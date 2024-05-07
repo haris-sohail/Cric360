@@ -22,3 +22,8 @@
     flex-direction: column;
     gap: 2vh;
 }
+
+.end-innings-container-innings{
+    display: flex;
+    justify-content: center;
+}

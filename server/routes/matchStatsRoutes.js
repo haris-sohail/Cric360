@@ -358,17 +358,9 @@ router.post('/getBowlerStats', async (req, res) => {
 
         const match = await MatchStatsModel.findOne({ id: id });
 
-        if (!match) {
-            return res.status(404).json({ error: "Match not found." });
-        }
-
         const inning = match.innings[inningNo];
 
         const bowler = inning.bowlers.find(bowler => bowler.name === bowlerName);
-
-        if (!bowler) {
-            return res.status(404).json({ error: "Bowler not found in the specified inning." });
-        }
 
         res.json(bowler)
     }

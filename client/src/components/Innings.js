@@ -178,12 +178,18 @@ function Innings({ matchStatsID, battingTeam, bowlingTeam, inningNoVal }) {
             <div className='bowling-and-scoremachine-container'>
                 {loadBowler && (
                     <BowlingInnings bowlingTeam={bowlingTeam} buttonPressed={buttonPressed} bowlerSelected={updateBowledSelected}
-                    matchStatsID={matchStatsID} inningNo={inningNo}/>
+                        matchStatsID={matchStatsID} inningNo={inningNo} />
                 )}
                 {(isBatsman1Selected && isBatsman2Selected && isBowlerSelected) && (
                     <ScoreMachine onButtonPress={handleButtonPress} />
                 )}
+
+                <div className='end-innings-container-innings'>
+                    <button><h6>END</h6></button>
+                </div>
             </div>
+
+
 
         </div>
     )
