@@ -1,5 +1,5 @@
 .match-handler-container {
-    height: 100vh;
+    height: 95vh;
     width: 70%;
     display: flex;
     flex-direction: column;
@@ -23,6 +23,12 @@
 
 .innings-container-match-handler{
     flex: 1;
+}
+
+.end-innings-container-match-handler{
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 @keyframes blink {

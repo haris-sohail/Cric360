@@ -12,6 +12,8 @@ import Matches from './components/Matches';
 import CreateMatch from './components/CreateMatch';
 import TossDetails from './components/TossDetails';
 import MatchHandler from './components/MatchHandler';
+import Team from './components/Team';
+import EndMatch from './components/EndMatch';
 
 function App() {
   return (
@@ -29,7 +31,8 @@ function App() {
         <Route path='/createMatch' element={<CreateMatch />} />
         <Route path='/tossDetails' element={<TossDetails />} />
         <Route path='/matchHandler' element={<MatchHandler />} />
-
+        <Route path='/teampage' element={<Team />} />
+        <Route path='/endmatch' element={<EndMatch />} />
       </Routes>
     </BrowserRouter>
   );

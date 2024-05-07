@@ -6,7 +6,9 @@ import ScoreMachine from './ScoreMachine'
 import axios from 'axios'
 import toast from 'react-hot-toast'
 
-function Innings({ matchStatsID, battingTeam, bowlingTeam, inningNoVal }) {
+function Innings({ matchStatsID, battingTeam, bowlingTeam, inningNoVal, updateInnings1Score, target, totalScoreTeam1,
+    totalScoreTeam2, tossWonBy, tossLostBy }) {
+
     const [totalRuns, setTotalRuns] = useState(0)
     const [wickets, setWickets] = useState(0)
     const [overs, setOvers] = useState(0)
@@ -57,6 +59,28 @@ function Innings({ matchStatsID, battingTeam, bowlingTeam, inningNoVal }) {
     useEffect(() => {
         setButtonPressed('') // reset its value after it has been used
     }, [buttonPressed])
+
+    useEffect(() => {
+        if (totalRuns) {
+            if (inningNoVal == 0) {
+                updateInnings1Score(totalRuns)
+            }
+
+            if (battingTeam.toLowerCase() == tossWonBy.toLowerCase()) {
+                totalScoreTeam1(totalRuns)
+            }
+            else if (bowlingTeam.toLowerCase() == tossWonBy.toLowerCase()) {
+                totalScoreTeam2(totalRuns)
+            }
+            else if (battingTeam.toLowerCase() == tossLostBy.toLowerCase()) {
+                totalScoreTeam2(totalRuns)
+            }
+            else if (bowlingTeam.toLowerCase() == tossLostBy.toLowerCase()) {
+                totalScoreTeam1(totalRuns)
+            }
+        }
+
+    }, [totalRuns])
 
     useEffect(() => {
         axios.post('http://localhost:3001/matchStats/updateExtras', { extras, matchStatsID, inningNo })
@@ -160,6 +184,9 @@ function Innings({ matchStatsID, battingTeam, bowlingTeam, inningNoVal }) {
         <div className='innings-container'>
             <div className='inning-stats-container-inning'>
                 <h2>{totalRuns}/{wickets} ({overs}.{balls})</h2>
+                {(inningNoVal == 1) && (
+                    <h5>TARGET: {target}</h5>
+                )}
             </div>
             <div className='batsmen-innings-container-innings'>
                 {loadBatsman1 && (
@@ -183,10 +210,6 @@ function Innings({ matchStatsID, battingTeam, bowlingTeam, inningNoVal }) {
                 {(isBatsman1Selected && isBatsman2Selected && isBowlerSelected) && (
                     <ScoreMachine onButtonPress={handleButtonPress} />
                 )}
-
-                <div className='end-innings-container-innings'>
-                    <button><h6>END</h6></button>
-                </div>
             </div>
 
 
