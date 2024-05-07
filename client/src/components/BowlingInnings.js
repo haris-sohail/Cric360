@@ -15,7 +15,37 @@ function BowlingInnings({ bowlingTeam, buttonPressed, bowlerSelected, matchStats
     const [allPlayers, setAllPlayers] = useState([])
     const [loading, setLoading] = useState(false)
     const [ballsBowled, setBallsBowled] = useState(0)
+    const [oversBowled, setOversBowled] = useState(0)
     const [runsConceded, setRunsConceded] = useState(0)
+    const [wickets, setWickets] = useState(0)
+    const [economy, setEconomy] = useState(0)
+    const [bowlerStats, setBowlerStats] = useState()
+
+    const setBowlerStatsFunc = () => {
+        setLoading(true)
+        axios.post('http://localhost:3001/matchStats/getBowlerStats', { matchStatsID, inningNo, bowler })
+            .then(res => {
+                if (res.data) {
+                    setBowlerStats(res.data)
+                }
+            })
+            .catch(err => {
+                toast.error("Error setting bowler stats, couldn't reach the server")
+            })
+            .finally(() => {
+                setLoading(false)
+            })
+    }
+
+    useEffect(() => {
+        if (bowlerStats) {
+            setOversBowled(bowlerStats.overs)
+            setRunsConceded(bowlerStats.runs)
+            setWickets(bowlerStats.wickets)
+            setEconomy(bowlerStats.economy)
+        }
+    }, [bowlerStats])
+
 
     useEffect(() => {
         if (!useEffectCalled) {
@@ -48,12 +78,70 @@ function BowlingInnings({ bowlingTeam, buttonPressed, bowlerSelected, matchStats
         if (bowler) {
             // update in database
             axios.post('http://localhost:3001/matchStats/createBowler', { matchStatsID, inningNo, bowler })
-            .catch(err => {
-                toast.error("Couldn't update bowler name, server is unreachable")
-                console.log(err)
-            })
+                .catch(err => {
+                    toast.error("Couldn't create bowler, server is unreachable")
+                    console.log(err)
+                })
+
+            setBowlerStatsFunc()
         }
     }, [bowler])
+
+    useEffect(() => {
+        if (ballsBowled) {
+            // update in database
+            axios.post('http://localhost:3001/matchStats/updateBallsBowled', { matchStatsID, inningNo, ballsBowled, bowler })
+                .catch(err => {
+                    toast.error("Couldn't update balls bowled, server is unreachable")
+                    console.log(err)
+                })
+        }
+    }, [ballsBowled])
+
+    useEffect(() => {
+
+        if (oversBowled) {
+            // update in database
+            axios.post('http://localhost:3001/matchStats/updateOversBowled', { matchStatsID, inningNo, oversBowled, bowler })
+                .catch(err => {
+                    toast.error("Couldn't update overs bowled, server is unreachable")
+                    console.log(err)
+                })
+        }
+    }, [oversBowled])
+
+    useEffect(() => {
+        if (runsConceded) {
+            // update in database
+            axios.post('http://localhost:3001/matchStats/updateRunsConceded', { matchStatsID, inningNo, runsConceded, bowler })
+                .catch(err => {
+                    toast.error("Couldn't update runs conceded, server is unreachable")
+                    console.log(err)
+                })
+        }
+    }, [runsConceded])
+
+    useEffect(() => {
+        if (wickets) {
+            // update in database
+            axios.post('http://localhost:3001/matchStats/updateWicketsBowler', { matchStatsID, inningNo, wickets, bowler })
+                .catch(err => {
+                    toast.error("Couldn't update wickets, server is unreachable")
+                    console.log(err)
+                })
+        }
+    }, [wickets])
+
+    useEffect(() => {
+        if (economy) {
+            // update in database
+            axios.post('http://localhost:3001/matchStats/updateBowlerEconomy', { matchStatsID, inningNo, economy, bowler })
+                .catch(err => {
+                    toast.error("Couldn't update economy, server is unreachable")
+                    console.log(err)
+                })
+        }
+    }, [economy])
 
     useEffect(() => {
         if (bowler) {
@@ -71,7 +159,10 @@ function BowlingInnings({ bowlingTeam, buttonPressed, bowlerSelected, matchStats
             if (buttonPressed == 'WD') {
                 setRunsConceded(runsConceded + 1)
             }
-            else if (buttonPressed == 'OUT' || buttonPressed == 'MISS') {
+            else if (buttonPressed == 'OUT') {
+                setWickets(wickets + 1)
+            }
+            else if (buttonPressed == 'MISS') {
 
             }
             else {
@@ -79,6 +170,17 @@ function BowlingInnings({ bowlingTeam, buttonPressed, bowlerSelected, matchStats
             }
         }
     }, [buttonPressed])
+
+    useEffect(() => {
+        if (ballsBowled > 5) {
+            setBallsBowled(0)
+
+            // update economy
+            setEconomy(runsConceded / (oversBowled + 1))
+            
+            setOversBowled(oversBowled + 1)
+        }
+    }, [ballsBowled])
 
     const bracketStyle = {
         fontFamily: 'Roboto Slab, sans-serif',
@@ -117,10 +219,7 @@ function BowlingInnings({ bowlingTeam, buttonPressed, bowlerSelected, matchStats
                     <h4>{bowler}</h4>
                     <div className={`stats-details-bowler-innings`}>
                         <h4 className={`${bowler ? 'show' : ''}`}>
-                            BALLS: {ballsBowled}
-                        </h4>
-                        <h4 className={`${bowler ? 'show' : ''}`}>
-                            RUNS: {runsConceded}
+                            {runsConceded} - {wickets} ({oversBowled}.{ballsBowled})
                         </h4>
                     </div>
                 </div>

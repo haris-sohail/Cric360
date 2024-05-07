@@ -37,6 +37,10 @@ const MatchStatsSchema = new mongoose.Schema({
                         type: Number,
                         default: 0
                     },
+                    balls: {
+                        type: Number,
+                        default: 0
+                    },
                     wickets: {
                         type: Number,
                         default: 0

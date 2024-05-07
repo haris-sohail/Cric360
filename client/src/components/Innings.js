@@ -111,7 +111,10 @@ function Innings({ matchStatsID, battingTeam, bowlingTeam, inningNoVal }) {
 
     useEffect(() => {
         if (overs) {
-            setLoadBowler(false);
+            setTimeout(() => {
+                setLoadBowler(false);
+            }, 10);
+
             setTimeout(() => {
                 setLoadBowler(true);
             }, 200);

@@ -168,6 +168,12 @@ router.post('/createBowler', async (req, res) => {
 
     const inning = match.innings[inningNo];
 
+    // Check if bowler already exists
+    const existingBowler = inning.bowlers.find(existingBowler => existingBowler.name === bowler);
+    if (existingBowler) {
+        return res.status(200).json();
+    }
+
     // Add bowler to the inning
     inning.bowlers.push({
         name: bowler,
@@ -182,6 +188,196 @@ router.post('/createBowler', async (req, res) => {
 
     res.json(match)
 })
+
+router.post('/updateBallsBowled', async (req, res) => {
+    try {
+        let id = req.body.matchStatsID
+        let inningNo = req.body.inningNo
+        let ballsBowled = req.body.ballsBowled
+        let bowlerName = req.body.bowler
+
+        const match = await MatchStatsModel.findOne({ id: id });
+
+        if (!match) {
+            return res.status(404).json({ error: "Match not found." });
+        }
+
+        const inning = match.innings[inningNo];
+
+        const bowlerToUpdate = inning.bowlers.find(bowler => bowler.name === bowlerName);
+
+        if (!bowlerToUpdate) {
+            return res.status(404).json({ error: "Bowler not found in the specified inning." });
+        }
+
+        bowlerToUpdate.balls = ballsBowled
+
+        await match.save()
+
+        res.json(match)
+    }
+    catch (err) {
+        res.json(err)
+    }
+});
+
+router.post('/updateOversBowled', async (req, res) => {
+    try {
+        let id = req.body.matchStatsID
+        let inningNo = req.body.inningNo
+        let oversBowled = req.body.oversBowled
+        let bowlerName = req.body.bowler
+
+        const match = await MatchStatsModel.findOne({ id: id });
+
+        if (!match) {
+            return res.status(404).json({ error: "Match not found." });
+        }
+
+        const inning = match.innings[inningNo];
+
+        const bowlerToUpdate = inning.bowlers.find(bowler => bowler.name === bowlerName);
+
+        if (!bowlerToUpdate) {
+            return res.status(404).json({ error: "Bowler not found in the specified inning." });
+        }
+
+        bowlerToUpdate.overs = oversBowled
+        bowlerToUpdate.balls = 0
+
+        await match.save()
+
+        res.json(match)
+    }
+    catch (err) {
+        res.json(err)
+    }
+});
+
+router.post('/updateRunsConceded', async (req, res) => {
+    try {
+        let id = req.body.matchStatsID
+        let inningNo = req.body.inningNo
+        let runsConceded = req.body.runsConceded
+        let bowlerName = req.body.bowler
+
+        const match = await MatchStatsModel.findOne({ id: id });
+
+        if (!match) {
+            return res.status(404).json({ error: "Match not found." });
+        }
+
+        const inning = match.innings[inningNo];
+
+        const bowlerToUpdate = inning.bowlers.find(bowler => bowler.name === bowlerName);
+
+        if (!bowlerToUpdate) {
+            return res.status(404).json({ error: "Bowler not found in the specified inning." });
+        }
+
+        bowlerToUpdate.runs = runsConceded
+
+        await match.save()
+
+        res.json(match)
+    }
+    catch (err) {
+        res.json(err)
+    }
+});
+
+router.post('/updateWicketsBowler', async (req, res) => {
+    try {
+        let id = req.body.matchStatsID
+        let inningNo = req.body.inningNo
+        let wickets = req.body.wickets
+        let bowlerName = req.body.bowler
+
+        const match = await MatchStatsModel.findOne({ id: id });
+
+        if (!match) {
+            return res.status(404).json({ error: "Match not found." });
+        }
+
+        const inning = match.innings[inningNo];
+
+        const bowlerToUpdate = inning.bowlers.find(bowler => bowler.name === bowlerName);
+
+        if (!bowlerToUpdate) {
+            return res.status(404).json({ error: "Bowler not found in the specified inning." });
+        }
+
+        bowlerToUpdate.wickets = wickets
+
+        await match.save()
+
+        res.json(match)
+    }
+    catch (err) {
+        res.json(err)
+    }
+});
+
+router.post('/updateBowlerEconomy', async (req, res) => {
+    try {
+        let id = req.body.matchStatsID
+        let inningNo = req.body.inningNo
+        let economy = req.body.economy
+        let bowlerName = req.body.bowler
+
+        const match = await MatchStatsModel.findOne({ id: id });
+
+        if (!match) {
+            return res.status(404).json({ error: "Match not found." });
+        }
+
+        const inning = match.innings[inningNo];
+
+        const bowlerToUpdate = inning.bowlers.find(bowler => bowler.name === bowlerName);
+
+        if (!bowlerToUpdate) {
+            return res.status(404).json({ error: "Bowler not found in the specified inning." });
+        }
+
+        bowlerToUpdate.economy = economy
+
+        await match.save()
+
+        res.json(match)
+    }
+    catch (err) {
+        res.json(err)
+    }
+});
+
+router.post('/getBowlerStats', async (req, res) => {
+    try {
+        let id = req.body.matchStatsID
+        let inningNo = req.body.inningNo
+        let bowlerName = req.body.bowler
+
+        const match = await MatchStatsModel.findOne({ id: id });
+
+        if (!match) {
+            return res.status(404).json({ error: "Match not found." });
+        }
+
+        const inning = match.innings[inningNo];
+
+        const bowler = inning.bowlers.find(bowler => bowler.name === bowlerName);
+
+        if (!bowler) {
+            return res.status(404).json({ error: "Bowler not found in the specified inning." });
+        }
+
+        res.json(bowler)
+    }
+    catch (err) {
+        res.json(err)
+    }
+});
+
+
 
 
 module.exports = router;
