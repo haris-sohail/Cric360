@@ -10,12 +10,49 @@ import axios from 'axios'
 
 import '../css/BatsmanInnings.css'
 
-function BatsmanInnings({ battingTeam, buttonPressed, currentlyFacing, updateCurrentlyFacing }) {
+function BatsmanInnings({ battingTeam, buttonPressed, currentlyFacing, updateCurrentlyFacing, batsmanSelected, batsmanNumber, matchStatsID
+    , inningNo
+}) {
     const [batsman, setBatsman] = useState();
     const [allPlayers, setAllPlayers] = useState([])
     const [loading, setLoading] = useState(false)
     const [runsScored, setRunsScored] = useState(0)
     const [ballsFaced, setBallsFaced] = useState(0)
+
+    useEffect(() => {
+        // update in database
+        axios.post('http://localhost:3001/matchStats/updateRunsScoredBatsman', { matchStatsID, batsmanNumber, inningNo, runsScored })
+            .catch(err => {
+                toast.error("Couldn't update runs, server is unreachable")
+                console.log(err)
+            })
+    }, [runsScored])
+
+    useEffect(() => {
+        if (batsman) {
+            // update in database
+            axios.post('http://localhost:3001/matchStats/updateBatsmanName', { matchStatsID, batsmanNumber, inningNo, batsman })
+            .catch(err => {
+                toast.error("Couldn't update batsman name, server is unreachable")
+                console.log(err)
+            })
+        }
+    }, [batsman])
+
+    useEffect(() => {
+        // update in database
+        axios.post('http://localhost:3001/matchStats/updateBallsFaced', { matchStatsID, batsmanNumber, inningNo, ballsFaced })
+        .catch(err => {
+            toast.error("Couldn't update balls faced, server is unreachable")
+            console.log(err)
+        })
+    }, [ballsFaced])
+
+    useEffect(() => {
+        if (batsman) {
+            batsmanSelected(true)
+        }
+    }, [batsman])
 
     useEffect(() => {
         setLoading(true)

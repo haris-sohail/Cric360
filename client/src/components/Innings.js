@@ -15,6 +15,14 @@ function Innings({ matchStatsID, battingTeam, bowlingTeam, inningNoVal }) {
     const [buttonPressed, setButtonPressed] = useState('')
     const [batter1Facing, setBatter1Facing] = useState(true)
     const [batter2Facing, setBatter2Facing] = useState(false)
+    const [loadBowler, setLoadBowler] = useState(true)
+    const [loadBatsman1, setLoadBatsman1] = useState(true)
+    const [loadBatsman2, setLoadBatsman2] = useState(true)
+    const [isBatsman1Selected, setIsBatsman1Selected] = useState(false)
+    const [isBatsman2Selected, setIsBatsman2Selected] = useState(false)
+    const [isBowlerSelected, setIsBowlerSelected] = useState(false)
+    const [batsmanNumber, setBatsmanNumber] = useState(0)
+    const [extras, setExtras] = useState(0)
 
     const updateBatter1Facing = (value) => {
         setBatter1Facing(value)
@@ -31,6 +39,7 @@ function Innings({ matchStatsID, battingTeam, bowlingTeam, inningNoVal }) {
 
         if (value == 'WD') {
             setTotalRuns(totalRuns + 1)
+            setExtras(extras + 1)
         }
         else if (value == 'OUT') {
             setWickets(wickets + 1);
@@ -48,6 +57,14 @@ function Innings({ matchStatsID, battingTeam, bowlingTeam, inningNoVal }) {
     useEffect(() => {
         setButtonPressed('') // reset its value after it has been used
     }, [buttonPressed])
+
+    useEffect(() => {
+        axios.post('http://localhost:3001/matchStats/updateExtras', { extras, matchStatsID, inningNo })
+            .catch(err => {
+                console.log(err)
+                toast.error("Couldn't update extras, server is unreachable")
+            })
+    }, [extras])
 
     useEffect(() => {
         if (balls > 5) {
@@ -92,23 +109,80 @@ function Innings({ matchStatsID, battingTeam, bowlingTeam, inningNoVal }) {
             })
     }, [overs])
 
+    useEffect(() => {
+        if (overs) {
+            setTimeout(() => {
+                setLoadBowler(false);
+            }, 10);
+
+            setTimeout(() => {
+                setLoadBowler(true);
+            }, 200);
+            setIsBowlerSelected(false)
+        }
+    }, [overs]);
+
+    useEffect(() => {
+        if (wickets && batter1Facing) {
+            setLoadBatsman1(false)
+            setTimeout(() => {
+                setLoadBatsman1(true);
+            }, 200);
+            setIsBatsman1Selected(false)
+        }
+
+        else if (wickets && batter2Facing) {
+            setLoadBatsman2(false)
+            setTimeout(() => {
+                setLoadBatsman2(true);
+            }, 200);
+            setIsBatsman2Selected(false)
+        }
+
+        if (wickets) {
+            setBatsmanNumber(batsmanNumber + 1)
+        }
+    }, [wickets])
+
+    const updateBatsman1Selected = () => {
+        setIsBatsman1Selected(true)
+    }
+
+    const updateBatsman2Selected = () => {
+        setIsBatsman2Selected(true)
+    }
+
+    const updateBowledSelected = () => {
+        setIsBowlerSelected(true)
+    }
+
     return (
         <div className='innings-container'>
             <div className='inning-stats-container-inning'>
                 <h2>{totalRuns}/{wickets} ({overs}.{balls})</h2>
             </div>
             <div className='batsmen-innings-container-innings'>
-                <BatsmanInnings battingTeam={battingTeam} buttonPressed={buttonPressed} currentlyFacing={batter1Facing}
-                    updateCurrentlyFacing={updateBatter1Facing} />
+                {loadBatsman1 && (
+                    <BatsmanInnings battingTeam={battingTeam} buttonPressed={buttonPressed} currentlyFacing={batter1Facing}
+                        updateCurrentlyFacing={updateBatter1Facing} batsmanSelected={updateBatsman1Selected} batsmanNumber={batsmanNumber}
+                        matchStatsID={matchStatsID} inningNo={inningNo} />
+                )}
 
-                <BatsmanInnings battingTeam={battingTeam} buttonPressed={buttonPressed} currentlyFacing={batter2Facing}
-                    updateCurrentlyFacing={updateBatter2Facing} />
+                {loadBatsman2 && (
+                    <BatsmanInnings battingTeam={battingTeam} buttonPressed={buttonPressed} currentlyFacing={batter2Facing}
+                        updateCurrentlyFacing={updateBatter2Facing} batsmanSelected={updateBatsman2Selected} batsmanNumber={batsmanNumber + 1}
+                        matchStatsID={matchStatsID} inningNo={inningNo} />
+                )}
             </div>
 
             <div className='bowling-and-scoremachine-container'>
-                <BowlingInnings bowlingTeam={bowlingTeam} />
-
-                <ScoreMachine onButtonPress={handleButtonPress} />
+                {loadBowler && (
+                    <BowlingInnings bowlingTeam={bowlingTeam} buttonPressed={buttonPressed} bowlerSelected={updateBowledSelected}
+                    matchStatsID={matchStatsID} inningNo={inningNo}/>
+                )}
+                {(isBatsman1Selected && isBatsman2Selected && isBowlerSelected) && (
+                    <ScoreMachine onButtonPress={handleButtonPress} />
+                )}
             </div>
 
         </div>

@@ -2,7 +2,7 @@ const mongoose = require("mongoose")
 
 const MatchStatsSchema = new mongoose.Schema({
     id: String,
-    match_date: Date,
+    startedAt: Date,
     teamA: String,
     teamB: String,
     tossWinner: String,
@@ -34,6 +34,10 @@ const MatchStatsSchema = new mongoose.Schema({
                 {
                     name: String,
                     overs: {
+                        type: Number,
+                        default: 0
+                    },
+                    balls: {
                         type: Number,
                         default: 0
                     },
