@@ -1,0 +1,55 @@
+.Main-div{
+    width:70%;
+    margin: 0 auto;
+}
+.first-slot{
+    align-items: center;
+    width: 100%;
+    height: 18vh;
+    display: flex;
+    justify-content: flex-start;
+    margin-top: 5%;
+    padding-right: 5%;
+    border-bottom: 5px solid #7D0A0A;
+}
+.image-container img{
+    display: flex;
+    width: 15vb;
+    height:15vb;
+    border-radius: 50%;
+    border: 5px solid black;
+    max-width: 100%;
+}
+.image-container{
+    padding-right: 5%;
+    padding-bottom: 2%;
+}
+
+.stats-container{
+    align-items: center;
+    border-bottom: 5px solid #7D0A0A;
+}
+.headings-container{
+    font-weight: 800;
+    padding-right: 15%;
+    padding-bottom: 2%;
+}
+.headings-container p{
+    padding-bottom: 5%;
+}
+.total-container{
+    display: flex;
+    justify-content: center;
+
+}
+.stats-heading{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+.values-container{
+    padding-bottom: 2%;
+}
+.values-container p{
+    padding-bottom: 15%;
+}
