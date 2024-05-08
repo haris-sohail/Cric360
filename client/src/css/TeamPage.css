@@ -2,6 +2,7 @@
     width:70%;
     margin: 0 auto;
     background-color: #eeee;
+    
 }
 .first-slot{
     align-items: center;
@@ -12,6 +13,10 @@
     margin-top: 5%;
     padding-right: 5%;
     border-bottom: 5px solid #7D0A0A;
+}
+.team-players-container{
+    display:flex;
+    justify-content: center;
 }
 .image-container img{
     display: flex;
@@ -59,8 +64,31 @@
     font-size:100%;
 }
 
+
 .team-player-info{
     width:100%;
+    background-color: white;
+    padding-left:5%;
+}
+.image-container-players img{
+    width: 9vb;
+    height:9vb;
+    border-radius: 50%;
+    border: 5px solid black;
+}
+.team-player-info:hover{
+    border-bottom: 5px solid black;
+    transition-delay: 30ms;
+}
+.image-container-players{
+    padding:1%;
+}
+.team-player-info{
     display: flex;
-    justify-content: center;
+    flex-direction: row;
+}
+.player-name{
+    padding-top:5%;
+    padding:3%;
+    padding-left: 0%;
 }
