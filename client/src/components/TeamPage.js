@@ -87,7 +87,10 @@ function TeamPage() {
       )}
 
       <div className='team-players-container'>
-       
+      <div className='stats-heading'>
+            <h2>PLAYERS</h2>
+        </div>
+
             {allPlayers.map(player => (
              <div className='team-player-info'>
                 <div className='image-container-players'>

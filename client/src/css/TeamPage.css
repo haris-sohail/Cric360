@@ -17,6 +17,7 @@
 .team-players-container{
     display:flex;
     justify-content: center;
+    flex-direction: column;
 }
 .image-container img{
     display: flex;
