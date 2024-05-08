@@ -2,7 +2,7 @@ const mongoose = require("mongoose")
 
 const MatchStatsSchema = new mongoose.Schema({
     id: String,
-    startedAt: Date,
+    startingAt: Date,
     teamA: String,
     teamB: String,
     tossWinner: String,
@@ -78,9 +78,9 @@ const MatchStatsSchema = new mongoose.Schema({
             ]
         }
     ],
-    result: String,
     winningTeam: String,
-    losingTeam: String
+    losingTeam: String,
+    isDrawn: Boolean
 });
 
 const MatchStatsModel = mongoose.model("MatchStats", MatchStatsSchema)

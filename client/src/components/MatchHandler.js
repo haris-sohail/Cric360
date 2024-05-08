@@ -11,6 +11,8 @@ function MatchHandler() {
     const tossWonBy = data.tossWonBy
     const electedTo = data.electedTo
     const tossLostBy = data.tossLostBy
+    const username = data.username
+    const startingAt = data.startingAt
     const [battingTeam, setBattingTeam] = useState();
     const [bowlingTeam, setBowlingTeam] = useState();
     const [matchStatsID, setMatchStatsID] = useState()
@@ -47,7 +49,7 @@ function MatchHandler() {
             }
 
             // make match details
-            axios.post('http://localhost:3001/matchStats/createMatchStats', { tossWonBy, electedTo, tossLostBy })
+            axios.post('http://localhost:3001/matchStats/createMatchStats', { tossWonBy, electedTo, tossLostBy, startingAt })
                 .then(res => {
                     if (res.data) {
                         setMatchStatsID(res.data.id);
@@ -68,20 +70,40 @@ function MatchHandler() {
         setInnings1Score(value)
     }
 
+    const updateEndMatchDB = (teamWon, teamLost, isDrawn) => {
+        setLoading(true)
+        axios.post('http://localhost:3001/matchStats/updateEndMatch', { matchStatsID, teamWon, teamLost, isDrawn, username })
+            .catch(err => {
+                console.log(err)
+                toast.error("Couldn't update end match, server unreachable")
+            })
+            .finally(() => {
+                setLoading(false)
+            })
+    }
+
     const handleEndInnings = () => {
         if (inningNo == '1') {
             if (scoreTeam1 > scoreTeam2) {
                 const isDrawn = false
-                navigate('/endmatch', { state: { teamWon: tossWonBy, isDrawn } })
+                updateEndMatchDB(tossWonBy, tossLostBy, false)
+                if (!loading) {
+                    navigate('/endmatch', { state: { teamWon: tossWonBy, isDrawn, username } })
+                }
             }
             else if (scoreTeam1 < scoreTeam2) {
                 const isDrawn = false
-
-                navigate('/endmatch', { state: { teamWon: tossLostBy, isDrawn } })
+                updateEndMatchDB(tossLostBy, tossWonBy, false)
+                if (!loading) {
+                    navigate('/endmatch', { state: { teamWon: tossLostBy, isDrawn, username } })
+                }
             }
             else {
                 const isDrawn = true
-                navigate('/endmatch', { state: { teamWon: tossWonBy, isDrawn } })
+                updateEndMatchDB("", "", true)
+                if (!loading) {
+                    navigate('/endmatch', { state: { teamWon: tossWonBy, isDrawn, username } })
+                }
             }
         }
         else {
@@ -115,7 +137,7 @@ function MatchHandler() {
                     {(loadInnings) && (
                         <Innings matchStatsID={matchStatsID} battingTeam={battingTeam} bowlingTeam={bowlingTeam} inningNoVal={inningNo}
                             updateInnings1Score={updateInnings1Score} target={innings1Score + 1} totalScoreTeam1={updateTotalScoreTeam1}
-                            totalScoreTeam2={updateTotalScoreTeam2} tossWonBy={tossWonBy} tossLostBy={tossLostBy} />
+                            totalScoreTeam2={updateTotalScoreTeam2} tossWonBy={tossWonBy} tossLostBy={tossLostBy} username={ username} />
                     )}
                 </div>
 
