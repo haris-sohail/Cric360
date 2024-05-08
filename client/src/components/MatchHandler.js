@@ -11,6 +11,7 @@ function MatchHandler() {
     const tossWonBy = data.tossWonBy
     const electedTo = data.electedTo
     const tossLostBy = data.tossLostBy
+    const username = data.username
     const [battingTeam, setBattingTeam] = useState();
     const [bowlingTeam, setBowlingTeam] = useState();
     const [matchStatsID, setMatchStatsID] = useState()
@@ -69,7 +70,7 @@ function MatchHandler() {
     }
 
     const updateEndMatchDB = (teamWon, teamLost, isDrawn) => {
-        axios.post('http://localhost:3001/matchStats/updateEndMatch', { matchStatsID, teamWon, teamLost, isDrawn })
+        axios.post('http://localhost:3001/matchStats/updateEndMatch', { matchStatsID, teamWon, teamLost, isDrawn, username })
             .catch(err => {
                 console.log(err)
                 toast.error("Couldn't update end match, server unreachable")

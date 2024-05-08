@@ -170,7 +170,7 @@ function Match({ id, venue, startingAt, teamA, format, isLive, username }) {
 
   const handleStartMatch = () => {
     if (!loading) {
-      navigate('/tossDetails', { state: { teamA, teamB } })
+      navigate('/tossDetails', { state: { teamA, teamB, username } })
     }
   }
 

@@ -15,6 +15,7 @@ function TossDetails() {
     const data = location.state
     const teamA = data.teamA
     const teamB = data.teamB
+    const username = data.username
     const [tossWonBy, setTossWonBy] = useState()
     const [tossLostBy, setTossLostBy] = useState()
     const [electedTo, setElectedTo] = useState()
@@ -25,7 +26,7 @@ function TossDetails() {
             toast.error("Please fill in all the fields")
         }
         else {
-            navigate('/matchHandler', { state: { tossWonBy, electedTo, tossLostBy } })
+            navigate('/matchHandler', { state: { tossWonBy, electedTo, tossLostBy, username } })
         }
     }
 

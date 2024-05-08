@@ -1,5 +1,5 @@
-import React from 'react'
-import { useLocation } from 'react-router-dom'
+import React, {useEffect} from 'react'
+import { useLocation, useNavigate } from 'react-router-dom'
 import '../css/EndMatch.css'
 
 function EndMatch() {
@@ -7,6 +7,16 @@ function EndMatch() {
     const data = location.state
     const teamWon = data.teamWon
     const isDrawn = data.isDrawn
+    const username = data.username
+    const navigate = useNavigate()
+
+    useEffect(() => {
+        const timeout = setTimeout(() => {
+            navigate('/home', { state: { username } })
+        }, 2000);
+
+        return () => clearTimeout(timeout);
+    }, [navigate]);
     
     return (
         <div className='end-match-container'>
