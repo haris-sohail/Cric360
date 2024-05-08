@@ -14,6 +14,7 @@ function Match({ id, venue, startingAt, teamA, format, isLive, username }) {
   const [decreaseOpacity, setDecreaseOpacity] = useState(false)
   const [showAcceptButton, setShowAcceptButton] = useState(false)
   const [showStartMatchButton, setShowStartMatchButton] = useState(false)
+  const [showViewMatchButton, setShowViewMatchButton] = useState(false)
   const [isUserUmpire, setIsUserUmpire] = useState(false)
   const [myTeam, setMyTeam] = useState()
   const [matchAccepted, setMatchAccepted] = useState(false)
@@ -66,7 +67,6 @@ function Match({ id, venue, startingAt, teamA, format, isLive, username }) {
     if (matchStats) {
       if (matchStats.winningTeam || matchStats.isDrawn == true || matchStats.isDrawn == false) {
         setIsMatchEnded(true)
-        console.log('match is ended')
       }
     }
   }, [matchStats])
@@ -119,13 +119,13 @@ function Match({ id, venue, startingAt, teamA, format, isLive, username }) {
   }
 
   const handleMouseEnter = () => {
-    if (!loading && isUserUmpire && matchAccepted) {
+    if (!loading && isUserUmpire && matchAccepted && !isMatchEnded) {
       setDecreaseOpacity(true)
       setShowStartMatchButton(true)
     }
 
     if (!loading && myTeam) {
-      if (myTeam.toLowerCase() != teamA.toLowerCase() && !matchAccepted) {
+      if (myTeam.toLowerCase() != teamA.toLowerCase() && !matchAccepted && !isMatchEnded) {
         setDecreaseOpacity(true)
         setShowAcceptButton(true)
       }
@@ -134,16 +134,21 @@ function Match({ id, venue, startingAt, teamA, format, isLive, username }) {
         setShowAcceptButton(false)
       }
     }
+
+    if (!loading && isMatchEnded) {
+      setDecreaseOpacity(true)
+      setShowViewMatchButton(true)
+    }
   }
 
   const handleMouseLeave = () => {
-    if (!loading && isUserUmpire && matchAccepted) {
+    if (!loading && isUserUmpire && matchAccepted && !isMatchEnded) {
       setDecreaseOpacity(false)
       setShowStartMatchButton(false)
     }
 
     if (!loading && myTeam) {
-      if (myTeam.toLowerCase() != teamA.toLowerCase() && !matchAccepted) {
+      if (myTeam.toLowerCase() != teamA.toLowerCase() && !matchAccepted && !isMatchEnded) {
         setDecreaseOpacity(false)
         setShowAcceptButton(false)
       }
@@ -151,6 +156,11 @@ function Match({ id, venue, startingAt, teamA, format, isLive, username }) {
         setDecreaseOpacity(false)
         setShowAcceptButton(false)
       }
+    }
+
+    if (!loading && isMatchEnded) {
+      setDecreaseOpacity(false)
+      setShowViewMatchButton(false)
     }
   }
 
@@ -200,6 +210,12 @@ function Match({ id, venue, startingAt, teamA, format, isLive, username }) {
     }
   }
 
+  const handleViewMatch = () => {
+    if (!loading) {
+
+    }
+  }
+
   if (loading) {
     return (
       <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', flex: '1' }}>
@@ -217,33 +233,67 @@ function Match({ id, venue, startingAt, teamA, format, isLive, username }) {
         <div className={`${matchAccepted ? 'teams-container-match' : ''}`}>
           <div className={`team-details-match ${decreaseOpacity ? 'decrease-opacity' : ''} ${matchAccepted ? 'match-accepted-team-details-match' : ''}`}>
             <img src={'http://localhost:3001/Images/' + teamLogo} alt="team_logo"></img>
-            <h2>{teamA.toUpperCase()}</h2>
+            {(isMatchEnded && (teamA.toLowerCase() == matchStats.winningTeam.toLowerCase())) && (
+              <h2>{teamA.toUpperCase()}(W)</h2>
+            )}
+            {(isMatchEnded && !(teamA.toLowerCase() == matchStats.winningTeam.toLowerCase())) && (
+              <h2>{teamA.toUpperCase()}</h2>
+            )}
+            {(!isMatchEnded) && (
+              <h2>{teamA.toUpperCase()}</h2>
+            )}
           </div>
 
           {teamB && (
             <div className={`team-details-match ${decreaseOpacity ? 'decrease-opacity' : ''} ${matchAccepted ? 'match-accepted-team-details-match' : ''}`}>
-              <h2>{teamB.toUpperCase()}</h2>
+              {(isMatchEnded && (teamB.toLowerCase() == matchStats.winningTeam.toLowerCase())) && (
+                <h2>{teamB.toUpperCase()}(W)</h2>
+              )}
+              {(isMatchEnded && !(teamB.toLowerCase() == matchStats.winningTeam.toLowerCase())) && (
+                <h2>{teamB.toUpperCase()}</h2>
+              )}
+              {(!isMatchEnded) && (
+                <h2>{teamB.toUpperCase()}</h2>
+              )}
               <img src={'http://localhost:3001/Images/' + teamBLogo} alt="team_logo"></img>
             </div>
           )}
         </div>
 
 
-        {(showAcceptButton) && (
-          <div className='accept-match-button-container'>
-            <button>
-              <h6 onClick={handleAcceptMatch}>Accept Match</h6>
-            </button>
-          </div>
-        )}
 
-        {(showStartMatchButton) && (
-          <div className='start-match-button-container'>
-            <button>
-              <h6 onClick={handleStartMatch}>Start Match</h6>
-            </button>
-          </div>
-        )}
+
+
+
+        {
+          (showAcceptButton) && (
+            <div className='accept-match-button-container'>
+              <button>
+                <h6 onClick={handleAcceptMatch}>Accept Match</h6>
+              </button>
+            </div>
+          )
+        }
+
+        {
+          (showStartMatchButton) && (
+            <div className='start-match-button-container'>
+              <button>
+                <h6 onClick={handleStartMatch}>Start Match</h6>
+              </button>
+            </div>
+          )
+        }
+
+        {
+          (showViewMatchButton) && (
+            <div className='view-match-button-container start-match-button-container'>
+              <button>
+                <h6 onClick={handleViewMatch}>View Match</h6>
+              </button>
+            </div>
+          )
+        }
 
 
         <div className={`match-details-match-container ${decreaseOpacity ? 'decrease-opacity' : ''} ${matchAccepted ? 'match-accepted-match-details-match-container' : ''}`}>
@@ -251,7 +301,7 @@ function Match({ id, venue, startingAt, teamA, format, isLive, username }) {
           <p>{format.toUpperCase()}</p>
           <p>{startingAtDate}</p>
         </div>
-      </div>
+      </div >
     )
   }
 

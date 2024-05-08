@@ -71,10 +71,14 @@ function MatchHandler() {
     }
 
     const updateEndMatchDB = (teamWon, teamLost, isDrawn) => {
+        setLoading(true)
         axios.post('http://localhost:3001/matchStats/updateEndMatch', { matchStatsID, teamWon, teamLost, isDrawn, username })
             .catch(err => {
                 console.log(err)
                 toast.error("Couldn't update end match, server unreachable")
+            })
+            .finally(() => {
+                setLoading(false)
             })
     }
 
@@ -84,21 +88,21 @@ function MatchHandler() {
                 const isDrawn = false
                 updateEndMatchDB(tossWonBy, tossLostBy, false)
                 if (!loading) {
-                    navigate('/endmatch', { state: { teamWon: tossWonBy, isDrawn } })
+                    navigate('/endmatch', { state: { teamWon: tossWonBy, isDrawn, username } })
                 }
             }
             else if (scoreTeam1 < scoreTeam2) {
                 const isDrawn = false
                 updateEndMatchDB(tossLostBy, tossWonBy, false)
-                if(!loading){
-                    navigate('/endmatch', { state: { teamWon: tossLostBy, isDrawn } })
+                if (!loading) {
+                    navigate('/endmatch', { state: { teamWon: tossLostBy, isDrawn, username } })
                 }
             }
             else {
                 const isDrawn = true
                 updateEndMatchDB("", "", true)
-                if(!loading){
-                    navigate('/endmatch', { state: { teamWon: tossWonBy, isDrawn } })
+                if (!loading) {
+                    navigate('/endmatch', { state: { teamWon: tossWonBy, isDrawn, username } })
                 }
             }
         }
@@ -133,7 +137,7 @@ function MatchHandler() {
                     {(loadInnings) && (
                         <Innings matchStatsID={matchStatsID} battingTeam={battingTeam} bowlingTeam={bowlingTeam} inningNoVal={inningNo}
                             updateInnings1Score={updateInnings1Score} target={innings1Score + 1} totalScoreTeam1={updateTotalScoreTeam1}
-                            totalScoreTeam2={updateTotalScoreTeam2} tossWonBy={tossWonBy} tossLostBy={tossLostBy} />
+                            totalScoreTeam2={updateTotalScoreTeam2} tossWonBy={tossWonBy} tossLostBy={tossLostBy} username={ username} />
                     )}
                 </div>
 

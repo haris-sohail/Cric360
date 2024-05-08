@@ -8,7 +8,7 @@ import toast from 'react-hot-toast'
 import { useNavigate } from 'react-router-dom'
 
 function Innings({ matchStatsID, battingTeam, bowlingTeam, inningNoVal, updateInnings1Score, target, totalScoreTeam1,
-    totalScoreTeam2, tossWonBy, tossLostBy }) {
+    totalScoreTeam2, tossWonBy, tossLostBy, username }) {
 
     const [totalRuns, setTotalRuns] = useState(0)
     const [wickets, setWickets] = useState(0)
@@ -87,7 +87,6 @@ function Innings({ matchStatsID, battingTeam, bowlingTeam, inningNoVal, updateIn
 
     const updateEndMatchDB = (teamWon, teamLost, isDrawn) => {
         setLoading(true)
-        console.log('updat end match called')
         axios.post('http://localhost:3001/matchStats/updateEndMatch', { matchStatsID, teamWon, teamLost, isDrawn })
             .catch(err => {
                 console.log(err)
@@ -105,19 +104,19 @@ function Innings({ matchStatsID, battingTeam, bowlingTeam, inningNoVal, updateIn
                     const isDrawn = false;
                     if (battingTeam.toLowerCase() == tossWonBy.toLowerCase()) {
                         updateEndMatchDB(tossWonBy, tossLostBy, false)
-                        navigate('/endmatch', { state: { teamWon: tossWonBy, isDrawn } })
+                        navigate('/endmatch', { state: { teamWon: tossWonBy, isDrawn, username } })
                     }
                     else if (bowlingTeam.toLowerCase() == tossWonBy.toLowerCase()) {
                         updateEndMatchDB(tossLostBy, tossWonBy, false)
-                        navigate('/endmatch', { state: { teamWon: tossLostBy, isDrawn } })
+                        navigate('/endmatch', { state: { teamWon: tossLostBy, isDrawn, username } })
                     }
                     else if (battingTeam.toLowerCase() == tossLostBy.toLowerCase()) {
                         updateEndMatchDB(tossLostBy, tossWonBy, false)
-                        navigate('/endmatch', { state: { teamWon: tossLostBy, isDrawn } })
+                        navigate('/endmatch', { state: { teamWon: tossLostBy, isDrawn, username } })
                     }
                     else if (bowlingTeam.toLowerCase() == tossLostBy.toLowerCase()) {
                         updateEndMatchDB(tossWonBy, tossLostBy, false)
-                        navigate('/endmatch', { state: { teamWon: tossWonBy, isDrawn } })
+                        navigate('/endmatch', { state: { teamWon: tossWonBy, isDrawn, username } })
                     }
                 }
             }

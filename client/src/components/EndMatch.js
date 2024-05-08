@@ -16,6 +16,7 @@ function EndMatch() {
         }, 2000);
 
         return () => clearTimeout(timeout);
+
     }, [navigate]);
     
     return (
