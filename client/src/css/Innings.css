@@ -9,6 +9,12 @@
 .inning-stats-container-inning{
     display: flex;
     justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.inning-stats-container-inning h5{
+    color: #7e7e7e;
 }
 
 .batsmen-innings-container-innings{

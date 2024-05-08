@@ -14,9 +14,23 @@ function MatchHandler() {
     const [battingTeam, setBattingTeam] = useState();
     const [bowlingTeam, setBowlingTeam] = useState();
     const [matchStatsID, setMatchStatsID] = useState()
+    const [innings1Score, setInnings1Score] = useState(0)
+    const [loadInnings, setLoadInnings] = useState(true)
     let matchStatsIDVal;
     const [loading, setLoading] = useState(false);
     let useEffectCalled = false
+    const [inningNo, setInningNo] = useState('0')
+    const [scoreTeam1, setScoreTeam1] = useState()
+    const [scoreTeam2, setScoreTeam2] = useState()
+    const navigate = useNavigate()
+
+    const updateTotalScoreTeam1 = (value) => {
+        setScoreTeam1(value)
+    }
+
+    const updateTotalScoreTeam2 = (value) => {
+        setScoreTeam2(value)
+    }
 
     useEffect(() => {
         if (!useEffectCalled) {
@@ -50,6 +64,43 @@ function MatchHandler() {
 
     }, []);
 
+    const updateInnings1Score = (value) => {
+        setInnings1Score(value)
+    }
+
+    const handleEndInnings = () => {
+        if (inningNo == '1') {
+            if (scoreTeam1 > scoreTeam2) {
+                const isDrawn = false
+                navigate('/endmatch', { state: { teamWon: tossWonBy, isDrawn } })
+            }
+            else if (scoreTeam1 < scoreTeam2) {
+                const isDrawn = false
+
+                navigate('/endmatch', { state: { teamWon: tossLostBy, isDrawn } })
+            }
+            else {
+                const isDrawn = true
+                navigate('/endmatch', { state: { teamWon: tossWonBy, isDrawn } })
+            }
+        }
+        else {
+            setInningNo('1')
+
+            // swap bowling and batting team values
+            const temp = battingTeam;
+            setBattingTeam(bowlingTeam);
+            setBowlingTeam(temp);
+
+            setLoadInnings(false)
+
+            setTimeout(() => {
+                setLoadInnings(true)
+            }, 10)
+        }
+
+    }
+
     if (loading) {
         return null;
     }
@@ -61,7 +112,15 @@ function MatchHandler() {
                     <div className='blink-dot-live-container'></div>
                 </div>
                 <div className='innings-container-match-handler'>
-                    <Innings matchStatsID={matchStatsID} battingTeam={battingTeam} bowlingTeam={bowlingTeam} inningNoVal={'0'} />
+                    {(loadInnings) && (
+                        <Innings matchStatsID={matchStatsID} battingTeam={battingTeam} bowlingTeam={bowlingTeam} inningNoVal={inningNo}
+                            updateInnings1Score={updateInnings1Score} target={innings1Score + 1} totalScoreTeam1={updateTotalScoreTeam1}
+                            totalScoreTeam2={updateTotalScoreTeam2} tossWonBy={tossWonBy} tossLostBy={tossLostBy} />
+                    )}
+                </div>
+
+                <div className='end-innings-container-match-handler'>
+                    <button onClick={handleEndInnings}><h6>END</h6></button>
                 </div>
             </div>
         )
