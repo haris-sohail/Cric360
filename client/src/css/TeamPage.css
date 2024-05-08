@@ -1,6 +1,7 @@
 .Main-div{
     width:70%;
     margin: 0 auto;
+    background-color: #eeee;
 }
 .first-slot{
     align-items: center;
@@ -52,4 +53,14 @@
 }
 .values-container p{
     padding-bottom: 15%;
+}
+.headings-one p{
+    font-style: italic;
+    font-size:100%;
+}
+
+.team-player-info{
+    width:100%;
+    display: flex;
+    justify-content: center;
 }

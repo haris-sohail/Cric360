@@ -21,7 +21,7 @@ function TeamPage() {
 
         <div className='headings-one'>
             <h2>{state.name}</h2>
-            <p>Location: {state.location}</p>
+            <p>{state.location}</p>
         </div>
         
       </div>
@@ -51,7 +51,11 @@ function TeamPage() {
             </div>
         </div>
     </div>
+    
       )}
+    <div className='team-player-info'>
+        <h2>Players</h2>
+    </div>
     </div>
   );
 }
