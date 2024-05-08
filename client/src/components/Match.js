@@ -20,6 +20,8 @@ function Match({ id, venue, startingAt, teamA, format, isLive, username }) {
   const [teamB, setTeamB] = useState()
   const [teamBLogo, setTeamBLogo] = useState()
   const [loading, setLoading] = useState(false)
+  const [isMatchEnded, setIsMatchEnded] = useState(false)
+  const [matchStats, setMatchStats] = useState()
   const navigate = useNavigate()
 
   useEffect(() => {
@@ -37,7 +39,6 @@ function Match({ id, venue, startingAt, teamA, format, isLive, username }) {
     // get team logo
     getMyTeamLogo()
 
-
     // convert the date
     const formattedDate = new Date(startingAt).toLocaleString('en-US', {
       timeZone: 'Asia/Karachi',
@@ -54,6 +55,31 @@ function Match({ id, venue, startingAt, teamA, format, isLive, username }) {
     setLoading(false)
 
   }, [])
+
+  useEffect(() => {
+    if (teamA && teamB && startingAt) {
+      getMatchStats()
+    }
+  }, [teamA, teamB, startingAt])
+
+  useEffect(() => {
+    if (matchStats) {
+      if (matchStats.winningTeam || matchStats.isDrawn == true || matchStats.isDrawn == false) {
+        setIsMatchEnded(true)
+        console.log('match is ended')
+      }
+    }
+  }, [matchStats])
+
+  const getMatchStats = () => {
+    axios.post('http://localhost:3001/matchStats/getMatchStats', { teamA, teamB, startingAt })
+      .then(res => {
+        setMatchStats(res.data)
+      })
+      .catch(err => {
+        toast.error("Error fetching match stats ID, server unreachable")
+      })
+  }
 
   const checkUser = () => {
     axios.post('http://localhost:3001/user/getUser', { username })
@@ -170,7 +196,7 @@ function Match({ id, venue, startingAt, teamA, format, isLive, username }) {
 
   const handleStartMatch = () => {
     if (!loading) {
-      navigate('/tossDetails', { state: { teamA, teamB, username } })
+      navigate('/tossDetails', { state: { teamA, teamB, username, startingAt } })
     }
   }
 

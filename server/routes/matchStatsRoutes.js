@@ -4,7 +4,7 @@ const router = express.Router();
 const uuid = require('uuid');
 
 router.post('/createMatchStats', (req, res) => {
-    const { tossWonBy, electedTo, tossLostBy } = req.body;
+    const { tossWonBy, electedTo, tossLostBy, startingAt } = req.body;
 
     MatchStatsModel.create({
         id: uuid.v4(),
@@ -16,7 +16,7 @@ router.post('/createMatchStats', (req, res) => {
             { teamName: tossWonBy },
             { teamName: tossLostBy }
         ],
-        startingAt: Date.now()
+        startingAt: startingAt
     })
         .then(MatchStats => res.json(MatchStats))
         .catch(err => res.json(err))
@@ -388,6 +388,24 @@ router.post('/getBowlerStats', async (req, res) => {
     }
     catch (err) {
         res.json(err)
+    }
+});
+
+router.post('/getMatchStats', async (req, res) => {
+    try {
+        let teamA = req.body.teamA;
+        let teamB = req.body.teamB;
+        let startingAt = req.body.startingAt;
+
+        const match = await MatchStatsModel.findOne({ 
+            teamA: teamA, 
+            teamB: teamB, 
+            startingAt: startingAt 
+        });
+
+        res.json(match);
+    } catch (err) {
+        res.json(err);
     }
 });
 

@@ -12,6 +12,7 @@ function MatchHandler() {
     const electedTo = data.electedTo
     const tossLostBy = data.tossLostBy
     const username = data.username
+    const startingAt = data.startingAt
     const [battingTeam, setBattingTeam] = useState();
     const [bowlingTeam, setBowlingTeam] = useState();
     const [matchStatsID, setMatchStatsID] = useState()
@@ -48,7 +49,7 @@ function MatchHandler() {
             }
 
             // make match details
-            axios.post('http://localhost:3001/matchStats/createMatchStats', { tossWonBy, electedTo, tossLostBy })
+            axios.post('http://localhost:3001/matchStats/createMatchStats', { tossWonBy, electedTo, tossLostBy, startingAt })
                 .then(res => {
                     if (res.data) {
                         setMatchStatsID(res.data.id);
