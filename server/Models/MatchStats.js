@@ -78,9 +78,9 @@ const MatchStatsSchema = new mongoose.Schema({
             ]
         }
     ],
-    result: String,
     winningTeam: String,
-    losingTeam: String
+    losingTeam: String,
+    isDrawn: Boolean
 });
 
 const MatchStatsModel = mongoose.model("MatchStats", MatchStatsSchema)

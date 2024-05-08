@@ -350,6 +350,28 @@ router.post('/updateBowlerEconomy', async (req, res) => {
     }
 });
 
+router.post('/updateEndMatch', async (req, res) => {
+    try {
+        let id = req.body.matchStatsID
+        let teamWon = req.body.teamWon
+        let teamLost = req.body.teamLost
+        let isDrawn = req.body.isDrawn
+        
+        const match = await MatchStatsModel.findOne({ id: id });
+
+        match.winningTeam = teamWon
+        match.losingTeam = teamLost
+        match.isDrawn = isDrawn
+
+        await match.save()
+
+        res.json(match)
+    }
+    catch (err) {
+        res.json(err)
+    }
+});
+
 router.post('/getBowlerStats', async (req, res) => {
     try {
         let id = req.body.matchStatsID

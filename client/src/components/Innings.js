@@ -5,6 +5,7 @@ import BowlingInnings from './BowlingInnings'
 import ScoreMachine from './ScoreMachine'
 import axios from 'axios'
 import toast from 'react-hot-toast'
+import { useNavigate } from 'react-router-dom'
 
 function Innings({ matchStatsID, battingTeam, bowlingTeam, inningNoVal, updateInnings1Score, target, totalScoreTeam1,
     totalScoreTeam2, tossWonBy, tossLostBy }) {
@@ -25,6 +26,8 @@ function Innings({ matchStatsID, battingTeam, bowlingTeam, inningNoVal, updateIn
     const [isBowlerSelected, setIsBowlerSelected] = useState(false)
     const [batsmanNumber, setBatsmanNumber] = useState(0)
     const [extras, setExtras] = useState(0)
+    const [loading, setLoading] = useState(false)
+    const navigate = useNavigate()
 
     const updateBatter1Facing = (value) => {
         setBatter1Facing(value)
@@ -77,6 +80,46 @@ function Innings({ matchStatsID, battingTeam, bowlingTeam, inningNoVal, updateIn
             }
             else if (bowlingTeam.toLowerCase() == tossLostBy.toLowerCase()) {
                 totalScoreTeam1(totalRuns)
+            }
+        }
+
+    }, [totalRuns])
+
+    const updateEndMatchDB = (teamWon, teamLost, isDrawn) => {
+        setLoading(true)
+        console.log('updat end match called')
+        axios.post('http://localhost:3001/matchStats/updateEndMatch', { matchStatsID, teamWon, teamLost, isDrawn })
+            .catch(err => {
+                console.log(err)
+                toast.error("Couldn't update end match, server unreachable")
+            })
+            .finally(() => {
+                setLoading(false)
+            })
+    }
+
+    useEffect(() => {
+        if (totalRuns) {
+            if (inningNoVal == 1) {
+                if (totalRuns >= target) {
+                    const isDrawn = false;
+                    if (battingTeam.toLowerCase() == tossWonBy.toLowerCase()) {
+                        updateEndMatchDB(tossWonBy, tossLostBy, false)
+                        navigate('/endmatch', { state: { teamWon: tossWonBy, isDrawn } })
+                    }
+                    else if (bowlingTeam.toLowerCase() == tossWonBy.toLowerCase()) {
+                        updateEndMatchDB(tossLostBy, tossWonBy, false)
+                        navigate('/endmatch', { state: { teamWon: tossLostBy, isDrawn } })
+                    }
+                    else if (battingTeam.toLowerCase() == tossLostBy.toLowerCase()) {
+                        updateEndMatchDB(tossLostBy, tossWonBy, false)
+                        navigate('/endmatch', { state: { teamWon: tossLostBy, isDrawn } })
+                    }
+                    else if (bowlingTeam.toLowerCase() == tossLostBy.toLowerCase()) {
+                        updateEndMatchDB(tossWonBy, tossLostBy, false)
+                        navigate('/endmatch', { state: { teamWon: tossWonBy, isDrawn } })
+                    }
+                }
             }
         }
 

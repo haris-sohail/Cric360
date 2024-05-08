@@ -68,20 +68,36 @@ function MatchHandler() {
         setInnings1Score(value)
     }
 
+    const updateEndMatchDB = (teamWon, teamLost, isDrawn) => {
+        axios.post('http://localhost:3001/matchStats/updateEndMatch', { matchStatsID, teamWon, teamLost, isDrawn })
+            .catch(err => {
+                console.log(err)
+                toast.error("Couldn't update end match, server unreachable")
+            })
+    }
+
     const handleEndInnings = () => {
         if (inningNo == '1') {
             if (scoreTeam1 > scoreTeam2) {
                 const isDrawn = false
-                navigate('/endmatch', { state: { teamWon: tossWonBy, isDrawn } })
+                updateEndMatchDB(tossWonBy, tossLostBy, false)
+                if (!loading) {
+                    navigate('/endmatch', { state: { teamWon: tossWonBy, isDrawn } })
+                }
             }
             else if (scoreTeam1 < scoreTeam2) {
                 const isDrawn = false
-
-                navigate('/endmatch', { state: { teamWon: tossLostBy, isDrawn } })
+                updateEndMatchDB(tossLostBy, tossWonBy, false)
+                if(!loading){
+                    navigate('/endmatch', { state: { teamWon: tossLostBy, isDrawn } })
+                }
             }
             else {
                 const isDrawn = true
-                navigate('/endmatch', { state: { teamWon: tossWonBy, isDrawn } })
+                updateEndMatchDB("", "", true)
+                if(!loading){
+                    navigate('/endmatch', { state: { teamWon: tossWonBy, isDrawn } })
+                }
             }
         }
         else {
