@@ -1,148 +1,25 @@
-.Overall-Nav {
-    height: 50px;
-    margin-top: 20px;
-}
-
 .navbar {
     display: flex;
     justify-content: space-between;
-    align-items: center;
-    /* Center items vertically */
     width: 100%;
-    color: white;
-    padding: 10px 20px;
-    /* Adjust padding for better appearance */
-    z-index: 1000;
-    /* Ensure navbar is above sidebar */
 }
 
 .navbar img {
     width: 8vmax;
 }
 
-.btns-container {
+.btns-container{
     display: flex;
-    gap: 20px;
-    /* Increase gap between buttons */
+    gap: 2vw;
 }
 
-#logo-link {
+#logo-link{
     cursor: pointer;
 }
 
-.sidebar {
-    width: 250px;
-    height: 100vh;
-    background-color: #333;
-    padding: 20px;
-    color: white;
-    position: fixed;
-    top: 0;
-    left: -250px;
-    /* Initially hide sidebar off-screen */
-    transition: left 0.3s ease;
-    /* Add transition for smooth animation */
-    z-index: 999;
-    /* Ensure sidebar is above other content */
-}
-
-.sidebar ul {
-    list-style-type: none;
-    padding: 0;
-    display: flex;
-    flex-direction: column;
-    /* Change flex direction to column */
-    align-items: center;
-    /* Center items horizontally */
-}
-
-.sidebar ul li a {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 15px 0;
-    color: white;
-    text-decoration: none;
-    transition: background-color 0.3s;
-    border-radius: 50%;
-    height: 50px;
-}
-
-.sidebar.show {
-    left: 0;
-    /* Show sidebar by bringing it into view */
-}
-
-.sidebar ul li {
-    margin-bottom: 10px;
-}
-
-.sidebar ul li:first-child a {
-    display: block;
-    text-align: center;
-    padding: 15px 0;
-    /* Adjust padding for better appearance */
-    margin-top: 75px;
-    /* Add margin to move the Home button down */
-    color: white;
-    text-decoration: none;
-    transition: background-color 0.3s;
-    /* Add transition for hover effect */
-}
-
-.sidebar ul li a:hover {
-    background-color: #555;
-    /* Change background color on hover */
-    border-radius: 20px;
-    width: 100px;
-}
-
-.toggle-btn {
-    position: fixed;
-    top: 50px;
-    left: 60px;
-    /* Position toggle button on the left side */
-    background: none;
-    border: none;
-    color: white;
-    font-size: 20px;
-    cursor: pointer;
-    z-index: 1000;
-    /* Ensure toggle button is above sidebar */
-    display: flex;
-    /* Use flexbox for alignment */
-    align-items: center;
-    /* Align text vertically with the icon */
-}
-
-.toggle-btn::after {
-    content: "Menu";
-    /* Add text after the icon */
-    margin-left: 8px;
-    /* Adjust margin for spacing between icon and text */
-}
-
-/* Media query to show/hide sidebar */
-/* Media query to show/hide sidebar */
-/* For screens up to 600px wide (typical mobile phone resolutions) */
 @media only screen and (max-width: 600px) {
     .navbar {
-        display: none;
-        /* Hide the navbar on smaller screens */
-    }
-
-    .sidebar {
-        display: block;
-        /* Ensure the sidebar is displayed on smaller screens */
-    }
-
-    .toggle-btn {
-        top: 20px;
-        /* Adjust the position of the toggle button */
-        left: 20px;
-    }
-
-    .toggle-btn:hover {
-        width: 100px;
+        width: 100%;
+        margin: 0 auto;
     }
 }
