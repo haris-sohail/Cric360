@@ -1,5 +1,7 @@
 import React from 'react'
 import { useLocation } from 'react-router-dom'
+import '../css/EndMatch.css'
+
 function EndMatch() {
     const location = useLocation()
     const data = location.state
@@ -7,9 +9,9 @@ function EndMatch() {
     const isDrawn = data.isDrawn
     
     return (
-        <div>
+        <div className='end-match-container'>
             {(!isDrawn) && (
-                <h2>Match won by {teamWon}</h2>
+                <h2>Match won by team {teamWon}</h2>
             )}
 
             {(isDrawn) && (
