@@ -212,7 +212,7 @@ function Match({ id, venue, startingAt, teamA, format, isLive, username }) {
 
   const handleViewMatch = () => {
     if (!loading) {
-
+      navigate('/viewMatch', {state : {username, matchStats}})
     }
   }
 

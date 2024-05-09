@@ -1,0 +1,6 @@
+.batsman-stats-match-container{
+    width: 100%;
+    display: flex;
+    background-color: white;
+    justify-content: space-around;
+}

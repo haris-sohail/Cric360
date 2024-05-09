@@ -1,0 +1,37 @@
+.view-match-container{
+    display: flex;
+    margin: 0 auto;
+    flex-direction: column;
+    width: 70%;
+    min-height: 100vh;
+}
+
+.main-content-container-view-match{
+    margin-top: 5vh;
+    flex: 1;
+}
+
+.innings-selector-container{
+    display: flex;
+    justify-content: space-evenly;
+    width: 100%;
+}
+
+.innings-selector-container a:hover{
+    font-weight: 500;
+    cursor: pointer;
+}
+
+.innings-selector-container a{
+    text-decoration: none;
+}
+
+.innings-clicked{
+    font-weight: 500;
+}
+
+@media only screen and (max-width: 600px) {
+    .view-match-container{
+        width: 95%;
+    }
+}
