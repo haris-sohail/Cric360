@@ -2,5 +2,14 @@
     width: 100%;
     display: flex;
     background-color: white;
-    justify-content: space-around;
+}
+
+.name-container-batsman-stats{
+    flex: 1;
+    text-align: center;
+}
+
+.stats-container-batsman-stats{
+    flex: 1;
+    text-align: center;
 }

@@ -9,6 +9,9 @@
 .main-content-container-view-match{
     margin-top: 5vh;
     flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 2vh;
 }
 
 .innings-selector-container{
@@ -32,6 +35,17 @@
 
 .batting-score-card-container-view-match{
     border-bottom: 3px solid black;
+    flex: 1;
+}
+
+.bowling-score-card-container-view-match{
+    flex: 1;
+}
+
+.batting-and-bowling-score-card-container{
+    display: flex;
+    flex-direction: column;
+    flex: 1;
 }
 
 @media only screen and (max-width: 600px) {

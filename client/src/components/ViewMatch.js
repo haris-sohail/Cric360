@@ -38,12 +38,14 @@ function ViewMatch() {
                     </a>
                 </div>
 
-                <div className='batting-score-card-container-view-match'>
-                    <BattingScoreCard inningsVal={teamAInningsClicked ? matchStats.innings[0] : matchStats.innings[1]}/>
-                </div>
+                <div className='batting-and-bowling-score-card-container'>
+                    <div className='batting-score-card-container-view-match'>
+                        <BattingScoreCard inningsVal={teamAInningsClicked ? matchStats.innings[0] : matchStats.innings[1]} />
+                    </div>
 
-                <div className='bowling-score-card-container-view-match'>
-                    <BowlingScoreCard inningsVal={teamAInningsClicked ? matchStats.innings[0] : matchStats.innings[1]}/>
+                    <div className='bowling-score-card-container-view-match'>
+                        <BowlingScoreCard inningsVal={teamAInningsClicked ? matchStats.innings[0] : matchStats.innings[1]} />
+                    </div>
                 </div>
             </div>
 
