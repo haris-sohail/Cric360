@@ -35,8 +35,6 @@ function BattingScoreCard({ inningsVal }) {
         if (inningsVal) {
             // set the batsmen stats according to the innings clicked
             setBatsmanStats(inningsVal.batsmen)
-
-            console.log(inningsVal)
         }
     }, [inningsVal]);
 

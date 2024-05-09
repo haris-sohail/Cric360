@@ -4,6 +4,7 @@ import { useLocation, useNavigate } from 'react-router-dom'
 import '../css/ViewMatch.css'
 import axios from 'axios'
 import BattingScoreCard from './BattingScoreCard'
+import BowlingScoreCard from './BowlingScoreCard'
 
 function ViewMatch() {
     const location = useLocation()
@@ -41,6 +42,9 @@ function ViewMatch() {
                     <BattingScoreCard inningsVal={teamAInningsClicked ? matchStats.innings[0] : matchStats.innings[1]}/>
                 </div>
 
+                <div className='bowling-score-card-container-view-match'>
+                    <BowlingScoreCard inningsVal={teamAInningsClicked ? matchStats.innings[0] : matchStats.innings[1]}/>
+                </div>
             </div>
 
         </div>
