@@ -1,18 +1,20 @@
 import React, { useEffect, useState } from 'react'
-import { useLocation } from 'react-router-dom'
-import Navbar from './Navbar'
+import { useLocation, useNavigate } from 'react-router-dom'
 import '../css/PlayerStats.css'
-import toast from 'react-hot-toast'
-import CircularProgress from '@mui/material/CircularProgress';
-import Box from '@mui/material/Box';
-import axios from 'axios'
 
-function PlayerStats({ playerName, teamName }) {
+function PlayerStats({ username, playerDetails }) {
+    const navigate = useNavigate()
+
+    const handlePlayerStatsClick = () => {
+        navigate('/playerStatsDetails', { state: { username, playerDetails } })
+    }
     return (
-        <div className='player-stats-container'>
-            <h6>{playerName}</h6>
-            <p><em>{teamName.toUpperCase()}</em></p>
-        </div>
+        <a onClick={handlePlayerStatsClick}>
+            <div className='player-stats-container'>
+                <h6>{playerDetails.username}</h6>
+                <p><em>{playerDetails.teamName.toUpperCase()}</em></p>
+            </div>
+        </a>
     )
 }
 

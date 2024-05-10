@@ -28,7 +28,6 @@ function PlayerStatsPage() {
                 .then(res => {
                     if (res.data) {
                         setPlayers(res.data)
-                        console.log(res.data)
                     }
                 })
                 .catch(err => {
@@ -46,8 +45,8 @@ function PlayerStatsPage() {
             const playersComp = players.map(player => (
                 <PlayerStats
                     key={player._id}
-                    playerName={player.username}
-                    teamName={player.teamName}
+                    username={username}
+                    playerDetails={player}
                 />
             ))
 
