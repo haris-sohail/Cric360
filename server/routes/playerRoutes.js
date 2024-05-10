@@ -37,6 +37,67 @@ router.post('/getPlayersOfTeam', (req, res) => {
         });
 })
 
+router.post('/incrementNoMatches', (req, res) => {
+    const username = req.body.username
+
+    PlayerModel.findOneAndUpdate(
+        { username: username },
+        { $inc: { noMatches: 1 } },
+        { new: true }
+    )
+        .then(player => { res.json(player) })
+        .catch(err => { res.json(err) })
+})
+
+router.post('/updateRunsScored', (req, res) => {
+    const username = req.body.username
+    const runs = req.body.buttonPressed
+
+    PlayerModel.findOneAndUpdate(
+        { username: username },
+        { $inc: { runsScored: runs } },
+        { new: true }
+    )
+        .then(player => { res.json(player) })
+        .catch(err => { res.json(err) })
+})
+
+router.post('/updateBallsFacedPlayer', (req, res) => {
+    const username = req.body.batsman
+    const ballsFaced = req.body.ballsFaced
+
+    PlayerModel.findOneAndUpdate(
+        { username: username },
+        { $inc: { ballsFaced: 1 } },
+        { new: true }
+    )
+        .then(player => { res.json(player) })
+        .catch(err => { res.json(err) })
+})
+
+router.post('/updateBattingAvgPlayer', (req, res) => {
+    const username = req.body.batsman
+    const buttonPressed = parseInt(req.body.buttonPressed)
+    const ballsFaced = req.body.ballsFacedVal
+
+    // find old batting avg
+    let oldBattingAvg;
+
+    PlayerModel.findOne({ username: username })
+        .then(player => {
+            oldBattingAvg = player.battingAvg
+
+            PlayerModel.findOneAndUpdate(
+                { username: username },
+                { battingAvg: (oldBattingAvg * (ballsFaced - 1) + buttonPressed) / ballsFaced },
+                { new: true }
+            )
+                .then(player => { res.json(player) })
+                .catch(err => { res.json(err) })
+        })
+        .catch(err => { res.json(err) })
+})
+
 
 
 module.exports = router;
