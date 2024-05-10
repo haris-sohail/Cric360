@@ -75,25 +75,39 @@ router.post('/updateBallsFacedPlayer', (req, res) => {
         .catch(err => { res.json(err) })
 })
 
-router.post('/updateBattingAvgPlayer', (req, res) => {
+router.post('/updateBattingAvgAndSRPlayer', (req, res) => {
+    // update SR
+
     const username = req.body.batsman
-    const buttonPressed = parseInt(req.body.buttonPressed)
+    let buttonPressed = req.body.buttonPressed
     const ballsFaced = req.body.ballsFacedVal
 
-    // find old batting avg
-    let oldBattingAvg;
+    if (buttonPressed == 'MISS') {
+        buttonPressed = 0
+    }
+    // find old SR
+    let oldSR;
+    let runsScored
+    let noMatches
 
     PlayerModel.findOne({ username: username })
         .then(player => {
+            oldSR = player.SR / 100
             oldBattingAvg = player.battingAvg
+            noMatches = player.noMatches
+            runsScored = player.runsScored
 
             PlayerModel.findOneAndUpdate(
                 { username: username },
-                { battingAvg: (oldBattingAvg * (ballsFaced - 1) + buttonPressed) / ballsFaced },
+                {
+                    SR: (100 * (oldSR * (ballsFaced - 1) + buttonPressed) / ballsFaced),
+                    battingAvg: runsScored / noMatches
+                },
                 { new: true }
             )
                 .then(player => { res.json(player) })
                 .catch(err => { res.json(err) })
+
         })
         .catch(err => { res.json(err) })
 })

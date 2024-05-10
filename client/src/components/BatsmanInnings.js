@@ -117,6 +117,15 @@ function BatsmanInnings({ battingTeam, buttonPressed, currentlyFacing, updateCur
             }
             else if (buttonPressed == 'MISS') {
                 setBallsFaced(ballsFaced + 1)
+
+                const ballsFacedVal = ballsFaced + 1
+
+                // update individual stats
+                axios.post('http://localhost:3001/player/updateBattingAvgAndSRPlayer', { batsman, buttonPressed, ballsFacedVal })
+                    .catch(err => {
+                        toast.error("Couldn't update batting avg of player, server is unreachable")
+                        console.log(err)
+                    })
             }
             else {
                 setRunsScored(runsScored + buttonPressed)
@@ -131,7 +140,7 @@ function BatsmanInnings({ battingTeam, buttonPressed, currentlyFacing, updateCur
 
                 const ballsFacedVal = ballsFaced + 1
                 // update individual stats
-                axios.post('http://localhost:3001/player/updateBattingAvgPlayer', { batsman, buttonPressed, ballsFacedVal })
+                axios.post('http://localhost:3001/player/updateBattingAvgAndSRPlayer', { batsman, buttonPressed, ballsFacedVal })
                     .catch(err => {
                         toast.error("Couldn't update batting avg of player, server is unreachable")
                         console.log(err)
