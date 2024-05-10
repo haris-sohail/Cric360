@@ -158,6 +158,12 @@ function BowlingInnings({ bowlingTeam, buttonPressed, bowlerSelected, matchStats
             // runs conceded
             if (buttonPressed == 'WD') {
                 setRunsConceded(runsConceded + 1)
+
+                // update runs conceded
+                axios.post('http://localhost:3001/player/updateRunsConceded', { buttonPressed, bowler })
+                    .catch(err => {
+                        toast.error("Couldn't update runs conceded, server is unreachable")
+                    })
             }
             else if (buttonPressed == 'OUT') {
                 setWickets(wickets + 1)
@@ -167,6 +173,12 @@ function BowlingInnings({ bowlingTeam, buttonPressed, bowlerSelected, matchStats
             }
             else {
                 setRunsConceded(runsConceded + parseInt(buttonPressed))
+
+                // update runs conceded
+                axios.post('http://localhost:3001/player/updateRunsConceded', { buttonPressed, bowler })
+                    .catch(err => {
+                        toast.error("Couldn't update runs conceded, server is unreachable")
+                    })
             }
         }
     }, [buttonPressed])
@@ -177,10 +189,28 @@ function BowlingInnings({ bowlingTeam, buttonPressed, bowlerSelected, matchStats
 
             // update economy
             setEconomy(runsConceded / (oversBowled + 1))
-            
+
             setOversBowled(oversBowled + 1)
         }
     }, [ballsBowled])
+
+    useEffect(() => {
+        if (ballsBowled || ballsBowled == 0) {
+            axios.post('http://localhost:3001/player/updateBallsBowledBowler', { bowler, ballsBowled })
+                .catch(err => {
+                    toast.error("Couldn't update balls bowled, server is unreachable")
+                })
+        }
+    }, [ballsBowled])
+
+    useEffect(() => {
+        if (wickets) {
+            axios.post('http://localhost:3001/player/incrementWickets', { bowler })
+                .catch(err => {
+                    toast.error("Couldn't increment wickets, server is unreachable")
+                })
+        }
+    }, [wickets])
 
     const bracketStyle = {
         fontFamily: 'Roboto Slab, sans-serif',

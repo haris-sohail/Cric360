@@ -1,0 +1,20 @@
+.player-stats-page-container{
+    display: flex;
+    min-height: 100vh;
+    margin: 0 auto;
+    flex-direction: column;
+    width: 70%;
+}
+
+.main-content-container-player-stats-page-container{
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 1vh;
+}
+
+@media only screen and (max-width: 600px) {
+    .player-stats-page-container{
+        width: 95%;
+    }
+}

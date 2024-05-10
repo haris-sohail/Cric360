@@ -15,6 +15,7 @@ import MatchHandler from './components/MatchHandler';
 import EndMatch from './components/EndMatch';
 import TeamPage from './components/TeamPage';
 import ViewMatch from './components/ViewMatch';
+import PlayerStatsPage from './components/PlayerStatsPage';
 
 function App() {
   return (
@@ -33,9 +34,9 @@ function App() {
         <Route path='/tossDetails' element={<TossDetails />} />
         <Route path='/matchHandler' element={<MatchHandler />} />
         <Route path='/endmatch' element={<EndMatch />} />
-        <Route path='/teampage' element={<TeamPage />}/>
-        <Route path='/viewMatch' element={<ViewMatch />}/>
-
+        <Route path='/teampage' element={<TeamPage />} />
+        <Route path='/viewMatch' element={<ViewMatch />} />
+        <Route path='/stats' element={<PlayerStatsPage />} />
       </Routes>
     </BrowserRouter>
   );

@@ -76,8 +76,6 @@ router.post('/updateBallsFacedPlayer', (req, res) => {
 })
 
 router.post('/updateBattingAvgAndSRPlayer', (req, res) => {
-    // update SR
-
     const username = req.body.batsman
     let buttonPressed = req.body.buttonPressed
     const ballsFaced = req.body.ballsFacedVal
@@ -85,7 +83,6 @@ router.post('/updateBattingAvgAndSRPlayer', (req, res) => {
     if (buttonPressed == 'MISS') {
         buttonPressed = 0
     }
-    // find old SR
     let oldSR;
     let runsScored
     let noMatches
@@ -112,6 +109,80 @@ router.post('/updateBattingAvgAndSRPlayer', (req, res) => {
         .catch(err => { res.json(err) })
 })
 
+router.post('/updateBallsBowledBowler', (req, res) => {
+    const username = req.body.bowler;
+    const ballsBowled = req.body.ballsBowled;
+
+    if (ballsBowled == 6) {
+        PlayerModel.findOneAndUpdate(
+            { username: username },
+            {
+                ballsBowled: ballsBowled,
+                $inc: { oversBowled: 1 }
+            },
+            { new: true }
+        )
+            .then(player => { res.json(player) })
+            .catch(err => { res.json(err) })
+    }
+    else {
+        PlayerModel.findOneAndUpdate(
+            { username: username },
+            { ballsBowled: ballsBowled },
+            { new: true }
+        )
+            .then(player => { res.json(player) })
+            .catch(err => { res.json(err) })
+    }
+})
+
+
+router.post('/incrementOversBowled', (req, res) => {
+    const username = req.body.bowler
+
+    PlayerModel.findOneAndUpdate(
+        { username: username },
+        { $inc: { oversBowled: 1 } },
+        { new: true }
+    )
+        .then(player => { res.json(player) })
+        .catch(err => { res.json(err) })
+})
+
+router.post('/incrementWickets', (req, res) => {
+    const username = req.body.bowler
+
+    PlayerModel.findOneAndUpdate(
+        { username: username },
+        { $inc: { wicketsTaken: 1 } },
+        { new: true }
+    )
+        .then(player => { res.json(player) })
+        .catch(err => { res.json(err) })
+})
+
+router.post('/updateRunsConceded', (req, res) => {
+    const username = req.body.bowler
+    let buttonPressed = req.body.buttonPressed
+
+    if (buttonPressed == 'WD') {
+        buttonPressed = 1
+    }
+
+    PlayerModel.findOneAndUpdate(
+        { username: username },
+        { $inc: { runsConceded: buttonPressed } },
+        { new: true }
+    )
+        .then(player => { res.json(player) })
+        .catch(err => { res.json(err) })
+})
+
+router.post('/getAllPlayers', (req, res) => {
+    PlayerModel.find()
+        .then(players => { res.json(players) })
+        .catch(err => res.json(err))
+});
 
 
 module.exports = router;
