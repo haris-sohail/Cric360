@@ -15,11 +15,8 @@ app.use(cors(
 
 app.use(express.static('public'))
 
-mongoose.connect(process.env.MONGODB_URI || "mongodb://127.0.0.1:27017/Cric360");
+mongoose.connect(process.env.MONGODB_URI);
 
-app.get("/", (req, res) => {
-  res.json("Deployed successfully")
-})
 const userRoutes = require('./routes/userRoutes');
 const discussionRoutes = require('./routes/discussionRoutes');
 const teamRoutes = require('./routes/teamRoutes');
