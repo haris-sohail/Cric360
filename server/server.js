@@ -13,6 +13,10 @@ app.use(cors(
   }
 ))
 
+app.get('/', (req, res) => {
+  res.json("Welcome to Cric360-api")
+})
+
 app.use(express.static('public'))
 
 mongoose.connect(process.env.MONGODB_URI);
