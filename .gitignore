@@ -17,8 +17,8 @@ build
 .env.development.local
 .env.test.local
 .env.production.local
-.\client\.env
-.\server\.env
+/client/.env
+/server/.env
 
 npm-debug.log*
 yarn-debug.log*
