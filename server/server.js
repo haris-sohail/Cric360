@@ -7,7 +7,7 @@ const app = express()
 app.use(express.json())
 app.use(cors(
   {
-    origin: [""],
+    origin: ["https://cric360.vercel.app"],
     methods: ["POST", "GET"],
     credentials: true
   }
