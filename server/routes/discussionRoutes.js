@@ -36,11 +36,33 @@ router.post('/upvote', (req, res) => {
         .catch(err => res.json(err))
 })
 
+router.post('/cancelUpvote', (req, res) => {
+    let discussion_id = req.body.discussionId;
+
+    DiscussionModel.findOneAndUpdate(
+        { id: discussion_id }, { $inc: { upvotes: -1 } },
+        { returnOriginal: false }
+    )
+        .then(discussion => res.json(discussion))
+        .catch(err => res.json(err))
+})
+
 router.post('/downvote', (req, res) => {
     let discussion_id = req.body.discussionId;
 
     DiscussionModel.findOneAndUpdate(
         { id: discussion_id }, { $inc: { downvotes: 1 } },
+        { returnOriginal: false }
+    )
+        .then(discussion => res.json(discussion))
+        .catch(err => res.json(err))
+})
+
+router.post('/cancelDownvote', (req, res) => {
+    let discussion_id = req.body.discussionId;
+
+    DiscussionModel.findOneAndUpdate(
+        { id: discussion_id }, { $inc: { downvotes: -1 } },
         { returnOriginal: false }
     )
         .then(discussion => res.json(discussion))
