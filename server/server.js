@@ -7,7 +7,7 @@ const app = express()
 app.use(express.json())
 app.use(cors(
   {
-    origin: [""],
+    origin: ["https://cric360.vercel.app"],
     methods: ["POST", "GET"],
     credentials: true
   }
@@ -15,11 +15,12 @@ app.use(cors(
 
 app.use(express.static('public'))
 
-mongoose.connect(process.env.MONGODB_URI || "mongodb://127.0.0.1:27017/Cric360");
+mongoose.connect(process.env.MONGODB_URI);
 
 app.get("/", (req, res) => {
-  res.json("Deployed successfully")
+  res.json("Welcome to Cric360-api")
 })
+
 const userRoutes = require('./routes/userRoutes');
 const discussionRoutes = require('./routes/discussionRoutes');
 const teamRoutes = require('./routes/teamRoutes');
