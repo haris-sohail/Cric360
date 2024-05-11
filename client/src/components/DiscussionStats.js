@@ -1,5 +1,6 @@
 import React from 'react'
 import { useEffect, useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 import '../css/DiscussionStats.css'
 import upvote from '../system/assets/upvote.png'
 import upvoteRed from '../system/assets/upvote-red.png'
@@ -9,27 +10,27 @@ import comment from '../system/assets/comment.png'
 import toast from 'react-hot-toast'
 import axios from 'axios';
 
-function DiscussionStats({ discussionId }) {
+function DiscussionStats({ discussionId, username }) {
+    const [discussion, setDiscussion] = useState()
     const [upvotes, setUpvotes] = useState()
     const [downvotes, setDownvotes] = useState()
     const [loading, setLoading] = useState(false)
     const [upvoted, setUpvoted] = useState(false)
     const [downvoted, setDownvoted] = useState(false)
+    const navigate = useNavigate()
 
     useEffect(() => {
         setLoading(true)
-        axios.post("http://localhost:3001/discussion/getUpvotes", { discussionId })
+        axios.post("http://localhost:3001/discussion/getDiscussion", { discussionId })
             .then(res => {
-                setUpvotes(res.data)
-            })
-
-        axios.post("http://localhost:3001/discussion/getDownvotes", { discussionId })
-            .then(res => {
-                setDownvotes(res.data)
+                setDiscussion(res.data)
+                setUpvotes(res.data.upvotes)
+                setDownvotes(res.data.downvotes)
             })
             .finally(() => {
                 setLoading(false)
             })
+
     }, [])
 
     const handleUpvote = (e) => {
@@ -127,6 +128,10 @@ function DiscussionStats({ discussionId }) {
 
     }
 
+    const handleCommentClick = () => {
+        navigate('/discussionComments', { state: { username, discussion } })
+    }
+
     if (loading) {
         return null
     }
@@ -159,7 +164,7 @@ function DiscussionStats({ discussionId }) {
                     <p>{downvotes}</p>
                 </div>
             </div>
-            <a>
+            <a onClick={handleCommentClick}>
                 <img src={comment} className='stats-img-discussion-page'></img>
             </a>
         </div>

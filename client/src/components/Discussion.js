@@ -6,7 +6,7 @@ import downvote from '../system/assets/downvote.png'
 import comment from '../system/assets/comment.png'
 import '../css/Discussion.css'
 
-function Discussion({ id, title, text, upvotes, downvotes, username, comments }) {
+function Discussion({ id, title, text, upvotes, downvotes, username, comments, postedBy }) {
   const navigate = useNavigate();
 
   const displayProps = () => {
@@ -19,7 +19,7 @@ function Discussion({ id, title, text, upvotes, downvotes, username, comments })
   }
 
   const handleDiscussionClick = (e) => {
-    navigate('/discussionPage', { state: { id, title, text, upvotes, downvotes, username, comments } })
+    navigate('/discussionPage', { state: { id, title, text, upvotes, downvotes, username, comments, postedBy } })
   }
 
   return (

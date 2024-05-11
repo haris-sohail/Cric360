@@ -17,6 +17,7 @@ import TeamPage from './components/TeamPage';
 import ViewMatch from './components/ViewMatch';
 import PlayerStatsPage from './components/PlayerStatsPage';
 import PlayerStatsDetails from './components/PlayerStatsDetails';
+import DiscussionComments from './components/DiscussionComments';
 
 function App() {
   return (
@@ -39,6 +40,7 @@ function App() {
         <Route path='/viewMatch' element={<ViewMatch />} />
         <Route path='/stats' element={<PlayerStatsPage />} />
         <Route path='/playerStatsDetails' element={<PlayerStatsDetails />} />
+        <Route path='/discussionComments' element={<DiscussionComments />} />
       </Routes>
     </BrowserRouter>
   );

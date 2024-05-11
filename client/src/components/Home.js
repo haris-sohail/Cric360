@@ -35,7 +35,8 @@ function Home() {
                     text={discussion.text}
                     upvotes={discussion.upvotes}
                     downvotes={discussion.downvotes}
-                    username={discussion.username}
+                    postedBy={discussion.username}
+                    username={data.username}
                     comments={discussion.comments}
                 />
             ));

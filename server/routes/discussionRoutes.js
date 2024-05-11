@@ -69,20 +69,35 @@ router.post('/cancelDownvote', (req, res) => {
         .catch(err => res.json(err))
 })
 
-router.post('/getUpvotes', (req, res) => {
+router.post('/getDiscussion', (req, res) => {
     let discussion_id = req.body.discussionId;
 
     DiscussionModel.findOne({ id: discussion_id })
-        .then(discussion => res.json(discussion.upvotes))
+        .then(discussion => res.json(discussion))
         .catch(err => res.json(err))
 })
 
-router.post('/getDownvotes', (req, res) => {
-    let discussion_id = req.body.discussionId;
+router.post('/addComment', async (req, res) => {
+    try {
+        let discussion_id = req.body.discussion_id;
+        let username = req.body.username;
+        let text = req.body.currentComment;
 
-    DiscussionModel.findOne({ id: discussion_id })
-        .then(discussion => res.json(discussion.downvotes))
-        .catch(err => res.json(err))
+        const discussion = await DiscussionModel.findOne({ id: discussion_id })
+        
+        discussion.comments.push({
+            postedBy: username,
+            text: text
+        })
+
+        await discussion.save()
+
+        res.json(discussion)
+    }
+    catch (err) {
+        res.json(err)
+    }
+    
 })
 
 module.exports = router;
