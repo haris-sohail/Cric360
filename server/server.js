@@ -17,7 +17,7 @@ app.use(express.static('public'))
 
 mongoose.connect(process.env.MONGODB_URI);
 
-app.get('/', (req, res) => {
+app.get("/", (req, res) => {
   res.json("Deployed successfully")
 })
 const userRoutes = require('./routes/userRoutes');
