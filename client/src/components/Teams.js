@@ -25,7 +25,7 @@ function Teams() {
 
     const fetchTeams = async () => {
         try {
-            const response = await axios.get('http://localhost:3001/team/getTeams');
+            const response = await axios.get(`${process.env.REACT_APP_BACKEND_URL}/team/getTeams`);
             
             if (response.status !== 200) {
                 throw new Error('Failed to fetch teams');

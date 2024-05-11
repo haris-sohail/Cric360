@@ -23,7 +23,7 @@ function TeamPage() {
     setLoading(true);
     if (useEffectCalled) {
       const teamName = state.name;
-      axios.post('http://localhost:3001/player/getPlayersOfTeam', { teamName })
+      axios.post(`${process.env.REACT_APP_BACKEND_URL}/player/getPlayersOfTeam`, { teamName })
         .then(res => {
           setAllPlayers(res.data);
         })
@@ -50,7 +50,7 @@ function TeamPage() {
       <Navbar />
       <div className='first-slot'>
         <div className='image-container'>
-          <img src={'http://localhost:3001/Images/' + state.logo} alt="Team Logo" />
+          <img src={`${process.env.REACT_APP_BACKEND_URL}/Images/` + state.logo} alt="Team Logo" />
         </div>
 
         <div className='headings-one'>
@@ -94,7 +94,7 @@ function TeamPage() {
             {allPlayers.map(player => (
              <div className='team-player-info'>
                 <div className='image-container-players'>
-                    <img src={'http://localhost:3001/Images/' + state.logo}></img>
+                    <img src={`${process.env.REACT_APP_BACKEND_URL}/Images/` + state.logo}></img>
                 </div>
             <div key={player._id} className="player-name">
                 {player.username}

@@ -34,7 +34,7 @@ function Signup() {
 
     const userNameExists = async () => {
         try {
-            const res = await axios.post('http://localhost:3001/user/getUser', { username });
+            const res = await axios.post(`${process.env.REACT_APP_BACKEND_URL}/user/getUser`, { username });
 
             if (res.data !== null)
                 toast.error("Username exists already")
@@ -49,7 +49,7 @@ function Signup() {
 
     const emailExists = async () => {
         try {
-            const res = await axios.post('http://localhost:3001/user/getEmail', { email });
+            const res = await axios.post(`${process.env.REACT_APP_BACKEND_URL}/user/getEmail`, { email });
 
             if (res.data !== null)
                 toast.error("Email exists already")
@@ -71,10 +71,10 @@ function Signup() {
 
             if (!userNameCheck && !emailCheck) {
                 try {
-                    const res = await axios.post('http://localhost:3001/user/register', { username, email, password, role});
+                    const res = await axios.post(`${process.env.REACT_APP_BACKEND_URL}/user/register`, { username, email, password, role});
 
                     if (res) {
-                        await axios.post('http://localhost:3001/player/createPlayer', { username })
+                        await axios.post(`${process.env.REACT_APP_BACKEND_URL}/player/createPlayer`, { username })
                             .then(res => {
                                 toast.success("Registered Successfully");
                             })

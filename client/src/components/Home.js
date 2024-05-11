@@ -48,7 +48,7 @@ function Home() {
 
     const loadDiscussions = async () => {
         try {
-            const res = await axios.post('http://localhost:3001/discussion/getDiscussions')
+            const res = await axios.post(`${process.env.REACT_APP_BACKEND_URL}/discussion/getDiscussions`)
                 .finally(() => {
                     setLoading(false);
                 });

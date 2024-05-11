@@ -25,7 +25,7 @@ function StartDiscussionDetails() {
 
             // insert in database
             try {
-                const res = await axios.post('http://localhost:3001/discussion/postDiscussion', { title, text, comments, upvotes, downvotes, username })
+                const res = await axios.post(`${process.env.REACT_APP_BACKEND_URL}/discussion/postDiscussion`, { title, text, comments, upvotes, downvotes, username })
 
                 if (res)
                     toast.success("Posted Successfully")

@@ -23,7 +23,7 @@ function BowlingInnings({ bowlingTeam, buttonPressed, bowlerSelected, matchStats
 
     const setBowlerStatsFunc = () => {
         setLoading(true)
-        axios.post('http://localhost:3001/matchStats/getBowlerStats', { matchStatsID, inningNo, bowler })
+        axios.post(`${process.env.REACT_APP_BACKEND_URL}/matchStats/getBowlerStats`, { matchStatsID, inningNo, bowler })
             .then(res => {
                 if (res.data) {
                     setBowlerStats(res.data)
@@ -57,7 +57,7 @@ function BowlingInnings({ bowlingTeam, buttonPressed, bowlerSelected, matchStats
             const teamName = bowlingTeam
 
             if (teamName) {
-                axios.post('http://localhost:3001/player/getPlayersOfTeam', { teamName })
+                axios.post(`${process.env.REACT_APP_BACKEND_URL}/player/getPlayersOfTeam`, { teamName })
                     .then(res => {
                         if (res.data && Array.isArray(res.data)) {
                             setAllPlayers(res.data)
@@ -77,7 +77,7 @@ function BowlingInnings({ bowlingTeam, buttonPressed, bowlerSelected, matchStats
     useEffect(() => {
         if (bowler) {
             // update in database
-            axios.post('http://localhost:3001/matchStats/createBowler', { matchStatsID, inningNo, bowler })
+            axios.post(`${process.env.REACT_APP_BACKEND_URL}/matchStats/createBowler`, { matchStatsID, inningNo, bowler })
                 .catch(err => {
                     toast.error("Couldn't create bowler, server is unreachable")
                     console.log(err)
@@ -90,7 +90,7 @@ function BowlingInnings({ bowlingTeam, buttonPressed, bowlerSelected, matchStats
     useEffect(() => {
         if (ballsBowled) {
             // update in database
-            axios.post('http://localhost:3001/matchStats/updateBallsBowled', { matchStatsID, inningNo, ballsBowled, bowler })
+            axios.post(`${process.env.REACT_APP_BACKEND_URL}/matchStats/updateBallsBowled`, { matchStatsID, inningNo, ballsBowled, bowler })
                 .catch(err => {
                     toast.error("Couldn't update balls bowled, server is unreachable")
                     console.log(err)
@@ -102,7 +102,7 @@ function BowlingInnings({ bowlingTeam, buttonPressed, bowlerSelected, matchStats
 
         if (oversBowled) {
             // update in database
-            axios.post('http://localhost:3001/matchStats/updateOversBowled', { matchStatsID, inningNo, oversBowled, bowler })
+            axios.post(`${process.env.REACT_APP_BACKEND_URL}/matchStats/updateOversBowled`, { matchStatsID, inningNo, oversBowled, bowler })
                 .catch(err => {
                     toast.error("Couldn't update overs bowled, server is unreachable")
                     console.log(err)
@@ -113,7 +113,7 @@ function BowlingInnings({ bowlingTeam, buttonPressed, bowlerSelected, matchStats
     useEffect(() => {
         if (runsConceded) {
             // update in database
-            axios.post('http://localhost:3001/matchStats/updateRunsConceded', { matchStatsID, inningNo, runsConceded, bowler })
+            axios.post(`${process.env.REACT_APP_BACKEND_URL}/matchStats/updateRunsConceded`, { matchStatsID, inningNo, runsConceded, bowler })
                 .catch(err => {
                     toast.error("Couldn't update runs conceded, server is unreachable")
                     console.log(err)
@@ -124,7 +124,7 @@ function BowlingInnings({ bowlingTeam, buttonPressed, bowlerSelected, matchStats
     useEffect(() => {
         if (wickets) {
             // update in database
-            axios.post('http://localhost:3001/matchStats/updateWicketsBowler', { matchStatsID, inningNo, wickets, bowler })
+            axios.post(`${process.env.REACT_APP_BACKEND_URL}/matchStats/updateWicketsBowler`, { matchStatsID, inningNo, wickets, bowler })
                 .catch(err => {
                     toast.error("Couldn't update wickets, server is unreachable")
                     console.log(err)
@@ -135,7 +135,7 @@ function BowlingInnings({ bowlingTeam, buttonPressed, bowlerSelected, matchStats
     useEffect(() => {
         if (economy) {
             // update in database
-            axios.post('http://localhost:3001/matchStats/updateBowlerEconomy', { matchStatsID, inningNo, economy, bowler })
+            axios.post(`${process.env.REACT_APP_BACKEND_URL}/matchStats/updateBowlerEconomy`, { matchStatsID, inningNo, economy, bowler })
                 .catch(err => {
                     toast.error("Couldn't update economy, server is unreachable")
                     console.log(err)
@@ -160,7 +160,7 @@ function BowlingInnings({ bowlingTeam, buttonPressed, bowlerSelected, matchStats
                 setRunsConceded(runsConceded + 1)
 
                 // update runs conceded
-                axios.post('http://localhost:3001/player/updateRunsConceded', { buttonPressed, bowler })
+                axios.post(`${process.env.REACT_APP_BACKEND_URL}/player/updateRunsConceded`, { buttonPressed, bowler })
                     .catch(err => {
                         toast.error("Couldn't update runs conceded, server is unreachable")
                     })
@@ -175,7 +175,7 @@ function BowlingInnings({ bowlingTeam, buttonPressed, bowlerSelected, matchStats
                 setRunsConceded(runsConceded + parseInt(buttonPressed))
 
                 // update runs conceded
-                axios.post('http://localhost:3001/player/updateRunsConceded', { buttonPressed, bowler })
+                axios.post(`${process.env.REACT_APP_BACKEND_URL}/player/updateRunsConceded`, { buttonPressed, bowler })
                     .catch(err => {
                         toast.error("Couldn't update runs conceded, server is unreachable")
                     })
@@ -196,7 +196,7 @@ function BowlingInnings({ bowlingTeam, buttonPressed, bowlerSelected, matchStats
 
     useEffect(() => {
         if (ballsBowled || ballsBowled == 0) {
-            axios.post('http://localhost:3001/player/updateBallsBowledBowler', { bowler, ballsBowled })
+            axios.post(`${process.env.REACT_APP_BACKEND_URL}/player/updateBallsBowledBowler`, { bowler, ballsBowled })
                 .catch(err => {
                     toast.error("Couldn't update balls bowled, server is unreachable")
                 })
@@ -205,7 +205,7 @@ function BowlingInnings({ bowlingTeam, buttonPressed, bowlerSelected, matchStats
 
     useEffect(() => {
         if (wickets) {
-            axios.post('http://localhost:3001/player/incrementWickets', { bowler })
+            axios.post(`${process.env.REACT_APP_BACKEND_URL}/player/incrementWickets`, { bowler })
                 .catch(err => {
                     toast.error("Couldn't increment wickets, server is unreachable")
                 })

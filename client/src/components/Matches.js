@@ -49,7 +49,7 @@ function Matches() {
 
     const loadMatches = async () => {
         try {
-            const res = await axios.post('http://localhost:3001/match/getMatches')
+            const res = await axios.post(`${process.env.REACT_APP_BACKEND_URL}/match/getMatches`)
                 .finally(() => {
                     setLoading(false)
                 })
@@ -65,7 +65,7 @@ function Matches() {
     }
 
     const hideCreateMatchButton = () => {
-        axios.post('http://localhost:3001/player/getPlayer', { username })
+        axios.post(`${process.env.REACT_APP_BACKEND_URL}/player/getPlayer`, { username })
             .then(res => {
                 if (!res.data || res.data.isCaptain == false) {
                     // hide the create match button

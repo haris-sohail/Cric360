@@ -28,7 +28,7 @@ function BatsmanInnings({ battingTeam, buttonPressed, currentlyFacing, updateCur
 
     useEffect(() => {
         // update in database
-        axios.post('http://localhost:3001/matchStats/updateRunsScoredBatsman', { matchStatsID, batsmanNumber, inningNo, runsScored })
+        axios.post(`${process.env.REACT_APP_BACKEND_URL}/matchStats/updateRunsScoredBatsman`, { matchStatsID, batsmanNumber, inningNo, runsScored })
             .catch(err => {
                 toast.error("Couldn't update runs, server is unreachable")
                 console.log(err)
@@ -38,14 +38,14 @@ function BatsmanInnings({ battingTeam, buttonPressed, currentlyFacing, updateCur
     useEffect(() => {
         if (batsman) {
             // update in database
-            axios.post('http://localhost:3001/matchStats/updateBatsmanName', { matchStatsID, batsmanNumber, inningNo, batsman })
+            axios.post(`${process.env.REACT_APP_BACKEND_URL}/matchStats/updateBatsmanName`, { matchStatsID, batsmanNumber, inningNo, batsman })
                 .catch(err => {
                     toast.error("Couldn't update batsman name, server is unreachable")
                     console.log(err)
                 })
 
             // increment no of matches
-            axios.post('http://localhost:3001/player/incrementNoMatches', { username: batsman })
+            axios.post(`${process.env.REACT_APP_BACKEND_URL}/player/incrementNoMatches`, { username: batsman })
                 .catch(err => {
                     toast.error("Couldn't update number of matches for player, server is unreachable")
                     console.log(err)
@@ -55,14 +55,14 @@ function BatsmanInnings({ battingTeam, buttonPressed, currentlyFacing, updateCur
 
     useEffect(() => {
         // update in database
-        axios.post('http://localhost:3001/matchStats/updateBallsFaced', { matchStatsID, batsmanNumber, inningNo, ballsFaced })
+        axios.post(`${process.env.REACT_APP_BACKEND_URL}/matchStats/updateBallsFaced`, { matchStatsID, batsmanNumber, inningNo, ballsFaced })
             .catch(err => {
                 toast.error("Couldn't update balls faced, server is unreachable")
                 console.log(err)
             })
 
         // update individual stats
-        axios.post('http://localhost:3001/player/updateBallsFacedPlayer', { batsman, ballsFaced })
+        axios.post(`${process.env.REACT_APP_BACKEND_URL}/player/updateBallsFacedPlayer`, { batsman, ballsFaced })
             .catch(err => {
                 toast.error("Couldn't update balls faced for player, server is unreachable")
                 console.log(err)
@@ -91,7 +91,7 @@ function BatsmanInnings({ battingTeam, buttonPressed, currentlyFacing, updateCur
         const teamName = battingTeam
 
         if (teamName) {
-            axios.post('http://localhost:3001/player/getPlayersOfTeam', { teamName })
+            axios.post(`${process.env.REACT_APP_BACKEND_URL}/player/getPlayersOfTeam`, { teamName })
                 .then(res => {
                     if (res.data && Array.isArray(res.data)) {
                         setAllPlayers(res.data)
@@ -121,7 +121,7 @@ function BatsmanInnings({ battingTeam, buttonPressed, currentlyFacing, updateCur
                 const ballsFacedVal = ballsFaced + 1
 
                 // update individual stats
-                axios.post('http://localhost:3001/player/updateBattingAvgAndSRPlayer', { batsman, buttonPressed, ballsFacedVal })
+                axios.post(`${process.env.REACT_APP_BACKEND_URL}/player/updateBattingAvgAndSRPlayer`, { batsman, buttonPressed, ballsFacedVal })
                     .catch(err => {
                         toast.error("Couldn't update batting avg of player, server is unreachable")
                         console.log(err)
@@ -132,7 +132,7 @@ function BatsmanInnings({ battingTeam, buttonPressed, currentlyFacing, updateCur
                 setBallsFaced(ballsFaced + 1)
 
                 // update individual runs
-                axios.post('http://localhost:3001/player/updateRunsScored', { username: batsman, buttonPressed })
+                axios.post(`${process.env.REACT_APP_BACKEND_URL}/player/updateRunsScored`, { username: batsman, buttonPressed })
                     .catch(err => {
                         toast.error("Couldn't update runs for player, server is unreachable")
                         console.log(err)
@@ -140,7 +140,7 @@ function BatsmanInnings({ battingTeam, buttonPressed, currentlyFacing, updateCur
 
                 const ballsFacedVal = ballsFaced + 1
                 // update individual stats
-                axios.post('http://localhost:3001/player/updateBattingAvgAndSRPlayer', { batsman, buttonPressed, ballsFacedVal })
+                axios.post(`${process.env.REACT_APP_BACKEND_URL}/player/updateBattingAvgAndSRPlayer`, { batsman, buttonPressed, ballsFacedVal })
                     .catch(err => {
                         toast.error("Couldn't update batting avg of player, server is unreachable")
                         console.log(err)

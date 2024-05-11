@@ -34,7 +34,7 @@ function DiscussionComments() {
         const discussion_id = discussion.id;
         const comment = currentComment.trim()
 
-        axios.post('http://localhost:3001/discussion/addComment', { discussion_id, currentComment: comment, username })
+        axios.post(`${process.env.REACT_APP_BACKEND_URL}/discussion/addComment`, { discussion_id, currentComment: comment, username })
             .then(res => {
                 setComments([...comments, { postedBy: username, text: currentComment }]);
                 setCurrentComment('');

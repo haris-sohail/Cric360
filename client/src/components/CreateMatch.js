@@ -29,7 +29,7 @@ function CreateMatch() {
 
     useEffect(() => {
         setLoading(true)
-        axios.post('http://localhost:3001/player/getPlayer', { username })
+        axios.post(`${process.env.REACT_APP_BACKEND_URL}/player/getPlayer`, { username })
             .then(res => {
                 setTeamName(res.data.teamName);
             })
@@ -46,7 +46,7 @@ function CreateMatch() {
 
             if (teamName) {
                 try {
-                    axios.post('http://localhost:3001/match/createMatch', { startingAt, venue, format, teamName })
+                    axios.post(`${process.env.REACT_APP_BACKEND_URL}/match/createMatch`, { startingAt, venue, format, teamName })
                         .then(res => {
                             toast.success("Created the match successfully")
                             navigate('/matches', { state: { username } })

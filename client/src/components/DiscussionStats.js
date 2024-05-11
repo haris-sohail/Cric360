@@ -21,7 +21,7 @@ function DiscussionStats({ discussionId, username }) {
 
     useEffect(() => {
         setLoading(true)
-        axios.post("http://localhost:3001/discussion/getDiscussion", { discussionId })
+        axios.post(`${process.env.REACT_APP_BACKEND_URL}/discussion/getDiscussion`, { discussionId })
             .then(res => {
                 setDiscussion(res.data)
                 setUpvotes(res.data.upvotes)
@@ -39,7 +39,7 @@ function DiscussionStats({ discussionId, username }) {
             setUpvotes(upvotes - 1)
 
             try {
-                axios.post("http://localhost:3001/discussion/cancelUpvote", { discussionId })
+                axios.post(`${process.env.REACT_APP_BACKEND_URL}/discussion/cancelUpvote`, { discussionId })
             }
             catch (err) {
                 toast.error("Couldn't reach the server, upvote failed")
@@ -52,7 +52,7 @@ function DiscussionStats({ discussionId, username }) {
             setDownvotes(downvotes - 1)
 
             try {
-                axios.post("http://localhost:3001/discussion/upvote", { discussionId })
+                axios.post(`${process.env.REACT_APP_BACKEND_URL}/discussion/upvote`, { discussionId })
             }
             catch (err) {
                 toast.error("Couldn't reach the server, upvote failed")
@@ -60,7 +60,7 @@ function DiscussionStats({ discussionId, username }) {
 
             // decrease downvote
             try {
-                axios.post("http://localhost:3001/discussion/cancelDownvote", { discussionId })
+                axios.post(`${process.env.REACT_APP_BACKEND_URL}/discussion/cancelDownvote`, { discussionId })
             }
             catch (err) {
                 toast.error("Couldn't reach the server, upvote failed")
@@ -71,7 +71,7 @@ function DiscussionStats({ discussionId, username }) {
             setUpvoted(true)
 
             try {
-                axios.post("http://localhost:3001/discussion/upvote", { discussionId })
+                axios.post(`${process.env.REACT_APP_BACKEND_URL}/discussion/upvote`, { discussionId })
             }
             catch (err) {
                 toast.error("Couldn't reach the server, upvote failed")
@@ -85,7 +85,7 @@ function DiscussionStats({ discussionId, username }) {
             setDownvotes(downvotes - 1)
 
             try {
-                axios.post("http://localhost:3001/discussion/cancelDownvote", { discussionId })
+                axios.post(`${process.env.REACT_APP_BACKEND_URL}/discussion/cancelDownvote`, { discussionId })
             }
             catch (err) {
                 toast.error("Couldn't reach the server, downvote failed")
@@ -98,14 +98,14 @@ function DiscussionStats({ discussionId, username }) {
             setUpvotes(upvotes - 1)
 
             try {
-                axios.post("http://localhost:3001/discussion/cancelUpvote", { discussionId })
+                axios.post(`${process.env.REACT_APP_BACKEND_URL}/discussion/cancelUpvote`, { discussionId })
             }
             catch (err) {
                 toast.error("Couldn't reach the server, downvote failed")
             }
 
             try {
-                axios.post("http://localhost:3001/discussion/downvote", { discussionId })
+                axios.post(`${process.env.REACT_APP_BACKEND_URL}/discussion/downvote`, { discussionId })
 
             }
             catch (err) {
@@ -117,7 +117,7 @@ function DiscussionStats({ discussionId, username }) {
             setDownvoted(true)
 
             try {
-                axios.post("http://localhost:3001/discussion/downvote", { discussionId })
+                axios.post(`${process.env.REACT_APP_BACKEND_URL}/discussion/downvote`, { discussionId })
 
             }
             catch (err) {

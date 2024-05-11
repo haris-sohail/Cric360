@@ -24,7 +24,7 @@ function PlayerStatsPage() {
             setLoading(true)
 
             // get all players
-            axios.post('http://localhost:3001/player/getAllPlayers')
+            axios.post(`${process.env.REACT_APP_BACKEND_URL}/player/getAllPlayers`)
                 .then(res => {
                     if (res.data) {
                         setPlayers(res.data)

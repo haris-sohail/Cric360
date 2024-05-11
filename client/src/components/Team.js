@@ -18,7 +18,7 @@ function Team({ captain_username, name,logo, location, matches_played, matches_w
       </div>
 
       <div className='image-container'>
-          <img src={'http://localhost:3001/Images/' + logo}></img>
+          <img src={`${process.env.REACT_APP_BACKEND_URL}/Images/` + logo}></img>
       </div>
     </div>
     </a>

@@ -7,7 +7,7 @@ app.use(express.json())
 app.use(cors())
 app.use(express.static('public'))
 
-mongoose.connect("mongodb://127.0.0.1:27017/Cric360");
+mongoose.connect(process.env.MONGODB_URI);
 
 
 const userRoutes = require('./routes/userRoutes');
@@ -25,6 +25,8 @@ app.use('/match', matchRoutes);
 app.use('/matchStats', matchStatsRoutes);
 
 
-app.listen(3001, () => {
-  console.log("Server is running")
-})
+const PORT = process.env.PORT || 3001;
+
+app.listen(PORT, () => {
+  console.log(`Server is running on port ${PORT}`);
+});

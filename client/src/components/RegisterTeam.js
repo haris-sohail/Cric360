@@ -30,13 +30,13 @@ function RegisterTeam() {
         }
 
         try {
-            axios.post('http://localhost:3001/team/registerTeam', formData)
+            axios.post(`${process.env.REACT_APP_BACKEND_URL}/team/registerTeam`, formData)
                 .then(() => {
                     // change team name of player
-                    axios.post('http://localhost:3001/player/changeTeamName', { username, teamName })
+                    axios.post(`${process.env.REACT_APP_BACKEND_URL}/player/changeTeamName`, { username, teamName })
                         .then(() => {
                             // change captain status
-                            axios.post('http://localhost:3001/player/makeCaptain', { username })
+                            axios.post(`${process.env.REACT_APP_BACKEND_URL}/makeCaptain`, { username })
                                 .then(() => {
                                     toast.success("Registered Successfully")
                                     navigate('/teams', { state: { username } })

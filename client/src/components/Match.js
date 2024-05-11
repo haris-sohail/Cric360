@@ -72,7 +72,7 @@ function Match({ id, venue, startingAt, teamA, format, isLive, username }) {
   }, [matchStats])
 
   const getMatchStats = () => {
-    axios.post('http://localhost:3001/matchStats/getMatchStats', { teamA, teamB, startingAt })
+    axios.post(`${process.env.REACT_APP_BACKEND_URL}/matchStats/getMatchStats`, { teamA, teamB, startingAt })
       .then(res => {
         setMatchStats(res.data)
       })
@@ -82,7 +82,7 @@ function Match({ id, venue, startingAt, teamA, format, isLive, username }) {
   }
 
   const checkUser = () => {
-    axios.post('http://localhost:3001/user/getUser', { username })
+    axios.post(`${process.env.REACT_APP_BACKEND_URL}/user/getUser`, { username })
       .then(res => {
         if (res.data) {
           if (res.data.role.toLowerCase() == 'umpire') {
@@ -97,7 +97,7 @@ function Match({ id, venue, startingAt, teamA, format, isLive, username }) {
   }
 
   const getMyTeam = () => {
-    axios.post('http://localhost:3001/player/getPlayer', { username })
+    axios.post(`${process.env.REACT_APP_BACKEND_URL}/player/getPlayer`, { username })
       .then(res => {
         if (res.data)
           setMyTeam(res.data.teamName.toLowerCase());
@@ -106,7 +106,7 @@ function Match({ id, venue, startingAt, teamA, format, isLive, username }) {
 
   const getMyTeamLogo = () => {
     try {
-      axios.post('http://localhost:3001/team/getTeam', { team: [teamA] })
+      axios.post(`${process.env.REACT_APP_BACKEND_URL}/team/getTeam`, { team: [teamA] })
         .then(res => {
           if (res.data)
             setTeamLogo(res.data.logo)
@@ -170,7 +170,7 @@ function Match({ id, venue, startingAt, teamA, format, isLive, username }) {
     setLoading(true)
 
     // set team B logo
-    axios.post('http://localhost:3001/team/getTeam', { team: [myTeam] })
+    axios.post(`${process.env.REACT_APP_BACKEND_URL}/team/getTeam`, { team: [myTeam] })
       .then(res => {
         if (res.data)
           setTeamBLogo(res.data.logo)
@@ -179,14 +179,14 @@ function Match({ id, venue, startingAt, teamA, format, isLive, username }) {
     setMatchAccepted(true)
 
     // set team B of match
-    axios.post('http://localhost:3001/match/setTeamB', { details: [id, myTeam] })
+    axios.post(`${process.env.REACT_APP_BACKEND_URL}/match/setTeamB`, { details: [id, myTeam] })
       .finally(() => {
         setLoading(false)
       })
   }
 
   const checkMatchAccepted = () => {
-    axios.post('http://localhost:3001/match/getMatch', { id })
+    axios.post(`${process.env.REACT_APP_BACKEND_URL}/match/getMatch`, { id })
       .then(res => {
         if (res.data)
           if (res.data.teamB) {
@@ -196,7 +196,7 @@ function Match({ id, venue, startingAt, teamA, format, isLive, username }) {
         // set team B and their logo
         setTeamB(res.data.teamB)
 
-        axios.post('http://localhost:3001/team/getTeam', { team: [res.data.teamB] })
+        axios.post(`${process.env.REACT_APP_BACKEND_URL}/team/getTeam`, { team: [res.data.teamB] })
           .then(res => {
             if (res.data)
               setTeamBLogo(res.data.logo)
@@ -232,7 +232,7 @@ function Match({ id, venue, startingAt, teamA, format, isLive, username }) {
 
         <div className={`${matchAccepted ? 'teams-container-match' : ''}`}>
           <div className={`team-details-match ${decreaseOpacity ? 'decrease-opacity' : ''} ${matchAccepted ? 'match-accepted-team-details-match' : ''}`}>
-            <img src={'http://localhost:3001/Images/' + teamLogo} alt="team_logo"></img>
+            <img src={`${process.env.REACT_APP_BACKEND_URL}/Images/` + teamLogo} alt="team_logo"></img>
             {(isMatchEnded && (teamA.toLowerCase() == matchStats.winningTeam.toLowerCase())) && (
               <h2>{teamA.toUpperCase()}(W)</h2>
             )}
@@ -255,7 +255,7 @@ function Match({ id, venue, startingAt, teamA, format, isLive, username }) {
               {(!isMatchEnded) && (
                 <h2>{teamB.toUpperCase()}</h2>
               )}
-              <img src={'http://localhost:3001/Images/' + teamBLogo} alt="team_logo"></img>
+              <img src={`${process.env.REACT_APP_BACKEND_URL}/Images/` + teamBLogo} alt="team_logo"></img>
             </div>
           )}
         </div>
