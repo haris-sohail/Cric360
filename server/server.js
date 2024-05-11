@@ -15,7 +15,7 @@ app.use(cors(
 
 app.use(express.static('public'))
 
-mongoose.connect(process.env.MONGODB_URI);
+mongoose.connect('mongodb+srv://haris:uK9ONJGuOVXRz68y@cluster0.wbkk2cx.mongodb.net/Cric360?retryWrites=true&w=majority&appName=Cluster0');
 
 app.get("/", (req, res) => {
   res.json("Welcome to Cric360-api")
