@@ -23,7 +23,7 @@ app.get("/", (req, res) => {
 
 const UserModel = require("./Models/User");
 
-router.post('/login', (req, res) => {
+app.post('/login', (req, res) => {
   UserModel.findOne({ username: req.body.username, password: req.body.password })
     .then(user => res.json(user))
     .catch(err => res.json(err))
