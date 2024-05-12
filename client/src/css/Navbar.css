@@ -1,25 +1,154 @@
-.navbar {
+/* General styles */
+.Overall-Nav {
+    height: 50px;
+    margin-top: auto, 0;
+  }
+  
+  .navbar {
     display: flex;
     justify-content: space-between;
+    align-items: center;
     width: 100%;
-}
-
-.navbar img {
+    color: white;
+    padding: 10px 20px;
+    z-index: 1000;
+  }
+  
+  .navbar img {
     width: 8vmax;
-}
-
-.btns-container{
+  }
+  
+  .btns-container {
     display: flex;
-    gap: 2vw;
-}
-
-#logo-link{
+  }
+  
+  .btns-container > * {
+    flex: 1; /* Distribute remaining space equally among children */
+    margin: 0 5px; /* Add margin for spacing */
+  }
+  
+  #logo-link {
     cursor: pointer;
-}
-
-@media only screen and (max-width: 600px) {
+  }
+  
+  .sidebar {
+    width: 250px;
+    height: 100vh;
+    background-color: #333;
+    padding: 20px;
+    color: white;
+    position: fixed;
+    top: 0;
+    right: -250px;
+    transition: right 0.3s ease;
+    z-index: 999;
+  }
+  
+  .sidebar.show {
+    right: 0;
+  }
+  
+  .sidebar ul {
+    list-style-type: none;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .sidebar ul li a {
+    justify-content: center;
+    align-items: center;
+    padding: 10px 0;
+    color: white;
+    text-decoration: none;
+    transition: background-color 0.3s;
+    border-radius: 50%;
+    height: 58px;
+  }
+  .sidebar .generate-columns .gb-grid-column {
+    flex: 1;
+  }
+  .sidebar ul li {
+    margin-bottom: 10px;
+  }
+  
+  .sidebar ul li:first-child a {
+    display: block;
+    text-align: center;
+    padding: 15px 0;
+    margin-top: 75px;
+    color: red;
+    text-decoration: none;
+    transition: background-color 0.3s;
+  }
+  
+  .sidebar ul li a:hover {
+    background-color: #555 !important;
+    border-radius: 20px !important;
+    width: 120px !important;
+    color: white !important;
+    text-align: center !important; /* Center the text */
+  }
+  
+  .toggle-btn {
+    position: fixed;
+    top: 50px;
+    right: 60px;
+    background: none;
+    border: none;
+    color: red;
+    font-size: 20px;
+    cursor: pointer;
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    background-color: red;
+    width: 100px;
+  }
+  
+  .toggle-btn::after {
+    content: "Menu";
+    margin-left: 8px;
+    color: white;
+  }
+  
+  /* Media query for smaller screens */
+  @media only screen and (max-width: 600px) {
     .navbar {
-        width: 100%;
-        margin: 0 auto;
+      display: none;
     }
-}
+  
+    .sidebar {
+      display: block;
+      justify-content: center;
+    }
+  
+    .toggle-btn {
+      top: 20px;
+      right: 20px;
+      color: white;
+    }
+  
+    .toggle-btn:hover {
+      width: 100px;
+    }
+  
+    .sidebar button {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: x-large;
+      background-color: transparent;
+      border: none;
+      color: white;
+      width: 100%;
+      text-align: center;
+    }
+  
+    .sidebar ul li a {
+      text-align: center;
+      justify-content: center;
+      gap: 0;
+    }
+  }
