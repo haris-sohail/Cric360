@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import Navbar from './Navbar';
 import toast from 'react-hot-toast';
 import axios from 'axios';
@@ -15,7 +15,7 @@ function TeamPage() {
   let useEffectCalled = false;
   const username = data.loggedinuser;
   const [showbutton, setshowbutton] = useState()
-  
+  const navigate = useNavigate();
 
   useEffect(() => {
     hidejointeambutton();
@@ -82,6 +82,7 @@ function TeamPage() {
     axios.post('http://localhost:3001/player/joinTeam', { username: data.loggedinuser, teamName: data.name })
       .then(() => {
         toast.success("Successfully joined the team");
+        navigate('/home', { state: { username } })
       })
       .catch(err => {
         console.error(err);
