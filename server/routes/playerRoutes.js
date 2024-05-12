@@ -37,7 +37,6 @@ router.post('/getPlayersOfTeam', (req, res) => {
         });
 })
 
-<<<<<<< HEAD
 router.post('/joinTeam', async (req, res) => {
     try {
         console.log(req.body);
@@ -59,8 +58,6 @@ router.post('/joinTeam', async (req, res) => {
     }
 });
 
-
-=======
 router.post('/incrementNoMatches', (req, res) => {
     const username = req.body.username
 
@@ -207,7 +204,6 @@ router.post('/getAllPlayers', (req, res) => {
         .then(players => { res.json(players) })
         .catch(err => res.json(err))
 });
->>>>>>> c68b87d5b955445e4db7a3b878770b2dfdda55f7
 
 
 module.exports = router;
