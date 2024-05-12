@@ -19,6 +19,7 @@
     justify-content: center;
     flex-direction: column;
 }
+
 .image-container img{
     display: flex;
     width: 15vb;
@@ -70,6 +71,7 @@
     width:100%;
     background-color: white;
     padding-left:5%;
+    margin-bottom: 20px;
 }
 .image-container-players img{
     width: 9vb;
@@ -103,4 +105,29 @@
 
 .join-button {
     width: 25%;
+}
+
+@media only screen and (max-width: 600px) {
+    .Main-div{
+        width:95%;
+    }
+    .total-container{
+        width:95%;
+    }
+    .headings-container{
+        width:90%;
+    }
+    .values-container p{
+        padding: 39%;
+    }
+    .image-container-players img{
+        width: 5vb;
+        height:5vb;
+    }
+    .image-container img{
+        width: 8vb;
+        height:8vb;
+        
+    }
+
 }

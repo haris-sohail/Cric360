@@ -14,10 +14,11 @@ function TeamPage() {
   const [allPlayers, setAllPlayers] = useState([]);
   let useEffectCalled = false;
   const username = data.loggedinuser;
-
+  const [showbutton, setshowbutton] = useState()
+  
 
   useEffect(() => {
-     console.log(data);
+    hidejointeambutton();
   }, [data]);
 
   useEffect(() => {
@@ -47,6 +48,35 @@ function TeamPage() {
     );
   }
 
+  const hidejointeambutton = () => {
+    axios.post('http://localhost:3001/user/getUser', { username })
+    .then(res => {
+        if (res.data.role=="player" || res.data.role!="umpire" ) {
+
+          axios.post('http://localhost:3001/player/getPlayer', { username })
+          .then(res => {
+              if (res.data.teamName=="" ) {
+                  // hide the create match button
+                  setshowbutton(true);
+                  
+              }
+              else {
+                  setshowbutton(false);
+              }
+          })
+            
+        }
+        else {
+            setshowbutton(false);
+        }
+    })
+
+
+    
+
+  }
+
+
   const handlejointeam = () => {
     setLoading(true);
     axios.post('http://localhost:3001/player/joinTeam', { username: data.loggedinuser, teamName: data.name })
@@ -65,9 +95,11 @@ function TeamPage() {
   return (
     <div className='Main-div'>
       <Navbar />
+      {showbutton &&(
       <div className='join-team-button'>
         <button className='join-button' onClick={handlejointeam}><h6>Join Team</h6></button>
       </div>
+)}
 
       <div className='first-slot'>
         <div className='image-container'>
@@ -110,8 +142,7 @@ function TeamPage() {
       <div className='team-players-container'>
       <div className='stats-heading'>
             <h2>PLAYERS</h2>
-        </div>
-
+      </div>
             {allPlayers.map(player => (
              <div className='team-player-info'>
                 <div className='image-container-players'>
