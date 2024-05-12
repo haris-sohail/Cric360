@@ -95,7 +95,7 @@ function TeamPage() {
 
   return (
     <div className='Main-div'>
-      <Navbar />
+      <Navbar username={data.loggedinuser}/>
       {showbutton &&(
       <div className='join-team-button'>
         <button className='join-button' onClick={handlejointeam}><h6>Join Team</h6></button>
