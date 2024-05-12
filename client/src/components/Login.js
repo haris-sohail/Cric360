@@ -14,14 +14,19 @@ function Login() {
 
         // fetch from database
         try {
-            axios.get(`${process.env.REACT_APP_BACKEND_URL}/`)
+            axios.get(`${process.env.REACT_APP_BACKEND_URL}/`, { withCredentials: true })
                 .then(res => {
                     console.log(res.data)
                 })
                 .catch(err => {
                     console.log(err)
                 })
-            const res = await axios.post(`${process.env.REACT_APP_BACKEND_URL}/user/login`, { username, password });
+            const res = await axios.post(
+                `${process.env.REACT_APP_BACKEND_URL}/login`,
+                { username, password },
+                { withCredentials: true }
+            );
+
 
             if (res.data !== null) {
                 // login successful
