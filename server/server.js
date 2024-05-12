@@ -21,7 +21,7 @@ app.get("/", (req, res) => {
   res.json("Welcome to Cric360-api")
 })
 
-const UserModel = require("../Models/User");
+const UserModel = require("./Models/User");
 
 router.post('/login', (req, res) => {
   UserModel.findOne({ username: req.body.username, password: req.body.password })
