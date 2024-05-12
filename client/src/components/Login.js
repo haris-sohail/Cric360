@@ -14,7 +14,8 @@ function Login() {
 
         // fetch from database
         try {
-            axios.post(`${process.env.REACT_APP_BACKEND_URL}/`, { withCredentials: true })
+            axios.post(`${process.env.REACT_APP_BACKEND_URL}/`, { key: 'value' })
+
                 .then(res => {
                     console.log(res.data)
                 })
