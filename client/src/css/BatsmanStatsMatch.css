@@ -1,0 +1,15 @@
+.batsman-stats-match-container{
+    width: 100%;
+    display: flex;
+    background-color: white;
+}
+
+.name-container-batsman-stats{
+    flex: 1;
+    text-align: center;
+}
+
+.stats-container-batsman-stats{
+    flex: 1;
+    text-align: center;
+}

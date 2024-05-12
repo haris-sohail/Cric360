@@ -7,7 +7,10 @@ const DiscussionSchema = new mongoose.Schema({
     text: String,
     upvotes: Number,
     downvotes: Number,
-    comments: [String]
+    comments: [{
+        postedBy: String,
+        text: String
+    }]
 });
 
 const DiscussionModel = mongoose.model("Discussions", DiscussionSchema)

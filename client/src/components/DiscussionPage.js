@@ -16,7 +16,7 @@ function DiscussionPage() {
             <div className='main-content-container-discussion-page'>
 
 
-                <h3 style={{ margin: 0 }}><em id='discussion-posted-by'>{username}</em></h3>
+                <h3 style={{ margin: 0 }}><em id='discussion-posted-by'>{data.postedBy}</em></h3>
 
                 <div className='discussion-content-container'>
                     <h1>{data.title}</h1>
@@ -29,7 +29,7 @@ function DiscussionPage() {
                 </div>
             </div>
 
-            <DiscussionStats discussionId={data.id} />
+            <DiscussionStats discussionId={data.id} username={username} />
         </div>
     )
 }

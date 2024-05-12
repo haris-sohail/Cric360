@@ -11,7 +11,10 @@ const PlayerSchema = new mongoose.Schema({
         default: ""
     },
     leaderBoardRank: Number,
-    battingAvg: Number,
+    battingAvg: {
+        type: Number,
+        default: 0
+    },
     captainOf: String,
     noMatches: {
         type: Number,
@@ -50,6 +53,10 @@ const PlayerSchema = new mongoose.Schema({
         default: 0
     },
     ballsBowled: {
+        type: Number,
+        default: 0
+    },
+    oversBowled: {
         type: Number,
         default: 0
     },

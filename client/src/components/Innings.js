@@ -103,20 +103,28 @@ function Innings({ matchStatsID, battingTeam, bowlingTeam, inningNoVal, updateIn
                 if (totalRuns >= target) {
                     const isDrawn = false;
                     if (battingTeam.toLowerCase() == tossWonBy.toLowerCase()) {
-                        updateEndMatchDB(tossWonBy, tossLostBy, false)
-                        navigate('/endmatch', { state: { teamWon: tossWonBy, isDrawn, username } })
+                        setTimeout(() => {
+                            updateEndMatchDB(tossWonBy, tossLostBy, false)
+                            navigate('/endmatch', { state: { teamWon: tossWonBy, isDrawn, username } })
+                        }, 10)
                     }
                     else if (bowlingTeam.toLowerCase() == tossWonBy.toLowerCase()) {
-                        updateEndMatchDB(tossLostBy, tossWonBy, false)
-                        navigate('/endmatch', { state: { teamWon: tossLostBy, isDrawn, username } })
+                        setTimeout(()=>{
+                            updateEndMatchDB(tossLostBy, tossWonBy, false)
+                            navigate('/endmatch', { state: { teamWon: tossLostBy, isDrawn, username } })
+                        }, 10)
                     }
                     else if (battingTeam.toLowerCase() == tossLostBy.toLowerCase()) {
-                        updateEndMatchDB(tossLostBy, tossWonBy, false)
-                        navigate('/endmatch', { state: { teamWon: tossLostBy, isDrawn, username } })
+                        setTimeout(()=>{
+                            updateEndMatchDB(tossLostBy, tossWonBy, false)
+                            navigate('/endmatch', { state: { teamWon: tossLostBy, isDrawn, username } })
+                        }, 10)
                     }
                     else if (bowlingTeam.toLowerCase() == tossLostBy.toLowerCase()) {
-                        updateEndMatchDB(tossWonBy, tossLostBy, false)
-                        navigate('/endmatch', { state: { teamWon: tossWonBy, isDrawn, username } })
+                        setTimeout(()=>{
+                            updateEndMatchDB(tossWonBy, tossLostBy, false)
+                            navigate('/endmatch', { state: { teamWon: tossWonBy, isDrawn, username } })
+                        }, 10)
                     }
                 }
             }

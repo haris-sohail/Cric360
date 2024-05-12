@@ -1,0 +1,25 @@
+.bowling-stats-fixed-text-container{
+    display: flex;
+}
+.name-container-bowler-stats-match{
+    flex: 1;
+    text-align: center;
+}
+.stats-container-bowler-stats-match{
+    display: flex;
+    flex: 2;
+}
+
+.stats-fixed-text-container{
+    flex: 1;
+}
+
+.stats-fixed-text-container p{
+    text-align: center;
+}
+
+.bowling-score-card-container{
+    display: flex;
+    flex-direction: column;
+    gap: 1vh;
+}

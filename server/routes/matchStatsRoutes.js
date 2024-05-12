@@ -356,7 +356,7 @@ router.post('/updateEndMatch', async (req, res) => {
         let teamWon = req.body.teamWon
         let teamLost = req.body.teamLost
         let isDrawn = req.body.isDrawn
-        
+
         const match = await MatchStatsModel.findOne({ id: id });
 
         match.winningTeam = teamWon
@@ -397,11 +397,19 @@ router.post('/getMatchStats', async (req, res) => {
         let teamB = req.body.teamB;
         let startingAt = req.body.startingAt;
 
-        const match = await MatchStatsModel.findOne({ 
-            teamA: teamA, 
-            teamB: teamB, 
-            startingAt: startingAt 
+        let match = await MatchStatsModel.findOne({
+            teamA: teamA,
+            teamB: teamB,
+            startingAt: startingAt
         });
+
+        if (!match) {
+            match = await MatchStatsModel.findOne({
+                teamB: teamA,
+                teamA: teamB,
+                startingAt: startingAt
+            });
+        }
 
         res.json(match);
     } catch (err) {

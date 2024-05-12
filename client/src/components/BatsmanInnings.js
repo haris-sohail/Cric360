@@ -18,6 +18,13 @@ function BatsmanInnings({ battingTeam, buttonPressed, currentlyFacing, updateCur
     const [loading, setLoading] = useState(false)
     const [runsScored, setRunsScored] = useState(0)
     const [ballsFaced, setBallsFaced] = useState(0)
+    let useEffectCalled = false;
+
+    useEffect(() => {
+        if (!useEffectCalled) {
+            useEffectCalled = true
+        }
+    }, [])
 
     useEffect(() => {
         // update in database
@@ -32,21 +39,44 @@ function BatsmanInnings({ battingTeam, buttonPressed, currentlyFacing, updateCur
         if (batsman) {
             // update in database
             axios.post('http://localhost:3001/matchStats/updateBatsmanName', { matchStatsID, batsmanNumber, inningNo, batsman })
-            .catch(err => {
-                toast.error("Couldn't update batsman name, server is unreachable")
-                console.log(err)
-            })
+                .catch(err => {
+                    toast.error("Couldn't update batsman name, server is unreachable")
+                    console.log(err)
+                })
+
+            // increment no of matches
+            axios.post('http://localhost:3001/player/incrementNoMatches', { username: batsman })
+                .catch(err => {
+                    toast.error("Couldn't update number of matches for player, server is unreachable")
+                    console.log(err)
+                })
         }
     }, [batsman])
 
     useEffect(() => {
         // update in database
         axios.post('http://localhost:3001/matchStats/updateBallsFaced', { matchStatsID, batsmanNumber, inningNo, ballsFaced })
-        .catch(err => {
-            toast.error("Couldn't update balls faced, server is unreachable")
-            console.log(err)
-        })
+            .catch(err => {
+                toast.error("Couldn't update balls faced, server is unreachable")
+                console.log(err)
+            })
+
+        // update individual stats
+        axios.post('http://localhost:3001/player/updateBallsFacedPlayer', { batsman, ballsFaced })
+            .catch(err => {
+                toast.error("Couldn't update balls faced for player, server is unreachable")
+                console.log(err)
+            })
     }, [ballsFaced])
+
+    useEffect(() => {
+        if (buttonPressed != '' && buttonPressed) {
+            if (buttonPressed != 'OUT' || buttonPressed != 'MISS' || buttonPressed != 'WD') {
+
+            }
+        }
+
+    }, [buttonPressed, ballsFaced])
 
     useEffect(() => {
         if (batsman) {
@@ -87,10 +117,34 @@ function BatsmanInnings({ battingTeam, buttonPressed, currentlyFacing, updateCur
             }
             else if (buttonPressed == 'MISS') {
                 setBallsFaced(ballsFaced + 1)
+
+                const ballsFacedVal = ballsFaced + 1
+
+                // update individual stats
+                axios.post('http://localhost:3001/player/updateBattingAvgAndSRPlayer', { batsman, buttonPressed, ballsFacedVal })
+                    .catch(err => {
+                        toast.error("Couldn't update batting avg of player, server is unreachable")
+                        console.log(err)
+                    })
             }
             else {
                 setRunsScored(runsScored + buttonPressed)
                 setBallsFaced(ballsFaced + 1)
+
+                // update individual runs
+                axios.post('http://localhost:3001/player/updateRunsScored', { username: batsman, buttonPressed })
+                    .catch(err => {
+                        toast.error("Couldn't update runs for player, server is unreachable")
+                        console.log(err)
+                    })
+
+                const ballsFacedVal = ballsFaced + 1
+                // update individual stats
+                axios.post('http://localhost:3001/player/updateBattingAvgAndSRPlayer', { batsman, buttonPressed, ballsFacedVal })
+                    .catch(err => {
+                        toast.error("Couldn't update batting avg of player, server is unreachable")
+                        console.log(err)
+                    })
             }
 
             // currently facing logic
