@@ -23,13 +23,16 @@ app.get("/", (req, res) => {
 
 const UserModel = require("./Models/User");
 
+// Increase timeout to 5 minutes (300000 ms)
 app.post('/login', (req, res) => {
-  console.log('Login requested')
-  console.log(req.body)
+  req.setTimeout(300000); // Set timeout to 5 minutes
+  console.log('Login requested');
+  console.log(req.body);
   UserModel.findOne({ username: req.body.username, password: req.body.password })
     .then(user => res.json(user))
-    .catch(err => res.json(err))
+    .catch(err => res.json(err));
 });
+
 
 const userRoutes = require('./routes/userRoutes');
 const discussionRoutes = require('./routes/discussionRoutes');
