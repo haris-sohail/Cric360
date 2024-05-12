@@ -93,3 +93,14 @@
     padding:3%;
     padding-left: 0%;
 }
+
+.join-team-button {
+    width:100%;
+    display: flex;
+    justify-content: flex-end; /* Aligns items to the right */
+    margin-top: 10%;
+}
+
+.join-button {
+    width: 25%;
+}

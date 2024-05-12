@@ -2,11 +2,11 @@ import React from 'react';
 import { Navigate } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom'
 
-function Team({ captain_username, name,logo, location, matches_played, matches_won, matches_drawn, matches_lost, battingAvg }) {
+function Team({ captain_username, name,logo, location, matches_played, matches_won, matches_drawn, matches_lost, battingAvg, loggedinuser }) {
   const navigate = useNavigate();
 
   const handleTeamClick=(e)=>{
-    navigate('/teampage', {state: {captain_username,name,logo,location,matches_played,matches_won,matches_lost,matches_drawn,battingAvg}})
+    navigate('/teampage', {state: {captain_username,name,logo,location,matches_played,matches_won,matches_lost,matches_drawn,battingAvg,loggedinuser}})
   }
 
   return (

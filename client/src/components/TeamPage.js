@@ -9,20 +9,22 @@ import '../css/TeamPage.css';
 
 function TeamPage() {
   const location = useLocation();
-  const { state } = location;
+  const data = location.state;
   const [loading, setLoading] = useState(false);
   const [allPlayers, setAllPlayers] = useState([]);
   let useEffectCalled = false;
+  const username = data.loggedinuser;
+
 
   useEffect(() => {
-    // console.log(state);
-  }, [state]);
+     console.log(data);
+  }, [data]);
 
   useEffect(() => {
     useEffectCalled = true;
     setLoading(true);
     if (useEffectCalled) {
-      const teamName = state.name;
+      const teamName = data.name;
       axios.post('http://localhost:3001/player/getPlayersOfTeam', { teamName })
         .then(res => {
           setAllPlayers(res.data);
@@ -45,22 +47,41 @@ function TeamPage() {
     );
   }
 
+  const handlejointeam = () => {
+    setLoading(true);
+    axios.post('http://localhost:3001/player/joinTeam', { username: data.loggedinuser, teamName: data.name })
+      .then(() => {
+        toast.success("Successfully joined the team");
+      })
+      .catch(err => {
+        console.error(err);
+        toast.error("Error joining the team, please try again later");
+      })
+      .finally(() => {
+        setLoading(false);
+      });
+  };
+
   return (
     <div className='Main-div'>
       <Navbar />
+      <div className='join-team-button'>
+        <button className='join-button' onClick={handlejointeam}><h6>Join Team</h6></button>
+      </div>
+
       <div className='first-slot'>
         <div className='image-container'>
-          <img src={'http://localhost:3001/Images/' + state.logo} alt="Team Logo" />
+          <img src={'http://localhost:3001/Images/' + data.logo} alt="Team Logo" />
         </div>
 
         <div className='headings-one'>
-          <h2>{state.name}</h2>
-          <p>{state.location}</p>
+          <h2>{data.name.toUpperCase()}</h2>
+          <p>{data.location}</p>
         </div>
 
       </div>
 
-      {state && (
+      {data && (
         <div className='stats-container'>
           <div className='stats-heading'>
             <h2>STATS</h2>
@@ -75,12 +96,12 @@ function TeamPage() {
               <p>batting avg </p>
             </div>
             <div className='values-container'>
-              <p>{state.captain_username}</p>
-              <p>{state.matches_played}</p>
-              <p>{state.matches_won}</p>
-              <p>{state.matches_lost}</p>
-              <p>{state.matches_drawn}</p>
-              <p>{state.battingAvg}</p>
+              <p>{data.captain_username}</p>
+              <p>{data.matches_played}</p>
+              <p>{data.matches_won}</p>
+              <p>{data.matches_lost}</p>
+              <p>{data.matches_drawn}</p>
+              <p>{data.battingAvg}</p>
             </div>
           </div>
         </div>
@@ -94,7 +115,7 @@ function TeamPage() {
             {allPlayers.map(player => (
              <div className='team-player-info'>
                 <div className='image-container-players'>
-                    <img src={'http://localhost:3001/Images/' + state.logo}></img>
+                    <img src={'http://localhost:3001/Images/default-team.png'}></img>
                 </div>
             <div key={player._id} className="player-name">
                 {player.username}

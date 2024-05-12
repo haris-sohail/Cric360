@@ -72,6 +72,7 @@ function Teams() {
                                 matches_drawn={team.matchesDrawn}
                                 matches_lost={team.matchesLost}
                                 battingAvg={team.battingAvg}
+                                loggedinuser={username}
                             />
                         ))}
                     </div>
