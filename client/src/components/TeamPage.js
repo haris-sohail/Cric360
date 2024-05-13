@@ -50,29 +50,29 @@ function TeamPage() {
 
   const hidejointeambutton = () => {
     axios.post('http://localhost:3001/user/getUser', { username })
-    .then(res => {
-        if (res.data.role=="player" || res.data.role!="umpire" ) {
+      .then(res => {
+        if (res.data.role == "player" || res.data.role != "umpire") {
 
           axios.post('http://localhost:3001/player/getPlayer', { username })
-          .then(res => {
-              if (res.data.teamName=="" ) {
-                  // hide the create match button
-                  setshowbutton(true);
-                  
+            .then(res => {
+              if (res.data.teamName == "") {
+                // hide the create match button
+                setshowbutton(true);
+
               }
               else {
-                  setshowbutton(false);
+                setshowbutton(false);
               }
-          })
-            
+            })
+
         }
         else {
-            setshowbutton(false);
+          setshowbutton(false);
         }
-    })
+      })
 
 
-    
+
 
   }
 
@@ -101,12 +101,12 @@ function TeamPage() {
 
   return (
     <div className='Main-div'>
-      <Navbar username={data.loggedinuser}/>
-      {showbutton &&(
-      <div className='join-team-button'>
-        <button className='join-button' onClick={handlejointeam}><h6>Join Team</h6></button>
-      </div>
-)}
+      <Navbar username={data.loggedinuser} />
+      {showbutton && (
+        <div className='join-team-button'>
+          <button className='join-button' onClick={handlejointeam}><h6>Join Team</h6></button>
+        </div>
+      )}
 
       <div className='first-slot'>
         <div className='image-container'>
@@ -147,20 +147,20 @@ function TeamPage() {
       )}
 
       <div className='team-players-container'>
-      <div className='stats-heading'>
-            <h2>PLAYERS</h2>
-      </div>
-            {allPlayers.map(player => (
-             <div className='team-player-info' onClick={handlePlayerClick}>
-                <div className='image-container-players'>
-                    <img src={'http://localhost:3001/Images/default-team.png'}></img>
-                </div>
-            <div key={player._id} className="player-name">
-                {player.username}
+        <div className='stats-heading'>
+          <h2>PLAYERS</h2>
+        </div>
+        {allPlayers.map(player => (
+          <div key={player._id} className='team-player-info' onClick={handlePlayerClick}>
+            <div className='image-container-players'>
+              <img src={'http://localhost:3001/Images/default-team.png'}></img>
             </div>
+            <div className="player-name">
+              {player.username}
             </div>
-            ))}
-        
+          </div>
+        ))}
+
       </div>
     </div>
   );

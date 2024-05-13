@@ -31,6 +31,7 @@ function DiscussionComments() {
     }, [comments])
 
     const handleAddComment = () => {
+        // add the comment to the discussion
         const discussion_id = discussion.id;
         const comment = currentComment.trim()
 

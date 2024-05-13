@@ -64,6 +64,7 @@ function Innings({ matchStatsID, battingTeam, bowlingTeam, inningNoVal, updateIn
     }, [buttonPressed])
 
     useEffect(() => {
+        // update the total runs
         if (totalRuns) {
             if (inningNoVal == 0) {
                 updateInnings1Score(totalRuns)
@@ -86,6 +87,7 @@ function Innings({ matchStatsID, battingTeam, bowlingTeam, inningNoVal, updateIn
     }, [totalRuns])
 
     const updateEndMatchDB = (teamWon, teamLost, isDrawn) => {
+        // update the end match in the database
         setLoading(true)
         axios.post('http://localhost:3001/matchStats/updateEndMatch', { matchStatsID, teamWon, teamLost, isDrawn })
             .catch(err => {
@@ -98,6 +100,7 @@ function Innings({ matchStatsID, battingTeam, bowlingTeam, inningNoVal, updateIn
     }
 
     useEffect(() => {
+        // check if the match has ended
         if (totalRuns) {
             if (inningNoVal == 1) {
                 if (totalRuns >= target) {
@@ -133,6 +136,7 @@ function Innings({ matchStatsID, battingTeam, bowlingTeam, inningNoVal, updateIn
     }, [totalRuns])
 
     useEffect(() => {
+        // check if the match has ended
         axios.post('http://localhost:3001/matchStats/updateExtras', { extras, matchStatsID, inningNo })
             .catch(err => {
                 console.log(err)
@@ -141,6 +145,7 @@ function Innings({ matchStatsID, battingTeam, bowlingTeam, inningNoVal, updateIn
     }, [extras])
 
     useEffect(() => {
+        // check if the match has ended
         if (balls > 5) {
             setBalls(0)
             setOvers(overs + 1)
@@ -152,6 +157,7 @@ function Innings({ matchStatsID, battingTeam, bowlingTeam, inningNoVal, updateIn
     }, [balls])
 
     useEffect(() => {
+        // update the total runs
         axios.post('http://localhost:3001/matchStats/updateTotalRuns', { totalRuns, matchStatsID, inningNo })
             .catch(err => {
                 console.log(err)
@@ -160,6 +166,7 @@ function Innings({ matchStatsID, battingTeam, bowlingTeam, inningNoVal, updateIn
     }, [totalRuns])
 
     useEffect(() => {
+        // update wickets
         axios.post('http://localhost:3001/matchStats/updateWickets', { wickets, matchStatsID, inningNo })
             .catch(err => {
                 console.log(err)
@@ -168,6 +175,7 @@ function Innings({ matchStatsID, battingTeam, bowlingTeam, inningNoVal, updateIn
     }, [wickets])
 
     useEffect(() => {
+        // update balls
         axios.post('http://localhost:3001/matchStats/updateBalls', { balls, matchStatsID, inningNo })
             .catch(err => {
                 console.log(err)
@@ -176,6 +184,7 @@ function Innings({ matchStatsID, battingTeam, bowlingTeam, inningNoVal, updateIn
     }, [balls])
 
     useEffect(() => {
+        // update overs
         axios.post('http://localhost:3001/matchStats/updateOvers', { overs, matchStatsID, inningNo })
             .catch(err => {
                 console.log(err)

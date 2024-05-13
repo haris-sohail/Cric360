@@ -23,6 +23,7 @@ function BowlingScoreCard({ inningsVal }) {
     }, [inningsVal]);
 
     useEffect(() => {
+        // set the bowler stats components
         if (bowlerStats) {
             const bowlingStatsComp = bowlerStats
                 .filter(bowlerStats => bowlerStats.name)

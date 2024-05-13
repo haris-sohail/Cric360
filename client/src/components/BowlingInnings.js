@@ -195,6 +195,7 @@ function BowlingInnings({ bowlingTeam, buttonPressed, bowlerSelected, matchStats
     }, [ballsBowled])
 
     useEffect(() => {
+        // update balls bowled
         if (ballsBowled || ballsBowled == 0) {
             axios.post('http://localhost:3001/player/updateBallsBowledBowler', { bowler, ballsBowled })
                 .catch(err => {
@@ -204,6 +205,7 @@ function BowlingInnings({ bowlingTeam, buttonPressed, bowlerSelected, matchStats
     }, [ballsBowled])
 
     useEffect(() => {
+        // update runs conceded
         if (wickets) {
             axios.post('http://localhost:3001/player/incrementWickets', { bowler })
                 .catch(err => {

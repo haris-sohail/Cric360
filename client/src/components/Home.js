@@ -21,16 +21,19 @@ function Home() {
     const navigate = useNavigate()
 
     useEffect(() => {
+        // load all discussions
         setLoading(true);
         loadDiscussions();
     }, []);
 
     const updateDelDiscussion = (discussionID) => {
+        // remove the discussion from the list
         const newDiscussions = discussions.filter(discussion => discussion.id !== discussionID);
         setDiscussions(newDiscussions);
     }
 
     useEffect(() => {
+        // create discussion components
         if (discussions) {
             const discussionsComponents = discussions.map(discussion => (
                 <Discussion
@@ -53,6 +56,7 @@ function Home() {
 
 
     const loadDiscussions = async () => {
+        // fetch all discussions
         try {
             const res = await axios.post('http://localhost:3001/discussion/getDiscussions')
                 .finally(() => {

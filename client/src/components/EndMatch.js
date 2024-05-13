@@ -11,6 +11,7 @@ function EndMatch() {
     const navigate = useNavigate()
 
     useEffect(() => {
+        // navigate to home page after 2 seconds
         const timeout = setTimeout(() => {
             navigate('/home', { state: { username } })
         }, 2000);

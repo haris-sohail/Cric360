@@ -185,6 +185,7 @@ function Match({ id, venue, startingAt, teamA, format, isLive, username }) {
       })
   }
 
+  // check if match is already accepted
   const checkMatchAccepted = () => {
     axios.post('http://localhost:3001/match/getMatch', { id })
       .then(res => {

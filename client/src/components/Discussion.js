@@ -23,11 +23,13 @@ function Discussion({ id, title, text, upvotes, downvotes, username, comments, p
   }
 
   const handleDiscussionClick = (e) => {
+    // if the user clicks on the delete button, don't navigate
     if (e.target.tagName === 'IMG') return
     navigate('/discussionPage', { state: { id, title, text, upvotes, downvotes, username, comments, postedBy } })
   }
 
   const handleDiscussionDelete = () => {
+    // delete the discussion
     axios.post('http://localhost:3001/discussion/deleteDiscussion', { id: id })
       .then(res => {
         if (res.data) {

@@ -20,6 +20,7 @@ function DiscussionStats({ discussionId, username }) {
     const navigate = useNavigate()
 
     useEffect(() => {
+        // get the discussion
         setLoading(true)
         axios.post("http://localhost:3001/discussion/getDiscussion", { discussionId })
             .then(res => {
@@ -34,6 +35,7 @@ function DiscussionStats({ discussionId, username }) {
     }, [])
 
     const handleUpvote = (e) => {
+        // if the user has already upvoted, cancel the upvote
         if (upvoted && !downvoted) {
             setUpvoted(false)
             setUpvotes(upvotes - 1)
@@ -45,6 +47,8 @@ function DiscussionStats({ discussionId, username }) {
                 toast.error("Couldn't reach the server, upvote failed")
             }
         }
+
+        //  if the user has already downvoted, cancel the downvote and upvote
         else if (downvoted && !upvoted) {
             setUpvoted(true)
             setDownvoted(false)
@@ -66,6 +70,7 @@ function DiscussionStats({ discussionId, username }) {
                 toast.error("Couldn't reach the server, upvote failed")
             }
         }
+        // if the user hasn't upvoted or downvoted, upvote
         else if (!downvoted && !upvoted) {
             setUpvotes(upvotes + 1)
             setUpvoted(true)
@@ -80,6 +85,7 @@ function DiscussionStats({ discussionId, username }) {
     }
 
     const handleDownvote = (e) => {
+        // if the user has already downvoted, cancel the downvote
         if (downvoted && !upvoted) {
             setDownvoted(false)
             setDownvotes(downvotes - 1)
@@ -91,6 +97,7 @@ function DiscussionStats({ discussionId, username }) {
                 toast.error("Couldn't reach the server, downvote failed")
             }
         }
+        // if the user has already upvoted, cancel the upvote and downvote
         else if (!downvoted && upvoted) {
             setDownvoted(true)
             setUpvoted(false)
@@ -112,6 +119,7 @@ function DiscussionStats({ discussionId, username }) {
                 toast.error("Couldn't reach the server, downvote failed")
             }
         }
+        // if the user hasn't upvoted or downvoted, downvote
         else if (!downvoted && !upvoted) {
             setDownvotes(downvotes + 1)
             setDownvoted(true)
