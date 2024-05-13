@@ -35,6 +35,10 @@ function Navbar({ username }) {
     navigate("/matches", { state: { username } });
   };
 
+  const handleStatsClick = () => {
+    navigate('/stats', { state: { username } })
+  }
+
   const toggleSidebar = () => {
     setIsSidebarOpen(!isSidebarOpen);
   };
@@ -88,12 +92,11 @@ function Navbar({ username }) {
             </button>
           </a>
 
-          <Link>
+          <a onClick={handleStatsClick}>
             <button>
               <h6>Stats</h6>
             </button>
-          </Link>
-
+          </a>
           <a onClick={handleTeamsClick}>
             <button>
               <h6>Teams</h6>
