@@ -1,4 +1,4 @@
-#anchor-discussion-container{
+#anchor-discussion-container {
     width: 100%;
 }
 
@@ -13,6 +13,7 @@
     padding-left: 2vmax;
     padding-right: 2vmax;
     transition: background-color 0.2s;
+    position: relative;
 }
 
 .discussion-container:hover {
@@ -20,7 +21,7 @@
     background-color: #DD1F1F;
 }
 
-.discussion-container:hover h2{
+.discussion-container:hover h2 {
     color: #EEEEEE;
 }
 
@@ -52,6 +53,25 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
+}
+
+.delete-btn-container {
+    position: absolute;
+    top: 0;
+    right: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 3vmax;
+    height: 3vmax;
+    background-color: #7D0A0A;
+    border-radius: 0 10px 0 20px;
+    transition: background-color 0.2s;
+}
+
+.delete-btn-container:hover {
+    cursor: pointer;
+    background-color: #EEEEEE;
 }
 
 @media only screen and (max-width: 600px) {

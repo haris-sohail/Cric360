@@ -84,7 +84,7 @@ router.post('/addComment', async (req, res) => {
         let text = req.body.currentComment;
 
         const discussion = await DiscussionModel.findOne({ id: discussion_id })
-        
+
         discussion.comments.push({
             postedBy: username,
             text: text
@@ -97,7 +97,15 @@ router.post('/addComment', async (req, res) => {
     catch (err) {
         res.json(err)
     }
-    
+
+})
+
+router.post('/deleteDiscussion', (req, res) => {
+    let discussion_id = req.body.id;
+
+    DiscussionModel.deleteOne({ id: discussion_id })
+        .then(discussion => res.json(discussion))
+        .catch(err => res.json(err))
 })
 
 module.exports = router;

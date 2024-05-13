@@ -25,6 +25,11 @@ function Home() {
         loadDiscussions();
     }, []);
 
+    const updateDelDiscussion = (discussionID) => {
+        const newDiscussions = discussions.filter(discussion => discussion.id !== discussionID);
+        setDiscussions(newDiscussions);
+    }
+
     useEffect(() => {
         if (discussions) {
             const discussionsComponents = discussions.map(discussion => (
@@ -38,6 +43,7 @@ function Home() {
                     postedBy={discussion.username}
                     username={data.username}
                     comments={discussion.comments}
+                    updateDeleteDiscussion={updateDelDiscussion}
                 />
             ));
             setDiscussionsComp(discussionsComponents);

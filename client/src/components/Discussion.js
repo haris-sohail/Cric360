@@ -4,10 +4,14 @@ import { useNavigate } from 'react-router-dom'
 import upvote from '../system/assets/upvote.png'
 import downvote from '../system/assets/downvote.png'
 import comment from '../system/assets/comment.png'
+import axios from 'axios'
+import { toast } from 'react-hot-toast'
+import deleteBtn from '../system/assets/delete.png'
 import '../css/Discussion.css'
 
-function Discussion({ id, title, text, upvotes, downvotes, username, comments, postedBy }) {
+function Discussion({ id, title, text, upvotes, downvotes, username, comments, postedBy, updateDeleteDiscussion }) {
   const navigate = useNavigate();
+  const hideDeleteBtn = username !== postedBy;
 
   const displayProps = () => {
     console.log(id)
@@ -19,7 +23,21 @@ function Discussion({ id, title, text, upvotes, downvotes, username, comments, p
   }
 
   const handleDiscussionClick = (e) => {
+    if (e.target.tagName === 'IMG') return
     navigate('/discussionPage', { state: { id, title, text, upvotes, downvotes, username, comments, postedBy } })
+  }
+
+  const handleDiscussionDelete = () => {
+    axios.post('http://localhost:3001/discussion/deleteDiscussion', { id: id })
+      .then(res => {
+        if (res.data) {
+          updateDeleteDiscussion(id)
+          toast.success('Discussion deleted successfully')
+        }
+      })
+      .catch(err => {
+        toast.error("Couldn't reach server, delete failed")
+      })
   }
 
   return (
@@ -44,6 +62,11 @@ function Discussion({ id, title, text, upvotes, downvotes, username, comments, p
             <img src={comment}></img>
             <p>{comments.length}</p>
           </div>
+          {(hideDeleteBtn) ? null :
+            <div className='delete-btn-container'>
+              <img onClick={handleDiscussionDelete} src={deleteBtn}></img>
+            </div>
+          }
         </div>
       </div>
     </a>
