@@ -93,6 +93,12 @@ function TeamPage() {
       });
   };
 
+  const handlePlayerClick = (e) => {
+    const playerName = e.currentTarget.querySelector('.player-name').textContent;
+    const playerDetails = allPlayers.find(player => player.username === playerName);
+    navigate('/playerStatsDetails', { state: { username, playerDetails } });
+  }
+
   return (
     <div className='Main-div'>
       <Navbar username={data.loggedinuser}/>
@@ -145,7 +151,7 @@ function TeamPage() {
             <h2>PLAYERS</h2>
       </div>
             {allPlayers.map(player => (
-             <div className='team-player-info'>
+             <div className='team-player-info' onClick={handlePlayerClick}>
                 <div className='image-container-players'>
                     <img src={'http://localhost:3001/Images/default-team.png'}></img>
                 </div>
