@@ -56,7 +56,7 @@ function Navbar({ username }) {
                   </a>
                 </li>
                 <li>
-                  <a href="">
+                  <a href="" onClick={handleStatsClick}>
                     <button>Stats</button>
                   </a>
                 </li>
